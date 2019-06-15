@@ -1,0 +1,14 @@
+# приклеить мобильный футер к низу
+# добавить серые иконки социальных сетей
+# отображать разные футеры в default в зависимости от разрешения
+# реализовать плавный переход по кнопке "Узнать подробнее", при помощи
+# добавить category navigation в error
+# добавить функциональность ответа на комментарий
+https://github.com/cferdinandi/smooth-scroll/tree/master/dist
+
+# либо добавить font-awesome согласно https://github.com/FortAwesome/vue-fontawesome#recommended, либо удалить все зависимости из package.json и config
+# разобраться с валидацией форм в комментариях и логине (вот так можно руками https://ru.vuejs.org/v2/cookbook/form-validation.html)
+
+# сделать нормальную авторизацию
+
+# resolve common component methods (setRegion)
