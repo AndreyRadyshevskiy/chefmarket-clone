@@ -51,9 +51,10 @@ export default {
 .post-thumb {
   display: flex;
   flex-direction: column;
-  width: 32%;
+  // width: 32%;
   height: 51.4rem;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
+  margin-bottom: 2rem;
 
   .post-thumb-image {
     height: 22rem;

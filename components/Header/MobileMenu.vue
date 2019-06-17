@@ -85,7 +85,7 @@
       </div>
       <footer class="mobile-footer">
         <span class="text">Присоединяйтесь к нам в социальных сетях!</span>
-        <SocialMenu />
+        <SocialContacts />
         <span class="text copyright">© 2012–2019 ООО «Шеф Маркет»</span>
       </footer>
     </div>
@@ -94,11 +94,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import SocialMenu from '@/components/Socials/SocialMenu'
+import SocialContacts from '@/components/Socials/SocialContacts'
 
 export default {
   components: {
-    SocialMenu
+    SocialContacts
   },
   data() {
     return {

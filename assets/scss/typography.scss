@@ -1,0 +1,23 @@
+.title {
+  font-family: PFRegalPro, sans-serif;
+  font-weight: 600;
+  font-size: 4rem;
+}
+.page-title {
+  font-size: 6rem;
+  text-align: center;
+}
+.date {
+  display: inline-block;
+  color: #999;
+}
+.tags {
+  font-size: 1.2rem;
+  color: rgba(51,51,51,.6);
+  padding-right: 3px;
+  line-height: 2.2rem;
+
+  &--small {
+    font-size: 1rem;
+  }
+}
