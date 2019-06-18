@@ -28,3 +28,33 @@
 .expand-arrow-grey.rotate {
   transform: rotate(224deg);
 }
+.btn {
+  display: inline-block;
+  width:  23.5rem;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #fff;
+  text-transform: uppercase;
+  padding: 1.8rem 0;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 44px;
+  transition: all .25s;
+
+  &-colored {
+    background: #59b958;
+
+    &:hover {
+      background: #8bce8a;
+    }
+  }
+  &-transparent {
+    border: 1px solid #59b958;
+
+    &:hover {
+      background: #ffffff;
+      color: #333;
+    }
+  }
+}

@@ -113,6 +113,13 @@ export default {
     margin-right: 3rem;
   }
 }
+
+.post-img {
+  background: url('https://www.chefmarket.ru/blog/wp-content/uploads/2019/05/cook-e1556954945111.jpg') no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  height: 50rem;
+}
 .comments {
   padding-top: 5.5rem;
   border-top: 1px solid #ccc;

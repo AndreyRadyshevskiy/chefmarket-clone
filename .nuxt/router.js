@@ -2,7 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { interopDefault } from './utils'
 
+const _2d536fe8 = () => interopDefault(import('..\\pages\\admin\\index.vue' /* webpackChunkName: "pages_admin_index" */))
 const _b92f9e8a = () => interopDefault(import('..\\pages\\blog\\index.vue' /* webpackChunkName: "pages_blog_index" */))
+const _fed37180 = () => interopDefault(import('..\\pages\\admin\\auth\\index.vue' /* webpackChunkName: "pages_admin_auth_index" */))
+const _60c387ca = () => interopDefault(import('..\\pages\\admin\\new-post\\index.vue' /* webpackChunkName: "pages_admin_new-post_index" */))
+const _a366601c = () => interopDefault(import('..\\pages\\admin\\_postId\\index.vue' /* webpackChunkName: "pages_admin__postId_index" */))
 const _6628593f = () => interopDefault(import('..\\pages\\blog\\_id\\index.vue' /* webpackChunkName: "pages_blog__id_index" */))
 const _451ef75d = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
@@ -81,9 +85,25 @@ export function createRouter() {
     scrollBehavior,
 
     routes: [{
+      path: "/admin",
+      component: _2d536fe8,
+      name: "admin"
+    }, {
       path: "/blog",
       component: _b92f9e8a,
       name: "blog"
+    }, {
+      path: "/admin/auth",
+      component: _fed37180,
+      name: "admin-auth"
+    }, {
+      path: "/admin/new-post",
+      component: _60c387ca,
+      name: "admin-new-post"
+    }, {
+      path: "/admin/:postId",
+      component: _a366601c,
+      name: "admin-postId"
     }, {
       path: "/blog/:id",
       component: _6628593f,

@@ -1,5 +1,5 @@
 <template>
-  <div class="post-thumb">
+  <article class="post-thumb">
     <nuxt-link :to="'/blog/' + id"
       class="post-thumb-image"
       :style="{backgroundImage: 'url(' + imgUrl + ')'}"></nuxt-link>
@@ -15,7 +15,7 @@
         class="tags"
       >#Блюда из мяса #Блюда из овощей #Блюда из рыбы и морепродуктов #Блюда на праздник #вкусно #Вторые блюда #готовить #приготовление #Рецепты #сладости</div>
     </div>
-  </div>
+  </article>
 </template>
 
 <script>
@@ -51,7 +51,6 @@ export default {
 .post-thumb {
   display: flex;
   flex-direction: column;
-  // width: 32%;
   height: 51.4rem;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.25);
   margin-bottom: 2rem;

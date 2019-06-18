@@ -8,10 +8,9 @@
       <main class="posts-thumbs">
 
         <PostThumb
-          v-for="(post, index) in 12"
+          v-for="post in 13"
           :key="post"
           id="1"
-          :style="{ order: index }"
           title="Что приготовить на скорую руку"
           date="04.05.2019"
           imgUrl="https://www.chefmarket.ru/blog/wp-content/uploads/2019/05/cook-e1556954945111.jpg"
@@ -78,40 +77,31 @@ export default {
   grid-template-rows: repeat(3, 1ft);
   grid-gap: 2rem;
 }
-// .posts-thumbs-row {
-//   display: flex;
-//   flex-wrap: wrap;
-//   justify-content: space-between;
-//   padding-bottom: 2.5rem;
-// }
-
-// .post-thumb:first-of-type {
-//   flex-basis: 100%;
-//   flex-direction: row;
-//   margin-bottom: 3.5rem;
-
-//   .post-thumb-image {
-//     width: 50%;
-//     height: 100%;
-//   }
-//   .post-thumb-content {
-//     width: 50%;
-//   }
-//   .title {
-//     font-size: 4rem;
-//     margin-bottom: 3.5rem;
-//   }
-//   .date {
-//     margin-bottom: 3.5rem;
-//   }
-// }
 
 .post-thumb:first-of-type {
   grid-row-start: 1;
   grid-column-start: 1;
   grid-row-end: 3;
   grid-column-end: 4;
+  flex-direction: row;
+  margin-bottom: 3.5rem;
+
+  .post-thumb-image {
+    width: 50%;
+    height: 100%;
+  }
+  .post-thumb-content {
+    width: 50%;
+  }
+  .title {
+    font-size: 4rem;
+    margin-bottom: 3.5rem;
+  }
+  .date {
+    margin-bottom: 3.5rem;
+  }
 }
+
 .tag-cloud {
   grid-row-start: 4;
   grid-column-start: 1;
