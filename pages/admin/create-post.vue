@@ -1,5 +1,5 @@
 <template>
-  <h1>Welcome to admin page</h1>
+  <div>Create</div>
 </template>
 
 <script>

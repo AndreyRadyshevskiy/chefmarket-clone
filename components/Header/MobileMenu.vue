@@ -4,16 +4,15 @@
       <div class="region">
         <div class="region-select" @click="toggleRegionMenu">
           <span>Ваш регион доставки:</span>
-          <span class="region-selected"> {{ region }}</span>
+          <span class="region-selected">{{ region }}</span>
           <span class="expand-arrow-green" :class="{ rotate: regionMenuIsOpen }"></span>
         </div>
         <ul class="region-items" @click="setRegion" v-show="regionMenuIsOpen">
-          <li class="region-item"
+          <li
+            class="region-item"
             v-for="(region, index) in this.$store.state.region.regionArr"
             :key="index"
-          >
-            {{ region.name }}
-          </li>
+          >{{ region.name }}</li>
         </ul>
       </div>
       <div class="line" v-show="!regionMenuIsOpen"></div>
@@ -37,7 +36,7 @@
             <a href class="icon icon-fb"></a>
           </div>
         </div>
-        <div class="expandable-menu" @click="toggleMobileSubMenu">
+        <div class="expandable-menu" @click="toggleSubMenu">
           <div class="line"></div>
           <div class="menu-title">
             <span>О Компании</span>
@@ -85,7 +84,7 @@
       </div>
       <footer class="mobile-footer">
         <span class="text">Присоединяйтесь к нам в социальных сетях!</span>
-        <SocialContacts />
+        <SocialContacts/>
         <span class="text copyright">© 2012–2019 ООО «Шеф Маркет»</span>
       </footer>
     </div>
@@ -93,8 +92,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import SocialContacts from '@/components/Socials/SocialContacts'
+import { mapGetters } from "vuex";
+import SocialContacts from "@/components/Socials/SocialContacts";
 
 export default {
   components: {
@@ -103,34 +102,34 @@ export default {
   data() {
     return {
       regionMenuIsOpen: false
-    }
+    };
   },
   computed: {
     ...mapGetters({
-      region: 'region/region',
-      phone: 'region/phone'
+      region: "region/region",
+      phone: "region/phone"
     })
   },
   methods: {
     toggleRegionMenu() {
-      this.regionMenuIsOpen = !this.regionMenuIsOpen
+      this.regionMenuIsOpen = !this.regionMenuIsOpen;
     },
     setRegion(event) {
-      const region = event.target.textContent.trim()
+      const region = event.target.textContent.trim();
       const activeRegionObj = this.$store.state.region.regionArr.find(
         el => el.name == region
-      )
-      this.$store.commit('region/setActiveRegion', activeRegionObj)
+      );
+      this.$store.commit("region/setActiveRegion", activeRegionObj);
       this.regionMenuIsOpen = false;
     },
-    toggleMobileSubMenu(event) {
-      const el = event.target.closest('.menu-title')
+    toggleSubMenu(event) {
+      const el = event.target.closest(".menu-title");
       if (el) {
-        el.nextElementSibling.classList.toggle('d-none')
-        el.querySelector('.expand-arrow-grey').classList.toggle('rotate')
+        el.nextElementSibling.classList.toggle("d-none");
+        el.querySelector(".expand-arrow-grey").classList.toggle("rotate");
       }
-      if(event.target.classList.contains('menu-item')) {
-        this.toggleMobileMenu()
+      if (event.target.classList.contains("menu-item")) {
+        this.toggleMobileMenu();
       }
     }
   }
@@ -139,7 +138,6 @@ export default {
 
 <style lang="scss">
 .mobile-menu {
-
   display: none;
 
   @include respond(tab-port) {
@@ -233,10 +231,9 @@ export default {
     margin-bottom: 1rem;
   }
   .social-contacts {
-
     .icon {
       margin-right: 1.5rem;
-      margin-left: .5rem;
+      margin-left: 0.5rem;
     }
   }
   .expandable-menu {
@@ -273,10 +270,10 @@ export default {
       img {
         width: 100%;
         height: 100%;
-        transition: opacity .25s;
+        transition: opacity 0.25s;
 
         &:hover {
-          opacity: .6;
+          opacity: 0.6;
         }
       }
     }

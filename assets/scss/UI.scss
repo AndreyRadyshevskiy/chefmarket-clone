@@ -1,5 +1,5 @@
 .expand-arrow-green {
-  border: solid #59B958;
+  border: solid #59b958;
   border-width: 0 2px 2px 0;
   display: inline-block;
   padding: 2.5px;
@@ -8,7 +8,7 @@
   height: 6px;
   margin-left: 5px;
   margin-bottom: 2px;
-  transition: transform .1s ease-in;
+  transition: transform 0.1s ease-in;
 }
 .expand-arrow-green.rotate {
   transform: rotate(224deg);
@@ -23,14 +23,14 @@
   height: 8px;
   margin-left: 5px;
   margin-bottom: 2px;
-  transition: transform .1s ease-in;
+  transition: transform 0.1s ease-in;
 }
 .expand-arrow-grey.rotate {
   transform: rotate(224deg);
 }
 .btn {
   display: inline-block;
-  width:  23.5rem;
+  width: 23.5rem;
   text-align: center;
   font-size: 1.2rem;
   color: #fff;
@@ -40,7 +40,7 @@
   outline: none;
   cursor: pointer;
   border-radius: 44px;
-  transition: all .25s;
+  transition: all 0.25s;
 
   &-colored {
     background: #59b958;

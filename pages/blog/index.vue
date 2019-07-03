@@ -5,7 +5,7 @@
 
       <SearchBar/>
 
-      <main class="posts-thumbs">
+      <main class="post-thumbs-blog">
 
         <PostThumb
           v-for="post in 13"
@@ -70,35 +70,36 @@ export default {
 </script>
 
 <style lang="scss">
-.posts-thumbs {
+
+.post-thumbs-blog {
   padding: 4.5rem 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1ft);
   grid-gap: 2rem;
-}
 
-.post-thumb:first-of-type {
-  grid-row-start: 1;
-  grid-column-start: 1;
-  grid-row-end: 3;
-  grid-column-end: 4;
-  flex-direction: row;
-  margin-bottom: 3.5rem;
+  .post-thumb:first-of-type {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    grid-row-end: 3;
+    grid-column-end: 4;
+    flex-direction: row;
+    margin-bottom: 3.5rem;
 
-  .post-thumb-image {
-    width: 50%;
-    height: 100%;
-  }
-  .post-thumb-content {
-    width: 50%;
-  }
-  .title {
-    font-size: 4rem;
-    margin-bottom: 3.5rem;
-  }
-  .date {
-    margin-bottom: 3.5rem;
+    .post-thumb-image {
+      width: 50%;
+      height: 100%;
+    }
+    .post-thumb-content {
+      width: 50%;
+    }
+    .title {
+      font-size: 4rem;
+      margin-bottom: 3.5rem;
+    }
+    .date {
+      margin-bottom: 3.5rem;
+    }
   }
 }
 

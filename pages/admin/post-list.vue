@@ -1,5 +1,5 @@
 <template>
-  <h1>Welcome to admin page</h1>
+  <div>Post List</div>
 </template>
 
 <script>

@@ -4,9 +4,10 @@ import { interopDefault } from './utils'
 
 const _2d536fe8 = () => interopDefault(import('..\\pages\\admin\\index.vue' /* webpackChunkName: "pages_admin_index" */))
 const _b92f9e8a = () => interopDefault(import('..\\pages\\blog\\index.vue' /* webpackChunkName: "pages_blog_index" */))
-const _fed37180 = () => interopDefault(import('..\\pages\\admin\\auth\\index.vue' /* webpackChunkName: "pages_admin_auth_index" */))
-const _60c387ca = () => interopDefault(import('..\\pages\\admin\\new-post\\index.vue' /* webpackChunkName: "pages_admin_new-post_index" */))
-const _a366601c = () => interopDefault(import('..\\pages\\admin\\_postId\\index.vue' /* webpackChunkName: "pages_admin__postId_index" */))
+const _5878efe7 = () => interopDefault(import('..\\pages\\admin\\create-post.vue' /* webpackChunkName: "pages_admin_create-post" */))
+const _1209da02 = () => interopDefault(import('..\\pages\\admin\\login.vue' /* webpackChunkName: "pages_admin_login" */))
+const _120fe141 = () => interopDefault(import('..\\pages\\admin\\post-list.vue' /* webpackChunkName: "pages_admin_post-list" */))
+const _72bd4a1e = () => interopDefault(import('..\\pages\\admin\\users.vue' /* webpackChunkName: "pages_admin_users" */))
 const _6628593f = () => interopDefault(import('..\\pages\\blog\\_id\\index.vue' /* webpackChunkName: "pages_blog__id_index" */))
 const _451ef75d = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
@@ -93,17 +94,21 @@ export function createRouter() {
       component: _b92f9e8a,
       name: "blog"
     }, {
-      path: "/admin/auth",
-      component: _fed37180,
-      name: "admin-auth"
+      path: "/admin/create-post",
+      component: _5878efe7,
+      name: "admin-create-post"
     }, {
-      path: "/admin/new-post",
-      component: _60c387ca,
-      name: "admin-new-post"
+      path: "/admin/login",
+      component: _1209da02,
+      name: "admin-login"
     }, {
-      path: "/admin/:postId",
-      component: _a366601c,
-      name: "admin-postId"
+      path: "/admin/post-list",
+      component: _120fe141,
+      name: "admin-post-list"
+    }, {
+      path: "/admin/users",
+      component: _72bd4a1e,
+      name: "admin-users"
     }, {
       path: "/blog/:id",
       component: _6628593f,

@@ -3,7 +3,7 @@ import Meta from 'vue-meta'
 import { createRouter } from './router.js'
 import NoSsr from './components/no-ssr.js'
 import NuxtChild from './components/nuxt-child.js'
-import NuxtError from './components/nuxt-error.vue'
+import NuxtError from '..\\layouts\\error.vue'
 import Nuxt from './components/nuxt.js'
 import App from './App.js'
 import { setContext, getLocation, getRouteData, normalizeError } from './utils'
@@ -11,7 +11,9 @@ import { createStore } from './store.js'
 
 /* Plugins */
 
+import nuxt_plugin_axios_fa387626 from 'nuxt_plugin_axios_fa387626' // Source: .\\axios.js (mode: 'all')
 import nuxt_plugin_elementui_d905880e from 'nuxt_plugin_elementui_d905880e' // Source: ..\\plugins\\element-ui (mode: 'all')
+import nuxt_plugin_firestore_decf9e12 from 'nuxt_plugin_firestore_decf9e12' // Source: ..\\plugins\\firestore (mode: 'all')
 
 // Component: <NoSsr>
 Vue.component(NoSsr.name, NoSsr)
@@ -151,8 +153,16 @@ async function createApp(ssrContext) {
 
   // Plugin execution
 
+  if (typeof nuxt_plugin_axios_fa387626 === 'function') {
+    await nuxt_plugin_axios_fa387626(app.context, inject)
+  }
+
   if (typeof nuxt_plugin_elementui_d905880e === 'function') {
     await nuxt_plugin_elementui_d905880e(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_firestore_decf9e12 === 'function') {
+    await nuxt_plugin_firestore_decf9e12(app.context, inject)
   }
 
   // If server-side, wait for async component to be resolved first

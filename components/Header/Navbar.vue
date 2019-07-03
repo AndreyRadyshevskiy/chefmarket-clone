@@ -6,65 +6,88 @@
           <img src="~/assets/img/logo.svg" class="navbar-logo">
         </nuxt-link>
         <nav class="main-nav" v-if="!login">
-          <nuxt-link to='/menu'>Меню</nuxt-link>
-          <nuxt-link to='/how-it-works'>Как это работает</nuxt-link>
-          <nuxt-link to='/blog'>Блог о вкусном
+          <nuxt-link to="/menu">Меню</nuxt-link>
+          <nuxt-link to="/how-it-works">Как это работает</nuxt-link>
+          <nuxt-link to="/blog">
+            Блог о вкусном
             <img src="~/assets/img/icons/link.svg">
           </nuxt-link>
         </nav>
         <nav class="main-nav" v-else>
-          <a href="">Меню</a>
-          <a href="">Подписки</a>
-          <a href="">Заказы</a>
+          <a href>Меню</a>
+          <a href>Подписки</a>
+          <a href>Заказы</a>
         </nav>
-        <div class="login" @click="login=!login">
+        <!-- <div class="login" @click="login=!login">
           <span>Войти</span>
         </div>
+        <div class="register" @click="login=!login">
+          <span>Зарегистрироваться</span>
+        </div>-->
+        <template v-if="isAuthenticated">
+          <button class="login">{{ user.email }}</button>
+        </template>
+        <template v-else>
+          <button class="login" @click="loginModalVisible = true">Войти</button>
+        </template>
         <img src="~/assets/img/icons/menu_bars.svg" class="menu-bars" @click="toggleMobileMenu">
       </div>
-      <MobileMenu v-show="mobileMenuIsOpen"/>
+      <MobileMenu v-show="mobileMenuVisible"/>
+      <LoginForm v-if="loginModalVisible" :visible.sync="loginModalVisible"/>
     </div>
   </div>
 </template>
 
 <script>
-import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
-import MobileMenu from '@/components/Header/MobileMenu'
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  clearAllBodyScrollLocks
+} from "body-scroll-lock";
+import MobileMenu from "@/components/Header/MobileMenu";
+import LoginForm from "@/components/Header/LoginForm";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
-    MobileMenu
+    MobileMenu,
+    LoginForm
   },
   data() {
     return {
       login: false,
-      mobileMenuIsOpen: false
-    }
+      mobileMenuVisible: false,
+      loginModalVisible: false
+    };
+  },
+  computed: {
+    ...mapGetters({
+      user: "auth/user",
+      isAuthenticated: "auth/isAuthenticated"
+    })
   },
   methods: {
     toggleMobileMenu() {
-      if(!this.mobileMenuIsOpen) {
-        document.body.style.overflow = "hidden"
-        this.mobileMenuIsOpen = !this.mobileMenuIsOpen
-        this.$refs.navbar.style.position = "fixed"
+      if (!this.mobileMenuVisible) {
+        document.body.style.overflow = "hidden";
+        this.mobileMenuVisible = !this.mobileMenuVisible;
+        this.$refs.navbar.style.position = "fixed";
       } else {
-        document.body.style.overflow = "visible"
-        this.mobileMenuIsOpen = !this.mobileMenuIsOpen
-        this.$refs.navbar.style.position = "relative"
+        document.body.style.overflow = "visible";
+        this.mobileMenuVisible = !this.mobileMenuVisible;
+        this.$refs.navbar.style.position = "relative";
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
-
 .navbar {
-
   @include respond(tab-port) {
     position: relative;
     background-color: #fff;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.26);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.26);
     width: 100%;
     height: 100%;
     overflow-y: auto;
@@ -90,7 +113,7 @@ export default {
     display: block;
     height: 5rem;
   }
-  .main-nav{
+  .main-nav {
     @include respond(tab-port) {
       display: none;
     }
@@ -99,7 +122,7 @@ export default {
       padding: 1rem;
       color: #333;
       margin-right: 2rem;
-      transition: color .2s ease-in;
+      transition: color 0.2s ease-in;
 
       &:hover {
         color: #999;
@@ -107,6 +130,13 @@ export default {
     }
   }
   .login {
+    border: none;
+    background-color: #fff;
+    font-size: inherit;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+
     @include respond(tab-port) {
       display: none;
     }

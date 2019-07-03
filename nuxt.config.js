@@ -1,56 +1,67 @@
-
 export default {
   mode: 'universal',
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      {
+        hid: 'description',
+        name: 'description',
+        content: process.env.npm_package_description || ''
+      }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
   /*
-  ** Customize the progress-bar color
-  */
+   ** Customize the progress-bar color
+   */
   loading: { color: '#fff' },
   /*
-  ** Global CSS
-  */
-  css: [
-    'element-ui/lib/theme-chalk/index.css',
-    '@/assets/scss/main.scss'
-  ],
+   ** Global CSS
+   */
+  css: ['element-ui/lib/theme-chalk/index.css', '@/assets/scss/main.scss'],
   /*
-  ** Plugins to load before mounting the App
-  */
-  plugins: [
-    '@/plugins/element-ui'
-  ],
+   ** Plugins to load before mounting the App
+   */
+  plugins: ['@/plugins/element-ui', '@/plugins/firestore'],
   /*
-  ** Nuxt.js modules
-  */
-  modules: [
-    '@nuxtjs/style-resources'
-  ],
+   ** Nuxt.js modules
+   */
+  modules: ['@nuxtjs/style-resources', '@nuxtjs/axios', '@nuxtjs/proxy'],
 
   styleResources: {
     scss: ['~assets/scss/mixins.scss']
   },
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
+  axios: {
+    credentials: true,
+    proxy: true
+  },
+
+  proxy: {
+    '/register/': {
+      target:
+        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyB088LjzbZDiC9hSFSc1eGR63yVq5Kpvuw',
+      pathRewrite: { '^/register/': '' }
+    },
+    '/login/': {
+      target:
+        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyB088LjzbZDiC9hSFSc1eGR63yVq5Kpvuw',
+      pathRewrite: { '^/login/': '' }
+    }
+  },
+
   build: {
     transpile: [/^element-ui/],
     /*
-    ** You can extend webpack config here
-    */
-    extend(config, ctx) {
-    }
+     ** You can extend webpack config here
+     */
+    extend(config, ctx) {}
   }
 }
