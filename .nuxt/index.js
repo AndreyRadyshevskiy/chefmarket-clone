@@ -13,7 +13,7 @@ import { createStore } from './store.js'
 
 import nuxt_plugin_axios_fa387626 from 'nuxt_plugin_axios_fa387626' // Source: .\\axios.js (mode: 'all')
 import nuxt_plugin_elementui_d905880e from 'nuxt_plugin_elementui_d905880e' // Source: ..\\plugins\\element-ui (mode: 'all')
-import nuxt_plugin_firestore_decf9e12 from 'nuxt_plugin_firestore_decf9e12' // Source: ..\\plugins\\firestore (mode: 'all')
+import nuxt_plugin_firebase_362e73fb from 'nuxt_plugin_firebase_362e73fb' // Source: ..\\plugins\\firebase (mode: 'all')
 
 // Component: <NoSsr>
 Vue.component(NoSsr.name, NoSsr)
@@ -161,8 +161,8 @@ async function createApp(ssrContext) {
     await nuxt_plugin_elementui_d905880e(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_firestore_decf9e12 === 'function') {
-    await nuxt_plugin_firestore_decf9e12(app.context, inject)
+  if (typeof nuxt_plugin_firebase_362e73fb === 'function') {
+    await nuxt_plugin_firebase_362e73fb(app.context, inject)
   }
 
   // If server-side, wait for async component to be resolved first
