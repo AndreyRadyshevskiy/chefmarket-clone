@@ -1,43 +1,89 @@
-import db from '@/plugins/firebase'
+import { auth, db } from '@/plugins/firebase'
+import Cookies from 'js-cookie'
 
 export const state = () => ({
-  token: '',
+  uid: null,
   user: null
 })
+
 export const mutations = {
-  setToken(state, token) {
-    state.token = token
+  saveUID(state, uid) {
+    state.uid = uid
   },
-  setUser(state, user) {
+  setUSER(state, user) {
     state.user = user
   }
 }
+
 export const actions = {
-  async authenticateUser({ commit }, userPayload) {
-    const authUserData = await this.$axios.$post(`/${userPayload.action}/`, {
-      email: userPayload.email,
-      password: userPayload.password,
-      returnSecureToken: userPayload.returnSecureToken
+  async signUp({ dispatch, state }, userData) {
+    const { user } = await auth.createUserWithEmailAndPassword(
+      userData.email,
+      userData.password
+    )
+    await auth.currentUser.updateProfile({
+      displayName: userData.displayName
     })
-    let user
-    if (userPayload.action === 'register') {
-      user = { email: authUserData.email }
-      await db
-        .collection('users')
-        .doc(userPayload.email)
-        .set(user)
-    } else {
-      const loginRef = db.collection('users').doc(userPayload.email)
-      const loggedInUser = await loginRef.get()
-      user = loggedInUser.data()
+    await db
+      .collection('users')
+      .doc(user.email)
+      .set({ name: userData.displayName, email: userData.email })
+
+    const token = await auth.currentUser.getIdToken(true)
+    const userInfo = {
+      name: user.displayName,
+      email: user.email,
+      uid: user.uid
     }
-    commit('setUser', user)
-    commit('setToken', authUserData.idToken)
+
+    Cookies.set('access_token', token)
+    await dispatch('setUSER', userInfo)
+    await dispatch('saveUID', userInfo.uid)
+  },
+  async signIn({ dispatch }, userData) {
+    const { user } = await auth.signInWithEmailAndPassword(
+      userData.email,
+      userData.password
+    )
+
+    const token = await auth.currentUser.getIdToken(true)
+    const userInfo = {
+      name: user.displayName,
+      email: user.email,
+      avatar: user.photoURL,
+      uid: user.uid
+    }
+
+    Cookies.set('access_token', token) // saving token in cookie for server rendering
+    await dispatch('setUSER', userInfo)
+    await dispatch('saveUID', userInfo.uid)
+  },
+  async signOut({ commit }) {
+    await auth.signOut()
+
+    Cookies.remove('access_token')
+    commit('setUSER', null)
+    commit('saveUID', null)
+  },
+  saveUID({ commit }, uid) {
+    commit('saveUID', uid)
+  },
+  setUSER({ commit }, user) {
+    commit('setUSER', user)
   }
 }
 
 export const getters = {
-  isAuthenticated: state => Boolean(state.token),
-  // isAdmin: state => (state.token === '9V6ePpwdCmbRdUziBjMZBF5fWSs1' ? true : false)
-  user: state => state.user
+  uid(state) {
+    if (state.user && state.user.uid) return state.user.uid
+    else return null
+  },
+
+  user(state) {
+    return state.user
+  },
+
+  isAuthenticated(state) {
+    return !!state.user && !!state.user.uid
+  }
 }

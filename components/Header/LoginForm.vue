@@ -44,9 +44,9 @@
           @submit.native.prevent="registerUser"
           v-if="!isAuthenticated"
         >
-          <!-- <el-form-item label="Имя" prop="name">
-          <el-input :disabled="loading" v-model="form.name"/>
-          </el-form-item>-->
+          <el-form-item label="Имя" prop="name">
+            <el-input :disabled="loading" v-model="form.name"/>
+          </el-form-item>
 
           <el-form-item label="E-mail" prop="email">
             <el-input :disabled="loading" v-model="form.email" type="email"/>
@@ -86,6 +86,8 @@
 </template>
 
 <script>
+import { auth, db } from "@/plugins/firebase";
+import { mapActions } from "vuex";
 export default {
   props: ["visible"],
   data() {
@@ -95,18 +97,18 @@ export default {
       loading: false,
       errorText: "",
       form: {
-        // name: "",
+        name: "",
         email: "",
         password: ""
       },
       rules: {
-        // name: [
-        //   {
-        //     required: true,
-        //     message: "Пожалуйтса, введите имя",
-        //     trigger: "blur"
-        //   }
-        // ],
+        name: [
+          {
+            required: true,
+            message: "Пожалуйтса, введите имя",
+            trigger: "blur"
+          }
+        ],
         email: [
           {
             required: true,
@@ -150,6 +152,7 @@ export default {
   //   }
   // },
   methods: {
+    ...mapActions({ login: "auth/login" }),
     switchTabs() {
       this.isLoginTab ? (this.isLoginTab = false) : (this.isLoginTab = true);
     },
@@ -160,14 +163,16 @@ export default {
       this.$refs.form.validate(async valid => {
         if (valid) {
           this.loading = true;
+
           try {
-            await this.$store.dispatch("auth/authenticateUser", {
-              // name: this.form.name,
-              action: "register",
+            const formData = {
+              displayName: this.form.name,
               email: this.form.email,
-              password: this.form.password,
-              returnSecureToken: true
-            });
+              password: this.form.password
+            };
+
+            await this.$store.dispatch("auth/signUp", formData);
+
             this.loading = false;
           } catch (err) {
             console.error(err);
@@ -184,13 +189,11 @@ export default {
         if (valid) {
           this.loading = true;
           try {
-            await this.$store.dispatch("auth/authenticateUser", {
-              // name: this.form.name,
-              action: "login",
+            const formData = {
               email: this.form.email,
-              password: this.form.password,
-              returnSecureToken: true
-            });
+              password: this.form.password
+            };
+            await this.$store.dispatch("auth/signIn", formData);
             this.loading = false;
             this.closeDialog();
           } catch (err) {

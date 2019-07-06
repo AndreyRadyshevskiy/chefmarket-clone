@@ -85,6 +85,7 @@ if (process.client) {
 
 export default {
   layout: "admin",
+  middleware: "auth",
   components: {
     VueEditor
   },

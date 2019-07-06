@@ -25,7 +25,7 @@
           <span>Зарегистрироваться</span>
         </div>-->
         <template v-if="isAuthenticated">
-          <button class="login">{{ user.email }}</button>
+          <button class="login" @click="logout">{{ user.email }}</button>
         </template>
         <template v-else>
           <button class="login" @click="loginModalVisible = true">Войти</button>
@@ -77,6 +77,9 @@ export default {
         this.mobileMenuVisible = !this.mobileMenuVisible;
         this.$refs.navbar.style.position = "relative";
       }
+    },
+    async logout() {
+      await this.$store.dispatch("auth/signOut");
     }
   }
 };

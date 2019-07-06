@@ -7,6 +7,8 @@ const VUEX_PROPERTIES = ['state', 'getters', 'actions', 'mutations']
 let store = {}
 
 void (function updateModules() {
+  store = normalizeRoot(require('..\\store\\index.js'), 'store/index.js')
+
   // If store is an exported method = classic mode (deprecated)
 
   if (typeof store === 'function') {
@@ -26,6 +28,7 @@ void (function updateModules() {
     // Whenever any Vuex module is updated...
     module.hot.accept([
       '..\\store\\auth.js',
+      '..\\store\\index.js',
       '..\\store\\posts.js',
       '..\\store\\region.js',
     ], () => {
