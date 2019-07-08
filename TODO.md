@@ -21,3 +21,7 @@ https://github.com/cferdinandi/smooth-scroll/tree/master/dist
 # resolve common component methods (setRegion)
 
 # сделать валидацию форм
+
+# admin user функциональность
+
+# реализовать удаление upload image из базы и интерфейса в create-post

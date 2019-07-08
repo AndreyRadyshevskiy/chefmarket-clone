@@ -16,45 +16,42 @@ export const mutations = {
 }
 
 export const actions = {
-  async signUp({ dispatch, state }, userData) {
-    const { user } = await auth.createUserWithEmailAndPassword(
-      userData.email,
-      userData.password
-    )
-    await auth.currentUser.updateProfile({
-      displayName: userData.displayName
-    })
-    await db
-      .collection('users')
-      .doc(user.email)
-      .set({ name: userData.displayName, email: userData.email })
+  async authenticateUser({ dispatch, state }, userData) {
+    let thisUser
+    if (userData.action === 'register') {
+      const { user } = await auth.createUserWithEmailAndPassword(
+        userData.email,
+        userData.password
+      )
+
+      await auth.currentUser.updateProfile({
+        displayName: userData.displayName
+      })
+      await db
+        .collection('users')
+        .doc(user.email)
+        .set({ name: userData.displayName, email: userData.email })
+
+      thisUser = user
+    }
+
+    if (userData.action === 'login') {
+      const { user } = await auth.signInWithEmailAndPassword(
+        userData.email,
+        userData.password
+      )
+
+      thisUser = user
+    }
 
     const token = await auth.currentUser.getIdToken(true)
     const userInfo = {
-      name: user.displayName,
-      email: user.email,
-      uid: user.uid
+      name: thisUser.displayName,
+      email: thisUser.email,
+      uid: thisUser.uid
     }
 
     Cookies.set('access_token', token)
-    await dispatch('setUSER', userInfo)
-    await dispatch('saveUID', userInfo.uid)
-  },
-  async signIn({ dispatch }, userData) {
-    const { user } = await auth.signInWithEmailAndPassword(
-      userData.email,
-      userData.password
-    )
-
-    const token = await auth.currentUser.getIdToken(true)
-    const userInfo = {
-      name: user.displayName,
-      email: user.email,
-      avatar: user.photoURL,
-      uid: user.uid
-    }
-
-    Cookies.set('access_token', token) // saving token in cookie for server rendering
     await dispatch('setUSER', userInfo)
     await dispatch('saveUID', userInfo.uid)
   },

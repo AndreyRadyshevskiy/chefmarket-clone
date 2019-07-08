@@ -152,7 +152,6 @@ export default {
   //   }
   // },
   methods: {
-    ...mapActions({ login: "auth/login" }),
     switchTabs() {
       this.isLoginTab ? (this.isLoginTab = false) : (this.isLoginTab = true);
     },
@@ -168,10 +167,11 @@ export default {
             const formData = {
               displayName: this.form.name,
               email: this.form.email,
-              password: this.form.password
+              password: this.form.password,
+              action: "register"
             };
 
-            await this.$store.dispatch("auth/signUp", formData);
+            await this.$store.dispatch("auth/authenticateUser", formData);
 
             this.loading = false;
           } catch (err) {
@@ -191,9 +191,10 @@ export default {
           try {
             const formData = {
               email: this.form.email,
-              password: this.form.password
+              password: this.form.password,
+              action: "login"
             };
-            await this.$store.dispatch("auth/signIn", formData);
+            await this.$store.dispatch("auth/authenticateUser", formData);
             this.loading = false;
             this.closeDialog();
           } catch (err) {
