@@ -4,6 +4,7 @@ import { interopDefault } from './utils'
 
 const _2d536fe8 = () => interopDefault(import('..\\pages\\admin\\index.vue' /* webpackChunkName: "pages_admin_index" */))
 const _b92f9e8a = () => interopDefault(import('..\\pages\\blog\\index.vue' /* webpackChunkName: "pages_blog_index" */))
+const _7ac66703 = () => interopDefault(import('..\\pages\\admin\\chefs.vue' /* webpackChunkName: "pages_admin_chefs" */))
 const _5878efe7 = () => interopDefault(import('..\\pages\\admin\\create-post.vue' /* webpackChunkName: "pages_admin_create-post" */))
 const _120fe141 = () => interopDefault(import('..\\pages\\admin\\post-list.vue' /* webpackChunkName: "pages_admin_post-list" */))
 const _72bd4a1e = () => interopDefault(import('..\\pages\\admin\\users.vue' /* webpackChunkName: "pages_admin_users" */))
@@ -92,6 +93,10 @@ export function createRouter() {
       path: "/blog",
       component: _b92f9e8a,
       name: "blog"
+    }, {
+      path: "/admin/chefs",
+      component: _7ac66703,
+      name: "admin-chefs"
     }, {
       path: "/admin/create-post",
       component: _5878efe7,

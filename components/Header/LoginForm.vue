@@ -8,11 +8,11 @@
           </el-form-item>-->
 
           <el-form-item label="E-mail" prop="email">
-            <el-input :disabled="loading" v-model="form.email" type="email"/>
+            <el-input :disabled="loading" v-model="form.email" type="email" />
           </el-form-item>
 
           <el-form-item label="Пароль" prop="password" class="mb6">
-            <el-input :disabled="loading" v-model="form.password" type="password" show-password/>
+            <el-input :disabled="loading" v-model="form.password" type="password" show-password />
           </el-form-item>
 
           <el-form-item>
@@ -45,15 +45,15 @@
           v-if="!isAuthenticated"
         >
           <el-form-item label="Имя" prop="name">
-            <el-input :disabled="loading" v-model="form.name"/>
+            <el-input :disabled="loading" v-model="form.name" />
           </el-form-item>
 
           <el-form-item label="E-mail" prop="email">
-            <el-input :disabled="loading" v-model="form.email" type="email"/>
+            <el-input :disabled="loading" v-model="form.email" type="email" />
           </el-form-item>
 
           <el-form-item label="Пароль" prop="password" class="mb6">
-            <el-input :disabled="loading" v-model="form.password" type="password" show-password/>
+            <el-input :disabled="loading" v-model="form.password" type="password" show-password />
           </el-form-item>
 
           <el-form-item>

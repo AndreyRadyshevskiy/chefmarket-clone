@@ -1,21 +1,20 @@
 <template>
-  <div class="blog">
+  <div class="blog-page">
     <div class="container">
       <h1 class="title page-title">Блог о вкусном</h1>
 
-      <SearchBar/>
+      <SearchBar />
 
       <main class="post-thumbs-blog">
-
         <PostThumb
-          v-for="post in 13"
-          :key="post"
-          id="1"
-          title="Что приготовить на скорую руку"
-          date="04.05.2019"
-          imgUrl="https://www.chefmarket.ru/blog/wp-content/uploads/2019/05/cook-e1556954945111.jpg"
-          text="Каждая хозяйка хотя бы единожды попадала в ситуацию, когда
-              нужны рецепты на скорую руку. Неожиданно заглянули гости..."
+          v-for="(post, index) in posts"
+          :key="index"
+          :title="post.title"
+          :date="post.date"
+          :imgUrl="post.thumbnail"
+          :text="previewText(post.content, 170)"
+          :tags="post.tags"
+          :slug="post.slug"
         />
 
         <section class="tag-cloud">
@@ -42,7 +41,6 @@
           <span class="text">3 ужина на двоих с бесплатной доставкой за 1490 руб.</span>
           <a href="#" class="btn btn-colored">Подробнее</a>
         </section>
-
       </main>
     </div>
   </div>
@@ -64,13 +62,29 @@ export default {
     return {};
   },
   methods: {
-    goToDinners() {}
+    goToDinners() {},
+    previewText(content, maxLength) {
+      let tempContent = content
+        .replace(/<\/?[^>]+(>|$)/g, "")
+        .replace(/\&nbsp;/g, "")
+        .substring(0, maxLength);
+
+      tempContent = tempContent.substr(
+        0,
+        Math.min(tempContent.length, tempContent.lastIndexOf(" "))
+      );
+      return tempContent + "...";
+    }
+  },
+  computed: {
+    posts() {
+      return this.$store.getters["posts/getPosts"];
+    }
   }
 };
 </script>
 
 <style lang="scss">
-
 .post-thumbs-blog {
   padding: 4.5rem 0;
   display: grid;

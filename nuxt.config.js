@@ -19,7 +19,7 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff' },
+  loading: { color: '#59b958' },
   /*
    ** Global CSS
    */
@@ -27,7 +27,11 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/element-ui', '@/plugins/firebase'],
+  plugins: [
+    '@/plugins/element-ui',
+    '@/plugins/firebase',
+    { src: '~/plugins/affix', ssr: false }
+  ],
   /*
    ** Nuxt.js modules
    */

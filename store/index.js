@@ -1,4 +1,5 @@
 import { getUserFromCookie, getUserFromSession } from '@/helpers'
+import { db } from '@/plugins/firebase'
 
 export const actions = {
   async nuxtServerInit({ commit }, { req }) {
@@ -10,5 +11,12 @@ export const actions = {
         uid: user.user_id
       })
     }
+    let posts = []
+    const postSnapshot = await db.collection('posts').get()
+    postSnapshot.forEach(doc => {
+      const post = doc.data()
+      posts.unshift(post)
+    })
+    commit('posts/setPosts', { posts })
   }
 }

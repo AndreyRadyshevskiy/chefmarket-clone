@@ -44,6 +44,11 @@
       <span>Пользователи</span>
     </el-menu-item>
 
+    <el-menu-item index="/admin/chefs">
+      <i class="el-icon-user"></i>
+      <span>Шеф-повара</span>
+    </el-menu-item>
+
     <el-menu-item index="4">
       <i class="el-icon-setting"></i>
       <span>Выйти</span>

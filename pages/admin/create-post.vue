@@ -1,101 +1,93 @@
 <template>
   <div class="post-create-page">
     <h2>Создать пост</h2>
-    <el-form>
+    <el-form
+      @submit.native.prevent="createPost"
+      :model="post"
+      :rules="rules"
+      ref="form"
+      label-position="top"
+    >
       <el-row :gutter="30" type="flex">
         <el-col :span="12">
           <el-form-item label="Заголовок поста" prop="title">
-            <el-input v-model="post.title" placeholder="Введите заголовок"/>
+            <el-input v-model="post.title" placeholder="Введите заголовок" @blur="saveTitle" />
           </el-form-item>
-          <vue-editor useCustomImageHandler @imageAdded="handleImageAdded" v-model="post.content"></vue-editor>
+          <no-ssr>
+            <vue-editor
+              useCustomImageHandler
+              @imageAdded="handleImageAdded"
+              @blur="saveEditorContent"
+              v-model="post.content"
+            ></vue-editor>
+          </no-ssr>
+          <el-form-item>
+            <el-button @click="preview=true" type="success" plain round>Предпросмотр</el-button>
+            <el-button @click="clearContent" type="success" plain round>Очистить содержимое</el-button>
+            <el-button
+              type="success"
+              round
+              native-type="submit"
+              :loading="loading"
+              :disabled="loading"
+            >Создать Пост</el-button>
+          </el-form-item>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="5">
           <el-form-item label="Добавить Тэги" prop="tags">
-            <el-input @keyup.native.188="addTag" v-model="tag" placeholder="Тэги поста"/>
+            <el-input v-model="tag" placeholder="Тэги поста" ref="tagInput">
+              <el-button slot="append" icon="el-icon-plus" @click="addTag"></el-button>
+            </el-input>
+
+            <el-button
+              class="tag-button"
+              v-for="(tag, index) in this.post.tags"
+              :key="index"
+              size="small"
+              plain
+              @click="removeTag"
+            >
+              {{tag}}
+              <i class="el-icon-close"></i>
+            </el-button>
           </el-form-item>
           <el-form-item label="Добавить Категорию" prop="category">
-            <el-input v-model="post.category" placeholder="Категория"/>
+            <el-select v-model="post.category" placeholder="Select">
+              <el-option v-for="(category, index) in categories" :key="index" :value="category"></el-option>
+            </el-select>
           </el-form-item>
 
-          <el-upload
-            ref="upload"
-            drag
-            action
-            :on-change="handleThumbnailAdded"
-            :on-remove="deleteImage"
-            :auto-upload="false"
-          >
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">
-              Перетащите картинку
-              <em>или нажмите</em>
-            </div>
-            <div class="el-upload__tip" slot="tip">Файлы с расширением jpg/png</div>
-          </el-upload>
+          <el-form-item label="Добавить изображение">
+            <el-upload
+              ref="upload"
+              drag
+              action
+              :on-change="handleThumbnailAdded"
+              :on-remove="deleteImage"
+              :auto-upload="false"
+            >
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">
+                Перетащите картинку
+                <em>или нажмите</em>
+              </div>
+              <div class="el-upload__tip" slot="tip">Файлы с расширением jpg/png</div>
+            </el-upload>
+          </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item>
-        <el-button @click="preview=true" type="success" round>Предпросмотр</el-button>
-        <el-button type="success" plain round>Создать Пост</el-button>
-      </el-form-item>
 
       <el-dialog :visible.sync="preview">
         <div class="ql-editor" v-html="post.content"></div>
-
-        <!-- <el-card :data="gridData">
-          <el-table-column property="date" label="Date" width="150"></el-table-column>
-          <el-table-column property="name" label="Name" width="200"></el-table-column>
-          <el-table-column property="address" label="Address"></el-table-column>
-        </el-table>-->
       </el-dialog>
-      <!-- <el-form-item>
-        <el-button
-          type="success"
-          round
-          native-type="submit"
-          :loading="loading"
-          :disabled="loading"
-        >Вход</el-button>
-        <el-button type="success" plain round :disabled="loading">Регистрация</el-button>
-      </el-form-item>-->
     </el-form>
-
-    <!-- <div class="post-create-page-inner">
-      <el-form :model="post" ref="postForm" @submit.native.prevent="createPost">
-        <el-form-item label="Добавить Тэги" prop="tags">
-          <el-input @keyup.native.188="addTag" v-model="post.tags" placeholder="Тэги поста"/>
-    </el-form-item>-->
-
-    <!-- <el-form-item label="Пароль" prop="password" class="mb6">
-          <el-input :disabled="loading" v-model="form.password" type="password" show-password/>
-    </el-form-item>-->
-
-    <!-- <el-form-item>
-          <el-button
-            type="success"
-            class="login-button"
-            round
-            native-type="submit"
-            :loading="loading"
-            :disabled="loading"
-          >Вход</el-button>
-          <el-button
-            @click="switchTabs"
-            class="login-button"
-            type="success"
-            plain
-            round
-            :disabled="loading"
-          >Регистрация</el-button>
-    </el-form-item>-->
-    <!-- </el-form>
-    </div>-->
-    <p>{{post.content}}</p>
   </div>
 </template>
 
 <script>
 import { fs } from "@/plugins/firebase";
+import { mapGetters } from "vuex";
+import slugify from "slugify";
 let VueEditor;
 
 if (process.client) {
@@ -109,13 +101,15 @@ export default {
   },
   data() {
     return {
+      loading: false,
       post: {
+        title: "",
         date: "",
-        author: "",
+        author: "chefmarket",
         rating: "",
         tags: [],
         thumbnail: null,
-        category: "",
+        category: "Все",
         content: "<h1>Some initial content</h1>"
       },
       tag: "",
@@ -124,31 +118,60 @@ export default {
         title: [
           {
             required: true,
-            message: "Пожалуйтса, введите название поста",
+            message: "Пожалуйста, введите название поста",
             trigger: "blur"
           }
         ],
         category: [
           {
             required: true,
-            message: "Пожалуйтса, выберите категорию",
-            trigger: "blur"
-          }
-        ],
-        tags: [
-          {
-            required: true,
-            message: "Пожалуйтса, добавьте тэги",
+            message: "Пожалуйста, выберите категорию",
             trigger: "blur"
           }
         ]
       }
     };
   },
+  computed: {
+    categories() {
+      return this.$store.getters["posts/getCategories"];
+    }
+  },
+  mounted() {
+    if (localStorage.editorContent) {
+      this.post.content = localStorage.editorContent;
+    }
+    if (localStorage.getItem("tags")) {
+      try {
+        this.post.tags = JSON.parse(localStorage.getItem("tags"));
+      } catch (e) {
+        localStorage.removeItem("tags");
+      }
+    }
+    if (localStorage.title) {
+      this.post.title = localStorage.title;
+    }
+  },
   methods: {
+    clearContent() {
+      localStorage.removeItem("title");
+      localStorage.removeItem("tags");
+      localStorage.removeItem("editorContent");
+      location.reload();
+    },
     addTag() {
-      this.post.tags.push(this.tag);
-      this.tag = "";
+      let tag = this.$refs.tagInput.value;
+      if (tag) {
+        tag = "#" + tag;
+        this.post.tags.push(tag);
+        this.tag = "";
+        this.saveTags();
+      }
+    },
+    removeTag(event) {
+      let tag = event.currentTarget.textContent.trim();
+      this.post.tags = this.post.tags.filter(el => el != tag);
+      this.saveTags();
     },
     handleImageAdded(file, Editor, cursorLocation, resetUploader) {
       // this.image = file.raw;
@@ -190,6 +213,16 @@ export default {
         }
       );
     },
+    saveEditorContent() {
+      localStorage.editorContent = this.post.content;
+    },
+    saveTags() {
+      const parsed = JSON.stringify(this.post.tags);
+      localStorage.setItem("tags", parsed);
+    },
+    saveTitle() {
+      localStorage.title = this.post.title;
+    },
     deleteImage(img) {
       let image = fs.refFromURL(img);
       console.log(image);
@@ -202,23 +235,29 @@ export default {
           console.log(error.message);
         });
     },
-    onSubmit() {
+    createPost() {
       this.$refs.form.validate(async valid => {
-        if (valid && this.post.image) {
+        if (valid && this.post.thumbnail) {
           this.loading = true;
           try {
-            await this.$store.dispatch("auth/authenticateUser", {
+            const formData = {
               title: this.post.title,
               content: this.post.content,
-              image: this.post.image
-            });
+              category: this.post.category,
+              tags: this.post.tags,
+              thumbnail: this.post.thumbnail,
+              date: new Date().toLocaleDateString(),
+              author: this.post.author,
+              slug: slugify(this.post.title, { lower: true })
+            };
+            console.log(formData);
+            await this.$store.dispatch("posts/createPost", formData);
+
             this.$refs.upload.clearFiles();
-            this.loading = false;
+            this.$message.success("Пост создан");
           } catch (err) {
-            console.error(err);
-            if (err.response.status === 400) {
-              this.errorText = "Пользователь с таким email уже существует!";
-            }
+            console.log(err);
+          } finally {
             this.loading = false;
           }
         } else {
@@ -238,13 +277,24 @@ export default {
   .post-details {
     width: 30rem;
   }
-
+  .ql-container {
+    margin-bottom: 5rem;
+  }
   .ql-editor {
     font-family: "LatoWeb";
     img {
       width: 100%;
       height: auto;
     }
+  }
+  .tag-button {
+    margin-right: 10px;
+    margin-left: 0;
+  }
+  .el-select,
+  .el-upload--text,
+  .el-upload-dragger {
+    width: 100%;
   }
 }
 </style>
