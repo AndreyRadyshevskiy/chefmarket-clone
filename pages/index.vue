@@ -304,8 +304,6 @@ export default {
     .el-carousel__container {
       width: 100%;
     }
-    .el-carousel__item {
-    }
   }
   .el-tabs {
     width: 70rem;

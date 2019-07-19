@@ -28,6 +28,7 @@ export const actions = {
       console.log(err)
     }
   },
+  // НАДО ЛИ ВОТ ЭТО?????? ЕСЛИ ЕСТЬ SERVER INIT
   async fetchAdminPosts({ commit, state }) {
     try {
       let posts = []
