@@ -23,14 +23,19 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['element-ui/lib/theme-chalk/index.css', '@/assets/scss/main.scss'],
+  css: [
+    'element-ui/lib/theme-chalk/index.css',
+    'swiper/dist/css/swiper.css',
+    '@/assets/scss/main.scss'
+  ],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
     '@/plugins/element-ui',
     '@/plugins/firebase',
-    { src: '~/plugins/affix', ssr: false }
+    { src: '~/plugins/affix', ssr: false },
+    { src: '~/plugins/swiper', ssr: false }
   ],
   /*
    ** Nuxt.js modules
@@ -62,7 +67,7 @@ export default {
   },
 
   build: {
-    transpile: [/^element-ui/],
+    transpile: [/^element-ui/, /^vue-awesome-swiper/],
     /*
      ** You can extend webpack config here
      */

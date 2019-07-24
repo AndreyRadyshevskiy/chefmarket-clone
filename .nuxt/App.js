@@ -4,6 +4,8 @@ import NuxtBuildIndicator from './components/nuxt-build-indicator'
 
 import '..\\node_modules\\element-ui\\lib\\theme-chalk\\index.css'
 
+import '..\\node_modules\\swiper\\dist\\css\\swiper.css'
+
 import '..\\assets\\scss\\main.scss'
 
 import _77068119 from '..\\layouts\\admin.vue'

@@ -4,8 +4,11 @@ import { interopDefault } from './utils'
 
 const _2d536fe8 = () => interopDefault(import('..\\pages\\admin\\index.vue' /* webpackChunkName: "pages_admin_index" */))
 const _b92f9e8a = () => interopDefault(import('..\\pages\\blog\\index.vue' /* webpackChunkName: "pages_blog_index" */))
+const _77538430 = () => interopDefault(import('..\\pages\\true-chef.vue' /* webpackChunkName: "pages_true-chef" */))
 const _7ac66703 = () => interopDefault(import('..\\pages\\admin\\chefs.vue' /* webpackChunkName: "pages_admin_chefs" */))
+const _075cf526 = () => interopDefault(import('..\\pages\\admin\\create-menu.vue' /* webpackChunkName: "pages_admin_create-menu" */))
 const _5878efe7 = () => interopDefault(import('..\\pages\\admin\\create-post.vue' /* webpackChunkName: "pages_admin_create-post" */))
+const _3107d3d6 = () => interopDefault(import('..\\pages\\admin\\create-recipe.vue' /* webpackChunkName: "pages_admin_create-recipe" */))
 const _120fe141 = () => interopDefault(import('..\\pages\\admin\\post-list.vue' /* webpackChunkName: "pages_admin_post-list" */))
 const _72bd4a1e = () => interopDefault(import('..\\pages\\admin\\users.vue' /* webpackChunkName: "pages_admin_users" */))
 const _6628593f = () => interopDefault(import('..\\pages\\blog\\_id\\index.vue' /* webpackChunkName: "pages_blog__id_index" */))
@@ -94,13 +97,25 @@ export function createRouter() {
       component: _b92f9e8a,
       name: "blog"
     }, {
+      path: "/true-chef",
+      component: _77538430,
+      name: "true-chef"
+    }, {
       path: "/admin/chefs",
       component: _7ac66703,
       name: "admin-chefs"
     }, {
+      path: "/admin/create-menu",
+      component: _075cf526,
+      name: "admin-create-menu"
+    }, {
       path: "/admin/create-post",
       component: _5878efe7,
       name: "admin-create-post"
+    }, {
+      path: "/admin/create-recipe",
+      component: _3107d3d6,
+      name: "admin-create-recipe"
     }, {
       path: "/admin/post-list",
       component: _120fe141,

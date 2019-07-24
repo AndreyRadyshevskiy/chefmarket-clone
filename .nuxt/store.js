@@ -20,6 +20,7 @@ void (function updateModules() {
 
   resolveStoreModules(require('..\\store\\auth.js'), 'auth.js')
   resolveStoreModules(require('..\\store\\chefs.js'), 'chefs.js')
+  resolveStoreModules(require('..\\store\\dinners.js'), 'dinners.js')
   resolveStoreModules(require('..\\store\\posts.js'), 'posts.js')
   resolveStoreModules(require('..\\store\\region.js'), 'region.js')
 
@@ -30,6 +31,7 @@ void (function updateModules() {
     module.hot.accept([
       '..\\store\\auth.js',
       '..\\store\\chefs.js',
+      '..\\store\\dinners.js',
       '..\\store\\index.js',
       '..\\store\\posts.js',
       '..\\store\\region.js',

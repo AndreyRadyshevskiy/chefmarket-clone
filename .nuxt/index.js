@@ -15,6 +15,7 @@ import nuxt_plugin_axios_fa387626 from 'nuxt_plugin_axios_fa387626' // Source: .
 import nuxt_plugin_elementui_d905880e from 'nuxt_plugin_elementui_d905880e' // Source: ..\\plugins\\element-ui (mode: 'all')
 import nuxt_plugin_firebase_362e73fb from 'nuxt_plugin_firebase_362e73fb' // Source: ..\\plugins\\firebase (mode: 'all')
 import nuxt_plugin_affix_35771fcc from 'nuxt_plugin_affix_35771fcc' // Source: ..\\plugins\\affix (mode: 'client')
+import nuxt_plugin_swiper_3a1c5924 from 'nuxt_plugin_swiper_3a1c5924' // Source: ..\\plugins\\swiper (mode: 'client')
 
 // Component: <NoSsr>
 Vue.component(NoSsr.name, NoSsr)
@@ -168,6 +169,10 @@ async function createApp(ssrContext) {
 
   if (process.client && typeof nuxt_plugin_affix_35771fcc === 'function') {
     await nuxt_plugin_affix_35771fcc(app.context, inject)
+  }
+
+  if (process.client && typeof nuxt_plugin_swiper_3a1c5924 === 'function') {
+    await nuxt_plugin_swiper_3a1c5924(app.context, inject)
   }
 
   // If server-side, wait for async component to be resolved first

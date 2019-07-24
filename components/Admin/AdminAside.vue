@@ -11,8 +11,8 @@
         <span>Меню</span>
       </template>
 
-      <el-menu-item>item one</el-menu-item>
-      <el-menu-item>item one</el-menu-item>
+      <el-menu-item index="/admin/create-menu">Составить меню</el-menu-item>
+      <el-menu-item index="/admin/create-recipe">Создать рецепт</el-menu-item>
       <el-menu-item>item three</el-menu-item>
       <el-menu-item>item one</el-menu-item>
     </el-submenu>

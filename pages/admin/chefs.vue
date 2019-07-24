@@ -148,7 +148,7 @@ export default {
         const chef = Object.assign({ uid: change.doc.id }, change.doc.data());
         if (change.type === "added") {
           this.$store.commit("chefs/addChef", { chef });
-          console.log("added");
+          this.activeChef = chef;
         }
         if (change.type === "modified") {
           this.$store.commit("chefs/updateChefs", { chef });

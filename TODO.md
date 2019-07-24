@@ -29,3 +29,5 @@ https://github.com/cferdinandi/smooth-scroll/tree/master/dist
 # во всех формах проверить disabled и loading во время отправки
 
 # вынести логику commit из chefs.vue doc.change или ненадо???
+
+# поправить везде размер кнопок как в оригинале
