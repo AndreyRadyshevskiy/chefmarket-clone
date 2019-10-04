@@ -21,8 +21,12 @@ void (function updateModules() {
   resolveStoreModules(require('..\\store\\auth.js'), 'auth.js')
   resolveStoreModules(require('..\\store\\chefs.js'), 'chefs.js')
   resolveStoreModules(require('..\\store\\dinners.js'), 'dinners.js')
+  resolveStoreModules(require('..\\store\\ingredients.js'), 'ingredients.js')
+  resolveStoreModules(require('..\\store\\inventory.js'), 'inventory.js')
   resolveStoreModules(require('..\\store\\posts.js'), 'posts.js')
+  resolveStoreModules(require('..\\store\\recipes.js'), 'recipes.js')
   resolveStoreModules(require('..\\store\\region.js'), 'region.js')
+  resolveStoreModules(require('..\\store\\weeks.js'), 'weeks.js')
 
   // If the environment supports hot reloading...
 
@@ -33,8 +37,12 @@ void (function updateModules() {
       '..\\store\\chefs.js',
       '..\\store\\dinners.js',
       '..\\store\\index.js',
+      '..\\store\\ingredients.js',
+      '..\\store\\inventory.js',
       '..\\store\\posts.js',
+      '..\\store\\recipes.js',
       '..\\store\\region.js',
+      '..\\store\\weeks.js',
     ], () => {
       // Update `root.modules` with the latest definitions.
       updateModules()

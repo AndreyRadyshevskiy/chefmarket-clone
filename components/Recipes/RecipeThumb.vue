@@ -1,41 +1,43 @@
 <template>
   <div class="recipe-thumb-admin">
     <el-card>
-      <div class="recipe-image">
+      <div class="recipe-image" :style="{backgroundImage: 'url(' + recipe.thumbnail + ')'}">
         <div class="recipe-tags">
-          <span class="recipe-tag">#До 20 минут</span>
-          <span class="recipe-tag">#Без духовки</span>
-          <span class="recipe-tag">#Азия</span>
+          <span class="recipe-tag" v-for="(tag,index) in recipe.tags" :key="index">{{tag}}</span>
         </div>
       </div>
       <div class="recipe-footer">
-        <h6
-          class="recipe-title"
-        >Мидии в устричном соусе со шпинатной лапшой и стружкой тунца «Бонито»</h6>
+        <h6 class="recipe-title">{{recipe.title}}</h6>
         <div class="recipe-expires">
           Готовить
-          <b>1 - 2 день</b>
+          <b>{{recipe.expires}}</b>
         </div>
         <div class="recipe-stats">
           <img src="~/assets/img/dinners/svg/pot.svg" />
-          <span class="weight">450г</span>
+          <span class="weight">{{ recipe.weight }}г</span>
           <img src="~/assets/img/dinners/svg/time-half.svg" />
-          <span class="time">20 минут</span>
+          <span class="time">{{ recipe.cookTime }} мин</span>
           <img src="~/assets/img/dinners/svg/cook2.svg" />
-          <span class="difficulty">Готовить легко</span>
-          <span class="kkal">На 100г блюда: 109 кКалб 6.0 | 5.0 | 10.0 БЖУ</span>
+          <span class="difficulty">{{ recipe.difficulty}}</span>
         </div>
       </div>
     </el-card>
     <div class="btn-group">
       <el-button type="primary" size="small" icon="el-icon-edit">Редактировать</el-button>
-      <el-button type="danger" size="small" icon="el-icon-delete">Удалить</el-button>
+      <el-button type="danger" size="small" icon="el-icon-delete" @click="removeRec(recipe)">Удалить</el-button>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["recipe"],
+  methods: {
+    removeRec(recipe) {
+      this.$emit("removeRecipe", recipe);
+    }
+  }
+};
 </script>
 
 <style lang="scss">
@@ -44,7 +46,7 @@ export default {};
     padding: 0;
   }
   .recipe-image {
-    background: url("~assets/img/dinners/dish1.jpeg") no-repeat center center;
+    background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
     height: 200px;
@@ -60,6 +62,7 @@ export default {};
     padding: 0.5rem;
     border-radius: 5px;
     color: #fff;
+    margin-right: 1rem;
     font-size: 1.2rem;
   }
   .recipe-footer {

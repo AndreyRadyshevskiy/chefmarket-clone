@@ -1,73 +1,86 @@
 <template>
   <div class="create-menu-page">
     <div class="admin-page-title">Составить меню</div>
-    <el-tabs type="border-card">
-      <el-tab-pane>
-        <span slot="label">Меню на 18 - 24 июля (прошлая неделя)</span>
-        <div class="dinners-tab-wrapper">
-          <el-button
-            size="small"
-            @click="addTab(editableTabsValue)"
-            class="dinners-add-btn"
-            type="info"
-            plain
-          >
-            Добавить Меню
-            <i class="el-icon-plus"></i>
-          </el-button>
-          <el-tabs type="card" closable @tab-remove="removeDinnerTab">
-            <el-tab-pane label="Оригинальное">
-              <div class="recipes">
-                <div class="recipes-add-section">
-                  <el-button size="small">
-                    Создать рецепт
-                    <i class="el-icon-plus"></i>
-                  </el-button>
-                  <span class="text">или выбрать из списка:</span>
-                  <el-autocomplete
-                    size="small"
-                    class="inline-input"
-                    v-model="state1"
-                    :fetch-suggestions="querySearch"
-                    placeholder="Выбрать рецепт"
-                    @select="handleSelect"
-                  >
-                    <el-button slot="append" icon="el-icon-plus"></el-button>
-                  </el-autocomplete>
-                  <el-button
-                    type="danger"
-                    size="small"
-                    icon="el-icon-delete"
-                    class="m-left-auto"
-                  >Удалить меню</el-button>
-                  <el-button type="success" size="small" icon="el-icon-success">Сохранить меню</el-button>
-                </div>
-                <div class="recipes-grid">
-                  <RecipeThumb v-for="recipe in 12" :key="recipe" />
-                </div>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane label="Семейное">Семейное</el-tab-pane>
-            <el-tab-pane label="20 минут">20 минут</el-tab-pane>
-            <el-tab-pane label="Баланс">Баланс</el-tab-pane>
-          </el-tabs>
+    <div class="input-block">
+      <span class="label">Выберете даты:</span>
+      <el-date-picker
+        :style="{width: '40rem'}"
+        v-model="menuDates"
+        type="daterange"
+        start-placeholder="Начало недели"
+        end-placeholder="Конец недели"
+        format="dd-MM-yyyy"
+      ></el-date-picker>
+    </div>
+    <div class="input-block">
+      <span class="label">Доставка возможна:</span>
+      <el-date-picker
+        :style="{width: '40rem'}"
+        v-model="deliveryDates"
+        type="daterange"
+        start-placeholder="Начало периода"
+        end-placeholder="Конец периода"
+        format="dd-MM-yyyy"
+      ></el-date-picker>
+    </div>
+    <div class="input-block">
+      <span class="label">Название меню:</span>
+      <el-input v-model="menuName" placeholder="Введите название меню" class="menu-input"></el-input>
+      <el-button
+        type="primary"
+        icon="el-icon-plus"
+        @click="addMenuName"
+        :style="{marginLeft: '1rem'}"
+      ></el-button>
+    </div>
+
+    <div class="input-block">
+      <span class="label">Выбрать рецепт:</span>
+      <el-select
+        v-model="recipeSelect"
+        filterable
+        placeholder="Выберете рецепт"
+        ref="recipeSelect"
+        class="recipe-select"
+      >
+        <el-option
+          v-for="(recipe, index) in recipes"
+          :key="index"
+          :label="recipe.title"
+          :value="recipe.title"
+        ></el-option>
+      </el-select>
+      <el-button
+        type="primary"
+        icon="el-icon-plus"
+        @click="addRecipe(menuActiveTab)"
+        :style="{marginLeft: '1rem'}"
+      ></el-button>
+    </div>
+
+    <div v-if="menuDates" class="date">Меню на {{menuStartDate}} - {{menuEndDate}}</div>
+    <div
+      v-if="deliveryDates"
+      class="delivery-date"
+    >Доставка возможна с {{deliveryStartDate}} по {{deliveryEndDate}}, выбирайте удобный вам день</div>
+
+    <el-tabs v-model="menuActiveTab" type="card" closable @tab-remove="removeTab">
+      <el-tab-pane v-for="(name, index) in menuNames" :key="index" :label="name" :name="name">
+        <div class="recipes-grid">
+          <RecipeThumb
+            v-for="(recipe, index) in activeMenuSet"
+            :key="index"
+            :recipe="recipe"
+            @removeRecipe="removeRecipe"
+          />
         </div>
       </el-tab-pane>
-      <el-tab-pane label="Config">
-        <span slot="label">Меню на 25 - 31 июля (текущая неделя)</span>
-        Текущая неделя
-      </el-tab-pane>
-      <el-tab-pane label="Role">
-        <span slot="label">Меню на 1 - 7 августа (следующая неделя)</span>
-        Следующая неделя
-      </el-tab-pane>
     </el-tabs>
-
-    <!-- create recipe dialog -->
   </div>
 </template>
 
 <script>
+import { db } from "@/plugins/firebase";
 import RecipeThumb from "@/components/Recipes/RecipeThumb";
 export default {
   layout: "admin",
@@ -76,89 +89,151 @@ export default {
   },
   data() {
     return {
-      editableTabsValue: "2",
-      editableTabs: [
-        {
-          title: "Tab 1",
-          name: "1",
-          content: "Tab 1 content"
-        },
-        {
-          title: "Tab 2",
-          name: "2",
-          content: "Tab 2 content"
-        }
-      ],
-      tabIndex: 2
+      menuDates: "",
+      deliveryDates: "",
+      menu: [],
+      menuName: "",
+      menuNames: [],
+      menuActiveTab: "",
+      recipeSelect: ""
     };
   },
-  methods: {
-    removeDinnerTab() {}
-    // handleTabsEdit(targetName, action) {
-    //   console.log("edit");
-    //   if (action === "add") {
-    //     let newTabName = ++this.tabIndex + "";
-    //     this.editableTabs.push({
-    //       title: "New Tab",
-    //       name: newTabName,
-    //       content: "New Tab content"
-    //     });
-    //     this.editableTabsValue = newTabName;
-    //   }
-    // if (action === "remove") {
-    //   let tabs = this.editableTabs;
-    //   let activeName = this.editableTabsValue;
-    //   if (activeName === targetName) {
-    //     tabs.forEach((tab, index) => {
-    //       if (tab.name === targetName) {
-    //         let nextTab = tabs[index + 1] || tabs[index - 1];
-    //         if (nextTab) {
-    //           activeName = nextTab.name;
-    //         }
-    //       }
-    //     });
-    //   }
+  async asyncData() {
+    let recipes = [];
+    const recipesSnapshot = await db.collection("recipes").get();
 
-    //   this.editableTabsValue = activeName;
-    //   this.editableTabs = tabs.filter(tab => tab.name !== targetName);
-    // }
-    // }
+    recipesSnapshot.forEach(recipe => {
+      recipes.unshift(recipe.data());
+    });
+    return { recipes };
+  },
+  computed: {
+    menuStartDate() {
+      return this.menuDates ? this.menuDates[0].getDate() : "";
+    },
+    menuEndDate() {
+      return this.menuDates
+        ? this.menuDates[1].toLocaleString("ru", {
+            day: "numeric",
+            month: "long"
+          })
+        : "";
+    },
+    deliveryStartDate() {
+      return this.deliveryDates ? this.deliveryDates[0].getDate() : "";
+    },
+    deliveryEndDate() {
+      return this.deliveryDates
+        ? this.deliveryDates[1].toLocaleString("ru", {
+            day: "numeric",
+            month: "long"
+          })
+        : "";
+    },
+    activeMenuSet() {
+      let c = this.menu.find(el => el.name === this.menuActiveTab);
+      if (c) {
+        return c.recipes;
+      }
+    }
+  },
+  methods: {
+    addMenuName() {
+      if (this.menuName) {
+        this.menuNames.push(this.menuName);
+        this.menuActiveTab = this.menuName;
+        this.menuName = "";
+      }
+    },
+    removeTab() {
+      let tabs = this.editableTabs;
+      let activeName = this.editableTabsValue;
+      if (activeName === targetName) {
+        tabs.forEach((tab, index) => {
+          if (tab.name === targetName) {
+            let nextTab = tabs[index + 1] || tabs[index - 1];
+            if (nextTab) {
+              activeName = nextTab.name;
+            }
+          }
+        });
+      }
+
+      this.editableTabsValue = activeName;
+      this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+    },
+    addRecipe(menuTab) {
+      if (this.recipeSelect) {
+        const recipe = this.recipes.find(r => {
+          return this.recipeSelect == r.title;
+        });
+        const activeSet = this.menu.find(el => el.name === this.menuActiveTab);
+        if (this.menu.length === 0 || activeSet === undefined) {
+          const menuSet = { name: menuTab, recipes: [] };
+          menuSet.recipes.push(recipe);
+          this.menu.push(menuSet);
+          this.recipeSelect = "";
+        } else {
+          activeSet.recipes.push(recipe);
+          this.recipeSelect = "";
+        }
+      }
+      // if (this.recipeSelect) {
+      //   const recipe = this.recipes.find(r => {
+      //     return this.recipeSelect == r.title;
+      //   });
+      //   if (!this.menu[menuTab]) {
+      //     this.menu[menuTab] = [];
+      //     this.menu[menuTab].push(recipe);
+      //     console.log(this.menu);
+      //   } else {
+      //     this.menu[menuTab].push(recipe);
+      //     console.log(this.menu);
+      //   }
+      // }
+    }
   }
 };
 </script>
 
 <style lang="scss">
 .create-menu-page {
-  .dinners-tab-wrapper {
-    position: relative;
+  .input-block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
   }
-  .dinners-add-btn {
-    position: absolute;
-    right: 0;
-    z-index: 1;
+  .label {
+    width: 20rem;
   }
-  .recipes {
-    width: 126rem;
-    margin: 0 auto;
+  .menu-input {
+    width: 40rem;
+  }
+  .recipe-select {
+    width: 40rem;
+  }
+  .date {
+    font-size: 2rem;
+    text-align: center;
+    width: 100%;
+    padding: 6rem 0 2rem 0;
+    color: #333;
+  }
+  .delivery-date {
+    font-size: 1.6rem;
+    text-align: center;
+    width: 100%;
+    color: #333;
+    padding-bottom: 4rem;
   }
   .recipes-grid {
+    width: 126rem;
+    margin: 0 auto;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 6rem;
     padding: 6rem 0;
-  }
-  .text {
-    font-size: 1.4rem;
-    padding-left: 2rem;
-    padding-right: 1rem;
-  }
-  .recipes-add-section {
-    display: flex;
-    align-items: center;
-  }
-  .m-left-auto {
-    margin-left: auto;
   }
 }
 </style>

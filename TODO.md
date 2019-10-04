@@ -31,3 +31,5 @@ https://github.com/cferdinandi/smooth-scroll/tree/master/dist
 # вынести логику commit из chefs.vue doc.change или ненадо???
 
 # поправить везде размер кнопок как в оригинале
+
+# доделать кнопки очистить форму везде, вообще проверить все кнопки везде

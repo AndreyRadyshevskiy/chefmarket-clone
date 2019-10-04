@@ -6,7 +6,10 @@ const _2d536fe8 = () => interopDefault(import('..\\pages\\admin\\index.vue' /* w
 const _b92f9e8a = () => interopDefault(import('..\\pages\\blog\\index.vue' /* webpackChunkName: "pages_blog_index" */))
 const _77538430 = () => interopDefault(import('..\\pages\\true-chef.vue' /* webpackChunkName: "pages_true-chef" */))
 const _7ac66703 = () => interopDefault(import('..\\pages\\admin\\chefs.vue' /* webpackChunkName: "pages_admin_chefs" */))
+const _1c704958 = () => interopDefault(import('..\\pages\\admin\\create-ingredient.vue' /* webpackChunkName: "pages_admin_create-ingredient" */))
+const _d61f42b6 = () => interopDefault(import('..\\pages\\admin\\create-inventory.vue' /* webpackChunkName: "pages_admin_create-inventory" */))
 const _075cf526 = () => interopDefault(import('..\\pages\\admin\\create-menu.vue' /* webpackChunkName: "pages_admin_create-menu" */))
+const _e920138c = () => interopDefault(import('..\\pages\\admin\\create-menu-draft.vue' /* webpackChunkName: "pages_admin_create-menu-draft" */))
 const _5878efe7 = () => interopDefault(import('..\\pages\\admin\\create-post.vue' /* webpackChunkName: "pages_admin_create-post" */))
 const _3107d3d6 = () => interopDefault(import('..\\pages\\admin\\create-recipe.vue' /* webpackChunkName: "pages_admin_create-recipe" */))
 const _120fe141 = () => interopDefault(import('..\\pages\\admin\\post-list.vue' /* webpackChunkName: "pages_admin_post-list" */))
@@ -105,9 +108,21 @@ export function createRouter() {
       component: _7ac66703,
       name: "admin-chefs"
     }, {
+      path: "/admin/create-ingredient",
+      component: _1c704958,
+      name: "admin-create-ingredient"
+    }, {
+      path: "/admin/create-inventory",
+      component: _d61f42b6,
+      name: "admin-create-inventory"
+    }, {
       path: "/admin/create-menu",
       component: _075cf526,
       name: "admin-create-menu"
+    }, {
+      path: "/admin/create-menu-draft",
+      component: _e920138c,
+      name: "admin-create-menu-draft"
     }, {
       path: "/admin/create-post",
       component: _5878efe7,
