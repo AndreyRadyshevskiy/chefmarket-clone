@@ -7,6 +7,7 @@
       :loop="false"
       :autoplay="false"
       class="weeks-slider"
+      @change="switchDinners"
     >
       <el-carousel-item>
         <div class="title">Меню на 4 - 10 июня</div>
@@ -40,6 +41,7 @@
       :loop="false"
       :autoplay="false"
       class="dinners-slider"
+      ref="mainCarousel"
     >
       <el-carousel-item v-for="slide in 3" :key="slide">
         <div class="slider-image">
@@ -77,9 +79,21 @@
 
 <script>
 export default {
+  data() {
+    return {
+      activeIndex: 1,
+      slider: {
+        index: 0,
+        sliderData: {}
+      }
+    };
+  },
   methods: {
-    switchDinners() {
-      console.log(this.$refs.datesSlider.activeIndex);
+    switchDinners(index) {
+      console.log(index);
+      this.activeIndex = index;
+      console.log(this.$refs.mainCarousel.setActiveItem(this.activeIndex));
+      // console.log(this.$refs.datesSlider.activeIndex);
     }
   }
 };

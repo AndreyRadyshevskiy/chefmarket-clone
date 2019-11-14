@@ -4,6 +4,8 @@ import { interopDefault } from './utils'
 
 const _2d536fe8 = () => interopDefault(import('..\\pages\\admin\\index.vue' /* webpackChunkName: "pages_admin_index" */))
 const _b92f9e8a = () => interopDefault(import('..\\pages\\blog\\index.vue' /* webpackChunkName: "pages_blog_index" */))
+const _37d953f8 = () => interopDefault(import('..\\pages\\testslider.vue' /* webpackChunkName: "pages_testslider" */))
+const _17e3358c = () => interopDefault(import('..\\pages\\testslider\\testslider-child.vue' /* webpackChunkName: "pages_testslider_testslider-child" */))
 const _77538430 = () => interopDefault(import('..\\pages\\true-chef.vue' /* webpackChunkName: "pages_true-chef" */))
 const _7ac66703 = () => interopDefault(import('..\\pages\\admin\\chefs.vue' /* webpackChunkName: "pages_admin_chefs" */))
 const _1c704958 = () => interopDefault(import('..\\pages\\admin\\create-ingredient.vue' /* webpackChunkName: "pages_admin_create-ingredient" */))
@@ -99,6 +101,15 @@ export function createRouter() {
       path: "/blog",
       component: _b92f9e8a,
       name: "blog"
+    }, {
+      path: "/testslider",
+      component: _37d953f8,
+      name: "testslider",
+      children: [{
+        path: "testslider-child",
+        component: _17e3358c,
+        name: "testslider-testslider-child"
+      }]
     }, {
       path: "/true-chef",
       component: _77538430,

@@ -1,17 +1,19 @@
 <template>
   <div class="create-menu-page">
     <div class="admin-page-title">Составить меню</div>
+
     <div class="input-block">
       <span class="label">Выберете даты:</span>
       <el-date-picker
         :style="{width: '40rem'}"
-        v-model="menuDates"
+        v-model="weekDates"
         type="daterange"
-        start-placeholder="Начало недели"
-        end-placeholder="Конец недели"
+        start-placeholder="Начало периода"
+        end-placeholder="Конец периода"
         format="dd-MM-yyyy"
       ></el-date-picker>
     </div>
+
     <div class="input-block">
       <span class="label">Доставка возможна:</span>
       <el-date-picker
@@ -23,49 +25,75 @@
         format="dd-MM-yyyy"
       ></el-date-picker>
     </div>
-    <div class="input-block">
-      <span class="label">Название меню:</span>
-      <el-input v-model="menuName" placeholder="Введите название меню" class="menu-input"></el-input>
-      <el-button
-        type="primary"
-        icon="el-icon-plus"
-        @click="addMenuName"
-        :style="{marginLeft: '1rem'}"
-      ></el-button>
-    </div>
 
-    <div class="input-block">
-      <span class="label">Выбрать рецепт:</span>
-      <el-select
-        v-model="recipeSelect"
-        filterable
-        placeholder="Выберете рецепт"
-        ref="recipeSelect"
-        class="recipe-select"
+    <el-button type="primary" @click="addWeek" class="mb4">Добавить период</el-button>
+
+    <!-- WEEK TABS -->
+    <el-tabs v-model="weekActiveTab" type="card" closable @tab-remove="removeTab">
+      <el-tab-pane
+        v-for="(week, index) in weeks"
+        :key="index"
+        :label="week.datesString"
+        :name="week.datesString"
       >
-        <el-option
-          v-for="(recipe, index) in recipes"
-          :key="index"
-          :label="recipe.title"
-          :value="recipe.title"
-        ></el-option>
-      </el-select>
-      <el-button
-        type="primary"
-        icon="el-icon-plus"
-        @click="addRecipe(menuActiveTab)"
-        :style="{marginLeft: '1rem'}"
-      ></el-button>
-    </div>
+        <div class="date">Меню на {{week.datesString}}</div>
+        <div
+          class="delivery-date"
+        >Доставка возможна с {{week.deliveryDatesString}}, выбирайте удобный вам день</div>
 
-    <div v-if="menuDates" class="date">Меню на {{menuStartDate}} - {{menuEndDate}}</div>
-    <div
-      v-if="deliveryDates"
-      class="delivery-date"
-    >Доставка возможна с {{deliveryStartDate}} по {{deliveryEndDate}}, выбирайте удобный вам день</div>
+        <div class="input-block">
+          <span class="label">Название меню:</span>
+          <el-input v-model="menuName" placeholder="Введите название меню" class="menu-input"></el-input>
 
+          <el-button
+            type="primary"
+            icon="el-icon-plus"
+            @click="addMenuName(weekActiveTab)"
+            :style="{marginLeft: '1rem'}"
+          ></el-button>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+
+    <!-- <div :style="{'marginTop': '4rem'}">
+      <el-button type="primary" @click="saveMenu">Сохранить меню</el-button>
+      <el-button type="danger">Удалить меню</el-button>
+      <el-button type="success">Предпросмотр</el-button>
+    </div>-->
+
+    <!-- MENU TABS -->
     <el-tabs v-model="menuActiveTab" type="card" closable @tab-remove="removeTab">
-      <el-tab-pane v-for="(name, index) in menuNames" :key="index" :label="name" :name="name">
+      <el-tab-pane
+        v-for="(name, index) in menuNames"
+        :key="index"
+        :label="name"
+        :name="name"
+        class="pt4"
+      >
+        <div class="input-block">
+          <span class="label">Выбрать рецепт:</span>
+          <el-select
+            v-model="recipeSelect"
+            filterable
+            placeholder="Выберете рецепт"
+            ref="recipeSelect"
+            class="recipe-select"
+          >
+            <el-option
+              v-for="(recipe, index) in recipes"
+              :key="index"
+              :label="recipe.title"
+              :value="recipe.title"
+            ></el-option>
+          </el-select>
+
+          <el-button
+            type="primary"
+            icon="el-icon-plus"
+            @click="addRecipe(menuActiveTab)"
+            :style="{marginLeft: '1rem'}"
+          ></el-button>
+        </div>
         <div class="recipes-grid">
           <RecipeThumb
             v-for="(recipe, index) in activeMenuSet"
@@ -76,6 +104,7 @@
         </div>
       </el-tab-pane>
     </el-tabs>
+    <p>{{weeks}}</p>
   </div>
 </template>
 
@@ -89,12 +118,15 @@ export default {
   },
   data() {
     return {
-      menuDates: "",
+      loading: false,
+      weekDates: "",
       deliveryDates: "",
       menu: [],
+      weeks: [],
       menuName: "",
       menuNames: [],
       menuActiveTab: "",
+      weekActiveTab: "",
       recipeSelect: ""
     };
   },
@@ -108,12 +140,12 @@ export default {
     return { recipes };
   },
   computed: {
-    menuStartDate() {
-      return this.menuDates ? this.menuDates[0].getDate() : "";
+    weekStartDate() {
+      return this.weekDates ? this.weekDates[0].getDate() : "";
     },
-    menuEndDate() {
-      return this.menuDates
-        ? this.menuDates[1].toLocaleString("ru", {
+    weekEndDate() {
+      return this.weekDates
+        ? this.weekDates[1].toLocaleString("ru", {
             day: "numeric",
             month: "long"
           })
@@ -135,9 +167,31 @@ export default {
       if (c) {
         return c.recipes;
       }
+    },
+    activeWeek() {
+      let c = this.weeks.find(el => el.status === this.weekActiveTab);
+      if (c) {
+        return c.menus;
+      }
     }
   },
   methods: {
+    addWeek() {
+      const datesString = this.weekStartDate + " - " + this.weekEndDate;
+      const deliveryDatesString =
+        this.deliveryStartDate + " - " + this.deliveryEndDate;
+      const week = {
+        dates: this.weekDates,
+        deliveryDates: this.deliveryDates,
+        datesString,
+        deliveryDatesString
+      };
+      this.weeks.push(week);
+      this.weekActiveTab = datesString;
+      this.weekDates = "";
+      this.deliveryDates = "";
+      this.$message.success("Период добавлен!");
+    },
     addMenuName() {
       if (this.menuName) {
         this.menuNames.push(this.menuName);
@@ -190,6 +244,26 @@ export default {
       //     this.menu[menuTab].push(recipe);
       //     console.log(this.menu);
       //   }
+      // }
+    },
+    async saveMenu() {
+      this.loading = true;
+
+      const formData = {
+        weekDates: this.weekDates,
+        deliveryDates: this.deliveryDates,
+        menu: this.menu
+      };
+
+      console.log(this.weekDates);
+
+      // try {
+      //   await this.$store.dispatch("menu/createMenu", formData);
+      //   this.$message.success("Меню сохранено!");
+      // } catch (err) {
+      //   console.log(err);
+      // } finally {
+      //   this.loading = false;
       // }
     }
   }
