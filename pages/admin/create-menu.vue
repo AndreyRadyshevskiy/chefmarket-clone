@@ -6,7 +6,7 @@
       <span class="label">Выберете даты:</span>
       <el-date-picker
         :style="{width: '40rem'}"
-        v-model="weekDates"
+        v-model="periodDates"
         type="daterange"
         start-placeholder="Начало периода"
         end-placeholder="Конец периода"
@@ -26,32 +26,76 @@
       ></el-date-picker>
     </div>
 
-    <el-button type="primary" @click="addWeek" class="mb4">Добавить период</el-button>
-
-    <!-- WEEK TABS -->
-    <el-tabs v-model="weekActiveTab" type="card" closable @tab-remove="removeTab">
+    <el-button type="primary" @click="addPeriodTab" class="mb4">Добавить период</el-button>
+    <p>{{periodTabs}}</p>
+    <!-- PERIOD TABS -->
+    <el-tabs v-model="periodActiveTab" type="card" closable @tab-remove="removeTab">
       <el-tab-pane
-        v-for="(week, index) in weeks"
+        v-for="(period, index) in periodTabs"
         :key="index"
-        :label="week.datesString"
-        :name="week.datesString"
+        :label="period.datesString"
+        :name="period.datesString"
       >
-        <div class="date">Меню на {{week.datesString}}</div>
+        <div class="date">Меню на {{period.datesString}}</div>
         <div
           class="delivery-date"
-        >Доставка возможна с {{week.deliveryDatesString}}, выбирайте удобный вам день</div>
+        >Доставка возможна с {{period.deliveryDatesString}}, выбирайте удобный вам день</div>
 
         <div class="input-block">
           <span class="label">Название меню:</span>
-          <el-input v-model="menuName" placeholder="Введите название меню" class="menu-input"></el-input>
+          <el-input v-model="menuTabName" placeholder="Введите название меню" class="menu-input"></el-input>
 
           <el-button
             type="primary"
             icon="el-icon-plus"
-            @click="addMenuName(weekActiveTab)"
+            @click="addMenuTab(periodActiveTab)"
             :style="{marginLeft: '1rem'}"
           ></el-button>
         </div>
+
+        <!-- MENU TABS -->
+        <el-tabs v-model="menuActiveTab" type="card" closable @tab-remove="removeTab">
+          <el-tab-pane
+            v-for="(name, index) in menuTabs"
+            :key="index"
+            :label="name"
+            :name="name"
+            class="pt4"
+          >
+            <div class="input-block">
+              <span class="label">Выбрать рецепт:</span>
+              <el-select
+                v-model="recipeSelect"
+                filterable
+                placeholder="Выберете рецепт"
+                ref="recipeSelect"
+                class="recipe-select"
+              >
+                <el-option
+                  v-for="(recipe, index) in recipes"
+                  :key="index"
+                  :label="recipe.title"
+                  :value="recipe.title"
+                ></el-option>
+              </el-select>
+
+              <el-button
+                type="primary"
+                icon="el-icon-plus"
+                @click="addRecipe(menuActiveTab)"
+                :style="{marginLeft: '1rem'}"
+              ></el-button>
+            </div>
+            <div class="recipes-grid">
+              <RecipeThumb
+                v-for="(recipe, index) in activeMenuSet"
+                :key="index"
+                :recipe="recipe"
+                @removeRecipe="removeRecipe"
+              />
+            </div>
+          </el-tab-pane>
+        </el-tabs>
       </el-tab-pane>
     </el-tabs>
 
@@ -61,49 +105,6 @@
       <el-button type="success">Предпросмотр</el-button>
     </div>-->
 
-    <!-- MENU TABS -->
-    <el-tabs v-model="menuActiveTab" type="card" closable @tab-remove="removeTab">
-      <el-tab-pane
-        v-for="(name, index) in menuNames"
-        :key="index"
-        :label="name"
-        :name="name"
-        class="pt4"
-      >
-        <div class="input-block">
-          <span class="label">Выбрать рецепт:</span>
-          <el-select
-            v-model="recipeSelect"
-            filterable
-            placeholder="Выберете рецепт"
-            ref="recipeSelect"
-            class="recipe-select"
-          >
-            <el-option
-              v-for="(recipe, index) in recipes"
-              :key="index"
-              :label="recipe.title"
-              :value="recipe.title"
-            ></el-option>
-          </el-select>
-
-          <el-button
-            type="primary"
-            icon="el-icon-plus"
-            @click="addRecipe(menuActiveTab)"
-            :style="{marginLeft: '1rem'}"
-          ></el-button>
-        </div>
-        <div class="recipes-grid">
-          <RecipeThumb
-            v-for="(recipe, index) in activeMenuSet"
-            :key="index"
-            :recipe="recipe"
-            @removeRecipe="removeRecipe"
-          />
-        </div>
-      </el-tab-pane>
-    </el-tabs>
     <p>{{weeks}}</p>
   </div>
 </template>
@@ -119,14 +120,16 @@ export default {
   data() {
     return {
       loading: false,
-      weekDates: "",
+      periodDates: "",
       deliveryDates: "",
       menu: [],
       weeks: [],
-      menuName: "",
-      menuNames: [],
+      menuTabName: "",
+      menuTabs: [],
+      periodTab: "",
+      periodTabs: [],
       menuActiveTab: "",
-      weekActiveTab: "",
+      periodActiveTab: "",
       recipeSelect: ""
     };
   },
@@ -140,12 +143,12 @@ export default {
     return { recipes };
   },
   computed: {
-    weekStartDate() {
-      return this.weekDates ? this.weekDates[0].getDate() : "";
+    periodStartDate() {
+      return this.periodDates ? this.periodDates[0].getDate() : "";
     },
-    weekEndDate() {
-      return this.weekDates
-        ? this.weekDates[1].toLocaleString("ru", {
+    periodEndDate() {
+      return this.periodDates
+        ? this.periodDates[1].toLocaleString("ru", {
             day: "numeric",
             month: "long"
           })
@@ -169,34 +172,45 @@ export default {
       }
     },
     activeWeek() {
-      let c = this.weeks.find(el => el.status === this.weekActiveTab);
+      let c = this.weeks.find(el => el.status === this.periodActiveTab);
       if (c) {
         return c.menus;
       }
     }
   },
   methods: {
-    addWeek() {
-      const datesString = this.weekStartDate + " - " + this.weekEndDate;
+    addPeriodTab() {
+      const datesString = this.periodStartDate + " - " + this.periodEndDate;
       const deliveryDatesString =
         this.deliveryStartDate + " - " + this.deliveryEndDate;
-      const week = {
-        dates: this.weekDates,
+      const period = {
+        dates: this.periodDates,
         deliveryDates: this.deliveryDates,
         datesString,
         deliveryDatesString
       };
-      this.weeks.push(week);
-      this.weekActiveTab = datesString;
-      this.weekDates = "";
+      this.periodTabs.push(period);
+      this.periodActiveTab = datesString;
+      this.periodDates = "";
       this.deliveryDates = "";
       this.$message.success("Период добавлен!");
     },
-    addMenuName() {
-      if (this.menuName) {
-        this.menuNames.push(this.menuName);
-        this.menuActiveTab = this.menuName;
-        this.menuName = "";
+    addMenuTab(periodTab) {
+      if (this.menuTabName) {
+        const activePeriod = this.periodTabs.find(
+          el => el.datesString === this.periodActiveTab
+        );
+        console.log(activePeriod);
+        if (this.periodTabs.length === 0 || activePeriod === undefined) {
+          const menuSets = [];
+
+          // menuSet.recipes.push(recipe);
+          // this.menu.push(menuSet);
+          // this.recipeSelect = "";
+          console.log("period undefined");
+        } else {
+          console.log("period defined");
+        }
       }
     },
     removeTab() {
@@ -232,30 +246,17 @@ export default {
           this.recipeSelect = "";
         }
       }
-      // if (this.recipeSelect) {
-      //   const recipe = this.recipes.find(r => {
-      //     return this.recipeSelect == r.title;
-      //   });
-      //   if (!this.menu[menuTab]) {
-      //     this.menu[menuTab] = [];
-      //     this.menu[menuTab].push(recipe);
-      //     console.log(this.menu);
-      //   } else {
-      //     this.menu[menuTab].push(recipe);
-      //     console.log(this.menu);
-      //   }
-      // }
     },
     async saveMenu() {
       this.loading = true;
 
       const formData = {
-        weekDates: this.weekDates,
+        periodDates: this.periodDates,
         deliveryDates: this.deliveryDates,
         menu: this.menu
       };
 
-      console.log(this.weekDates);
+      console.log(this.periodDates);
 
       // try {
       //   await this.$store.dispatch("menu/createMenu", formData);
