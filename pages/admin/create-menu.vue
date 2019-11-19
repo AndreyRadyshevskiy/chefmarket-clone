@@ -1,11 +1,11 @@
 <template>
   <div class="create-menu-page">
     <div class="admin-page-title">Составить меню</div>
-
+    <!-- DATES INPUT -->
     <div class="input-block">
       <span class="label">Выберете даты:</span>
       <el-date-picker
-        :style="{width: '40rem'}"
+        :style="{ width: '40rem' }"
         v-model="periodDates"
         type="daterange"
         start-placeholder="Начало периода"
@@ -14,10 +14,11 @@
       ></el-date-picker>
     </div>
 
+    <!-- DELIVERY DATES -->
     <div class="input-block">
       <span class="label">Доставка возможна:</span>
       <el-date-picker
-        :style="{width: '40rem'}"
+        :style="{ width: '40rem' }"
         v-model="deliveryDates"
         type="daterange"
         start-placeholder="Начало периода"
@@ -26,40 +27,49 @@
       ></el-date-picker>
     </div>
 
-    <el-button type="primary" @click="addPeriodTab" class="mb4">Добавить период</el-button>
-    <p>{{periodTabs}}</p>
+    <el-button type="primary" @click="addPeriod" class="mb4">Добавить период</el-button>
+
     <!-- PERIOD TABS -->
-    <el-tabs v-model="periodActiveTab" type="card" closable @tab-remove="removeTab">
+
+    <el-tabs v-model="activePeriodName" type="card" @tab-click="displayPeriodTabContent">
       <el-tab-pane
-        v-for="(period, index) in periodTabs"
+        v-for="(period, index) in periods"
         :key="index"
         :label="period.datesString"
         :name="period.datesString"
       >
-        <div class="date">Меню на {{period.datesString}}</div>
-        <div
-          class="delivery-date"
-        >Доставка возможна с {{period.deliveryDatesString}}, выбирайте удобный вам день</div>
-
+        <!-- PERIODS HEADER -->
+        <div class="date">Меню на {{ period.datesString }}</div>
+        <div class="delivery-date">
+          Доставка возможна с {{ period.deliveryDatesString }}, выбирайте
+          удобный вам день
+        </div>
+        <!-- MENU INPUT -->
         <div class="input-block">
           <span class="label">Название меню:</span>
-          <el-input v-model="menuTabName" placeholder="Введите название меню" class="menu-input"></el-input>
+          <el-input v-model="menuSetName" placeholder="Введите название меню" class="menu-input"></el-input>
 
           <el-button
             type="primary"
             icon="el-icon-plus"
-            @click="addMenuTab(periodActiveTab)"
-            :style="{marginLeft: '1rem'}"
+            @click="addMenuSet"
+            :style="{ marginLeft: '1rem' }"
           ></el-button>
         </div>
 
         <!-- MENU TABS -->
-        <el-tabs v-model="menuActiveTab" type="card" closable @tab-remove="removeTab">
+        <el-tabs
+          v-model="menuActiveSetName"
+          type="card"
+          closable
+          @tab-click="displayMenuTabContent"
+          @tab-remove="removeMenuSet"
+        >
           <el-tab-pane
-            v-for="(name, index) in menuTabs"
+            v-for="(menuSet, index) in activePeriod.menuSets"
             :key="index"
-            :label="name"
-            :name="name"
+            :label="menuSet.name"
+            :name="menuSet.name"
             class="pt4"
           >
             <div class="input-block">
@@ -82,13 +92,13 @@
               <el-button
                 type="primary"
                 icon="el-icon-plus"
-                @click="addRecipe(menuActiveTab)"
-                :style="{marginLeft: '1rem'}"
+                @click="addRecipe"
+                :style="{ marginLeft: '1rem' }"
               ></el-button>
             </div>
             <div class="recipes-grid">
               <RecipeThumb
-                v-for="(recipe, index) in activeMenuSet"
+                v-for="(recipe, index) in menuActiveSet.recipes"
                 :key="index"
                 :recipe="recipe"
                 @removeRecipe="removeRecipe"
@@ -98,14 +108,6 @@
         </el-tabs>
       </el-tab-pane>
     </el-tabs>
-
-    <!-- <div :style="{'marginTop': '4rem'}">
-      <el-button type="primary" @click="saveMenu">Сохранить меню</el-button>
-      <el-button type="danger">Удалить меню</el-button>
-      <el-button type="success">Предпросмотр</el-button>
-    </div>-->
-
-    <p>{{weeks}}</p>
   </div>
 </template>
 
@@ -114,22 +116,17 @@ import { db } from "@/plugins/firebase";
 import RecipeThumb from "@/components/Recipes/RecipeThumb";
 export default {
   layout: "admin",
-  components: {
-    RecipeThumb
-  },
+  components: { RecipeThumb },
   data() {
     return {
-      loading: false,
-      periodDates: "",
-      deliveryDates: "",
-      menu: [],
-      weeks: [],
-      menuTabName: "",
-      menuTabs: [],
-      periodTab: "",
-      periodTabs: [],
-      menuActiveTab: "",
-      periodActiveTab: "",
+      periodDates: [],
+      deliveryDates: [],
+      periods: [],
+      activePeriod: [],
+      activePeriodName: "",
+      menuSetName: "",
+      menuActiveSetName: "",
+      menuActiveSet: {},
       recipeSelect: ""
     };
   },
@@ -164,22 +161,10 @@ export default {
             month: "long"
           })
         : "";
-    },
-    activeMenuSet() {
-      let c = this.menu.find(el => el.name === this.menuActiveTab);
-      if (c) {
-        return c.recipes;
-      }
-    },
-    activeWeek() {
-      let c = this.weeks.find(el => el.status === this.periodActiveTab);
-      if (c) {
-        return c.menus;
-      }
     }
   },
   methods: {
-    addPeriodTab() {
+    addPeriod() {
       const datesString = this.periodStartDate + " - " + this.periodEndDate;
       const deliveryDatesString =
         this.deliveryStartDate + " - " + this.deliveryEndDate;
@@ -187,90 +172,65 @@ export default {
         dates: this.periodDates,
         deliveryDates: this.deliveryDates,
         datesString,
-        deliveryDatesString
+        deliveryDatesString,
+        menuSets: []
       };
-      this.periodTabs.push(period);
-      this.periodActiveTab = datesString;
+      // NEED TO ADD ORDER TO PERIODS HERE
+      this.periods.push(period);
+      this.activePeriodName = datesString;
+      this.activePeriod = this.periods.find(
+        el => el.datesString === this.activePeriodName
+      );
       this.periodDates = "";
       this.deliveryDates = "";
       this.$message.success("Период добавлен!");
     },
-    addMenuTab(periodTab) {
-      if (this.menuTabName) {
-        const activePeriod = this.periodTabs.find(
-          el => el.datesString === this.periodActiveTab
-        );
-        console.log(activePeriod);
-        if (this.periodTabs.length === 0 || activePeriod === undefined) {
-          const menuSets = [];
-
-          // menuSet.recipes.push(recipe);
-          // this.menu.push(menuSet);
-          // this.recipeSelect = "";
-          console.log("period undefined");
-        } else {
-          console.log("period defined");
-        }
+    removePeriod() {},
+    displayPeriodTabContent() {
+      this.activePeriod = this.periods.find(
+        el => el.datesString === this.activePeriodName
+      );
+      if (
+        this.menuActiveSetName !== "0" &&
+        this.activePeriod.menuSets.length > 0
+      ) {
+        this.menuActiveSetName = this.activePeriod.menuSets[0].name;
       }
     },
-    removeTab() {
-      let tabs = this.editableTabs;
-      let activeName = this.editableTabsValue;
-      if (activeName === targetName) {
-        tabs.forEach((tab, index) => {
-          if (tab.name === targetName) {
-            let nextTab = tabs[index + 1] || tabs[index - 1];
-            if (nextTab) {
-              activeName = nextTab.name;
-            }
-          }
-        });
+    addMenuSet() {
+      if (this.menuSetName) {
+        const menuSet = {
+          name: this.menuSetName,
+          recipes: []
+        };
+        this.activePeriod.menuSets.push(menuSet);
+        this.menuActiveSetName = this.menuSetName;
+        this.menuSetName = "";
+        this.menuActiveSet = menuSet;
+        this.$message.success("Меню добавлено!");
       }
-
-      this.editableTabsValue = activeName;
-      this.editableTabs = tabs.filter(tab => tab.name !== targetName);
     },
-    addRecipe(menuTab) {
+    removeMenuSet() {},
+    addRecipe() {
       if (this.recipeSelect) {
         const recipe = this.recipes.find(r => {
           return this.recipeSelect == r.title;
         });
-        const activeSet = this.menu.find(el => el.name === this.menuActiveTab);
-        if (this.menu.length === 0 || activeSet === undefined) {
-          const menuSet = { name: menuTab, recipes: [] };
-          menuSet.recipes.push(recipe);
-          this.menu.push(menuSet);
-          this.recipeSelect = "";
-        } else {
-          activeSet.recipes.push(recipe);
-          this.recipeSelect = "";
-        }
+        this.menuActiveSet = this.activePeriod.menuSets.find(p => {
+          return p.name === this.menuActiveSetName;
+        });
+        this.menuActiveSet.recipes.push(recipe);
+        this.recipeSelect = "";
       }
     },
-    async saveMenu() {
-      this.loading = true;
-
-      const formData = {
-        periodDates: this.periodDates,
-        deliveryDates: this.deliveryDates,
-        menu: this.menu
-      };
-
-      console.log(this.periodDates);
-
-      // try {
-      //   await this.$store.dispatch("menu/createMenu", formData);
-      //   this.$message.success("Меню сохранено!");
-      // } catch (err) {
-      //   console.log(err);
-      // } finally {
-      //   this.loading = false;
-      // }
+    displayMenuTabContent() {
+      this.menuActiveSet = this.activePeriod.menuSets.find(p => {
+        return p.name === this.menuActiveSetName;
+      });
     }
   }
 };
 </script>
-
 <style lang="scss">
 .create-menu-page {
   .input-block {
@@ -312,4 +272,3 @@ export default {
   }
 }
 </style>
-
