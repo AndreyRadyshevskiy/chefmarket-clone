@@ -31,7 +31,7 @@
 
     <!-- PERIOD TABS -->
 
-    <el-tabs v-model="activePeriodName" type="card" @tab-click="displayPeriodTabContent">
+    <el-tabs v-model="periodActiveName" type="card">
       <el-tab-pane
         v-for="(period, index) in periods"
         :key="index"
@@ -66,7 +66,7 @@
           @tab-remove="removeMenuSet"
         >
           <el-tab-pane
-            v-for="(menuSet, index) in activePeriod.menuSets"
+            v-for="(menuSet, index) in periodActive.menuSets"
             :key="index"
             :label="menuSet.name"
             :name="menuSet.name"
@@ -122,8 +122,8 @@ export default {
       periodDates: [],
       deliveryDates: [],
       periods: [],
-      activePeriod: [],
-      activePeriodName: "",
+      periodActive: [],
+      periodActiveName: "",
       menuSetName: "",
       menuActiveSetName: "",
       menuActiveSet: {},
@@ -163,51 +163,70 @@ export default {
         : "";
     }
   },
-  methods: {
-    addPeriod() {
-      const datesString = this.periodStartDate + " - " + this.periodEndDate;
-      const deliveryDatesString =
-        this.deliveryStartDate + " - " + this.deliveryEndDate;
-      const period = {
-        dates: this.periodDates,
-        deliveryDates: this.deliveryDates,
-        datesString,
-        deliveryDatesString,
-        menuSets: []
-      };
-      // NEED TO ADD ORDER TO PERIODS HERE
-      this.periods.push(period);
-      this.activePeriodName = datesString;
-      this.activePeriod = this.periods.find(
-        el => el.datesString === this.activePeriodName
+  watch: {
+    periodActiveName() {
+      this.periodActive = this.periods.find(
+        p => p.datesString === this.periodActiveName
       );
-      this.periodDates = "";
-      this.deliveryDates = "";
-      this.$message.success("Период добавлен!");
-    },
-    removePeriod() {},
-    displayPeriodTabContent() {
-      this.activePeriod = this.periods.find(
-        el => el.datesString === this.activePeriodName
-      );
-      if (
-        this.menuActiveSetName !== "0" &&
-        this.activePeriod.menuSets.length > 0
-      ) {
-        this.menuActiveSetName = this.activePeriod.menuSets[0].name;
+      if (this.periodActive && this.periodActive.menuSets.length > 0) {
+        this.menuActiveSetName = this.periodActive.menuSets[0].name;
       }
     },
+    menuActiveSetName() {
+      this.menuActiveSet = this.periodActive.menuSets.find(
+        ms => ms.name === this.menuActiveSetName
+      );
+    }
+  },
+  methods: {
+    addPeriod() {
+      if (this.periodDates.length === 2 && this.deliveryDates.length === 2) {
+        console.log(this.periodDates);
+        const datesString = this.periodStartDate + " - " + this.periodEndDate;
+        const deliveryDatesString =
+          this.deliveryStartDate + " - " + this.deliveryEndDate;
+        const period = {
+          dates: this.periodDates,
+          deliveryDates: this.deliveryDates,
+          datesString,
+          deliveryDatesString,
+          menuSets: []
+        };
+        // NEED TO ADD ORDER TO PERIODS HERE
+        this.periods.push(period);
+        this.periodActiveName = datesString;
+        this.periodDates = "";
+        this.deliveryDates = "";
+        this.$message.success("Период добавлен!");
+      } else {
+        this.$message.error("Выберете даты и добавьте период доставки!");
+      }
+    },
+    removePeriod() {},
+    // displayPeriodTabContent() {
+    //   this.menuActiveSetName = this.activeMenuSet.name;
+    // },
     addMenuSet() {
       if (this.menuSetName) {
         const menuSet = {
           name: this.menuSetName,
           recipes: []
         };
-        this.activePeriod.menuSets.push(menuSet);
+        this.periodActive.menuSets.push(menuSet);
         this.menuActiveSetName = this.menuSetName;
+        this.periods.map(p =>
+          p.datesString === this.periodActive.datesString
+            ? this.periodActive
+            : p
+        );
+        // this.activePeriod.menuSets.push(menuSet);
+        // this.menuActiveSetName = this.menuSetName;
+        this.menuActiveSet = this.periodActive.menuSets.find(
+          ms => ms.name === this.menuActiveSetName
+        );
         this.menuSetName = "";
-        this.menuActiveSet = menuSet;
-        this.$message.success("Меню добавлено!");
+        // this.menuActiveSet = menuSet;
+        // this.$message.success("Меню добавлено!");
       }
     },
     removeMenuSet() {},
@@ -216,7 +235,7 @@ export default {
         const recipe = this.recipes.find(r => {
           return this.recipeSelect == r.title;
         });
-        this.menuActiveSet = this.activePeriod.menuSets.find(p => {
+        this.menuActiveSet = this.periodActive.menuSets.find(p => {
           return p.name === this.menuActiveSetName;
         });
         this.menuActiveSet.recipes.push(recipe);
@@ -224,9 +243,9 @@ export default {
       }
     },
     displayMenuTabContent() {
-      this.menuActiveSet = this.activePeriod.menuSets.find(p => {
-        return p.name === this.menuActiveSetName;
-      });
+      // this.menuActiveSet = this.activePeriod.menuSets.find(p => {
+      //   return p.name === this.menuActiveSetName;
+      // });
     }
   }
 };
