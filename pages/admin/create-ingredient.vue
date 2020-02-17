@@ -189,7 +189,7 @@ export default {
       this.$refs.ingredientForm.validate(async valid => {
         if (valid && this.ingredient.thumbnail) {
           this.loading = true;
-
+          this.ingredient.name = this.ingredient.name.toLowerCase();
           const formData = this.ingredient;
 
           try {

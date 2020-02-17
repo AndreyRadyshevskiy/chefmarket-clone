@@ -11,10 +11,11 @@ const _7ac66703 = () => interopDefault(import('..\\pages\\admin\\chefs.vue' /* w
 const _1c704958 = () => interopDefault(import('..\\pages\\admin\\create-ingredient.vue' /* webpackChunkName: "pages_admin_create-ingredient" */))
 const _d61f42b6 = () => interopDefault(import('..\\pages\\admin\\create-inventory.vue' /* webpackChunkName: "pages_admin_create-inventory" */))
 const _075cf526 = () => interopDefault(import('..\\pages\\admin\\create-menu.vue' /* webpackChunkName: "pages_admin_create-menu" */))
-const _e920138c = () => interopDefault(import('..\\pages\\admin\\create-menu-draft.vue' /* webpackChunkName: "pages_admin_create-menu-draft" */))
 const _5878efe7 = () => interopDefault(import('..\\pages\\admin\\create-post.vue' /* webpackChunkName: "pages_admin_create-post" */))
 const _3107d3d6 = () => interopDefault(import('..\\pages\\admin\\create-recipe.vue' /* webpackChunkName: "pages_admin_create-recipe" */))
+const _1d7215c9 = () => interopDefault(import('..\\pages\\admin\\inventory-list.vue' /* webpackChunkName: "pages_admin_inventory-list" */))
 const _120fe141 = () => interopDefault(import('..\\pages\\admin\\post-list.vue' /* webpackChunkName: "pages_admin_post-list" */))
+const _e569ca8a = () => interopDefault(import('..\\pages\\admin\\recipes.vue' /* webpackChunkName: "pages_admin_recipes" */))
 const _72bd4a1e = () => interopDefault(import('..\\pages\\admin\\users.vue' /* webpackChunkName: "pages_admin_users" */))
 const _6628593f = () => interopDefault(import('..\\pages\\blog\\_id\\index.vue' /* webpackChunkName: "pages_blog__id_index" */))
 const _451ef75d = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
@@ -131,10 +132,6 @@ export function createRouter() {
       component: _075cf526,
       name: "admin-create-menu"
     }, {
-      path: "/admin/create-menu-draft",
-      component: _e920138c,
-      name: "admin-create-menu-draft"
-    }, {
       path: "/admin/create-post",
       component: _5878efe7,
       name: "admin-create-post"
@@ -143,9 +140,17 @@ export function createRouter() {
       component: _3107d3d6,
       name: "admin-create-recipe"
     }, {
+      path: "/admin/inventory-list",
+      component: _1d7215c9,
+      name: "admin-inventory-list"
+    }, {
       path: "/admin/post-list",
       component: _120fe141,
       name: "admin-post-list"
+    }, {
+      path: "/admin/recipes",
+      component: _e569ca8a,
+      name: "admin-recipes"
     }, {
       path: "/admin/users",
       component: _72bd4a1e,

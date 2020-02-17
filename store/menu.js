@@ -1,10 +1,10 @@
-import { db } from '@/plugins/firebase'
+import { db } from "@/plugins/firebase";
 export const actions = {
   async createMenu({}, menuData) {
     try {
-      await db.collection('menu').add(menuData)
+      await db.collection("menu").add(menuData);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
-}
+};

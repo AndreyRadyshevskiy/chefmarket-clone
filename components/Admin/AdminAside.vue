@@ -12,9 +12,10 @@
       </template>
 
       <el-menu-item index="/admin/create-menu">Составить меню</el-menu-item>
-      <el-menu-item index="/admin/create-menu-draft">Составить меню черновик</el-menu-item>
+      <el-menu-item index="/admin/recipes">Рецепты</el-menu-item>
       <el-menu-item index="/admin/create-recipe">Создать рецепт</el-menu-item>
       <el-menu-item index="/admin/create-ingredient">Создать ингредиент</el-menu-item>
+      <el-menu-item index="/admin/inventory-list">Инвентарь</el-menu-item>
       <el-menu-item index="/admin/create-inventory">Создать инвентарь</el-menu-item>
     </el-submenu>
 

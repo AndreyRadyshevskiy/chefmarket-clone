@@ -1,12 +1,15 @@
 <template>
   <div class="create-recipe-page">
     <div class="admin-page-title">Создать рецепт</div>
-    <div class="admin-section-title">Основная Информация</div>
+    <div class="admin-section-title">
+      Основная Информация
+      <el-button class="clear-btn" type="danger" @click="clearAllFields">Очистить все поля</el-button>
+    </div>
     <el-form ref="recipeForm" :model="recipe" label-width="120px" label-position="top">
       <el-row :gutter="40">
         <el-col :md="10" :style="{paddingRight: '22px'}">
           <el-form-item label="Название рецепта:">
-            <el-input v-model="recipe.title"></el-input>
+            <el-input v-model="recipe.title" @blur="saveToLocalStorage"></el-input>
           </el-form-item>
         </el-col>
         <el-col :md="5">
@@ -33,7 +36,11 @@
       <el-row type="flex" :gutter="40" class="mb2">
         <el-col :md="5">
           <el-form-item label="Срок приготовления:">
-            <el-select v-model="recipe.expires" placeholder="Выберете срок">
+            <el-select
+              v-model="recipe.expires"
+              @change="saveToLocalStorage"
+              placeholder="Выберете срок"
+            >
               <el-option value="1 день"></el-option>
               <el-option value="1 - 2 день"></el-option>
               <el-option value="1 - 3 день"></el-option>
@@ -43,23 +50,27 @@
           </el-form-item>
 
           <el-form-item label="Вес готового блюда: (в граммах)">
-            <el-input v-model="recipe.weight"></el-input>
+            <el-input v-model="recipe.weight" @blur="saveToLocalStorage"></el-input>
           </el-form-item>
 
           <el-form-item label="Время приготовления: (в минутах)">
-            <el-input v-model="recipe.cookTime"></el-input>
+            <el-input v-model="recipe.cookTime" @blur="saveToLocalStorage"></el-input>
           </el-form-item>
         </el-col>
         <el-col :md="5">
           <el-form-item label="Сложность приготовления:">
-            <el-select v-model="recipe.difficulty" placeholder="Выберете сложность">
+            <el-select
+              v-model="recipe.difficulty"
+              @change="saveToLocalStorage"
+              placeholder="Выберете сложность"
+            >
               <el-option value="Готовить легко"></el-option>
               <el-option value="Готовить непросто"></el-option>
               <el-option value="Готовить сложно"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="Калорийность: (на 100г продукта)">
-            <el-input v-model="recipe.stats"></el-input>
+          <el-form-item label="Калорийность и БЖУ: (на 100г продукта)">
+            <el-input v-model="recipe.stats" @blur="saveToLocalStorage"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -67,7 +78,12 @@
       <div class="admin-section-title">Дополнительная информация</div>
 
       <el-form-item label="Выбрать автора">
-        <el-select v-model="chef" filterable placeholder="Выберете автора">
+        <el-select
+          v-model="recipe.chef"
+          @change="saveToLocalStorage"
+          filterable
+          placeholder="Выберете автора"
+        >
           <el-option
             v-for="(chef, index) in chefs"
             :key="index"
@@ -83,72 +99,48 @@
           :rows="4"
           placeholder="Введите совет"
           v-model="recipe.advice"
+          @blur="saveToLocalStorage"
           :style="{width: '36rem'}"
         ></el-input>
       </el-form-item>
 
-      <el-form-item label="Выбрать ингридиенты">
-        <el-select
-          v-model="ingredientsInput"
-          filterable
-          placeholder="Выберете ингридиент"
-          ref="ingredientInput"
-        >
-          <el-option
-            v-for="(ingredient, index) in ingredients"
-            :key="index"
-            :label="ingredient"
-            :value="ingredient"
-          ></el-option>
-        </el-select>
-        <el-button
-          type="primary"
-          icon="el-icon-plus"
-          @click="addIngredient"
-          :style="{marginLeft: '1rem'}"
-        ></el-button>
-        <el-button
-          class="ingr-button"
-          v-for="(ingr, index) in this.ingredientsList"
-          :key="index"
-          size="small"
-          plain
-          type="info"
-          @click="removeIngredient"
-        >
-          {{ingr}}
-          <i class="el-icon-close"></i>
-        </el-button>
+      <el-form-item label="Выберете ингридиенты:">
+        <el-autocomplete
+          class="autocomplete"
+          v-model="ingrSearch"
+          :fetch-suggestions="((queryString, cb)=>{searchDB(queryString, cb,'ingredients')})"
+          placeholder="Поиск по названию"
+          @select="addIngredient"
+          :clearable="true"
+        ></el-autocomplete>
       </el-form-item>
 
-      <el-form-item label="Выбрать инвентарь">
-        <el-select
-          v-model="inventoryInput"
-          filterable
-          placeholder="Выберете инвентарь"
-          ref="inventoryInput"
-        >
-          <el-option v-for="(inv, index) in inventory" :key="index" :label="inv" :value="inv"></el-option>
-        </el-select>
-        <el-button
-          type="primary"
-          icon="el-icon-plus"
-          @click="addInventory"
-          :style="{marginLeft: '1rem'}"
-        ></el-button>
-        <el-button
-          class="ingr-button"
-          v-for="(inv, index) in this.inventoryList"
-          :key="index"
-          size="small"
-          plain
-          type="info"
-          @click="removeInventory"
-        >
-          {{inv}}
-          <i class="el-icon-close"></i>
-        </el-button>
+      <div class="ingredients-list">
+        <el-card v-for="(ingr, index) in recipe.ingredients" :key="index" class="ingredient-item">
+          <img :src="ingr.thumbnail" class="ingredient-image" />
+          <span>{{ingr.name}}</span>
+          <i class="el-icon-circle-close ingredient-icon-close" @click="removeIngredient(ingr)"></i>
+        </el-card>
+      </div>
+
+      <el-form-item label="Выберете инвентарь:">
+        <el-autocomplete
+          class="autocomplete"
+          v-model="invSearch"
+          :fetch-suggestions="((queryString, cb)=>{searchDB(queryString, cb,'inventory')})"
+          placeholder="Поиск по названию"
+          @select="addInventory"
+          :clearable="true"
+        ></el-autocomplete>
       </el-form-item>
+
+      <div class="inventory-list">
+        <el-card v-for="(inv, index) in recipe.inventory" :key="index" class="inventory-item">
+          <img :src="inv.thumbnail" class="inventory-image" />
+          <span>{{inv.name}}</span>
+          <i class="el-icon-circle-close inventory-icon-close" @click="removeInventory(inv)"></i>
+        </el-card>
+      </div>
 
       <div class="admin-section-title">Рецепт по шагам</div>
 
@@ -182,7 +174,7 @@
           <el-button type="info" :disabled="loading" @click="addStep" class="mb4">Добавить шаг</el-button>
         </el-col>
         <el-col :md="16">
-          <div class="step" v-for="(step, index) in steps" :key="index">
+          <div class="step" v-for="(step, index) in recipe.steps" :key="index">
             <div class="step-thumb" :style="{backgroundImage: 'url(' + step.thumbnail +')'}"></div>
             <div class="step-info">
               <div class="step-num">Шаг {{ index + 1 }}</div>
@@ -202,7 +194,7 @@
                 circle
                 size="small"
                 @click="stepDown(index)"
-                :disabled="index === (steps.length - 1)"
+                :disabled="index === (recipe.steps.length - 1)"
               ></el-button>
               <el-button type="primary" icon="el-icon-edit" circle size="small"></el-button>
               <el-button
@@ -240,20 +232,20 @@ export default {
         advice: "",
         ingredients: [],
         inventory: [],
-        tags: []
+        tags: [],
+        chef: "",
+        steps: []
       },
       loading: false,
-      chef: "",
       tag: "",
-      ingredientsList: [],
       ingredientsInput: "",
-      inventoryList: [],
       inventoryInput: "",
-      steps: [],
       stepDescription: "",
       stepTime: "",
       stepThumb: "",
-      stepsDisabled: false
+      stepsDisabled: false,
+      ingrSearch: "",
+      invSearch: ""
     };
   },
   async asyncData() {
@@ -272,8 +264,8 @@ export default {
     return { ingredients, inventory };
   },
   mounted() {
-    if (localStorage.steps) {
-      this.steps = JSON.parse(localStorage.getItem("steps"));
+    if (localStorage.recipe) {
+      this.recipe = JSON.parse(localStorage.getItem("recipe"));
     }
   },
   computed: {
@@ -284,47 +276,80 @@ export default {
       return this.chefs.filter(chef => chef.name === this.chef)[0];
     },
     thumbnail() {
-      return this.steps[this.steps.length - 1].thumbnail;
+      return this.recipe.steps[this.recipe.steps.length - 1].thumbnail;
     }
   },
   methods: {
-    async addIngredient() {
-      let ingr = this.$refs.ingredientInput.value;
-      if (ingr) {
-        const snapshot = await db
-          .collection("ingredients")
-          .where("name", "==", ingr)
+    saveToLocalStorage() {
+      localStorage.setItem("recipe", JSON.stringify(this.recipe));
+    },
+    clearAllFields() {
+      this.recipe = {
+        title: "",
+        expires: "",
+        weight: "",
+        cookTime: "",
+        difficulty: "",
+        stats: "",
+        advice: "",
+        ingredients: [],
+        inventory: [],
+        tags: [],
+        chef: "",
+        steps: []
+      };
+    },
+    async searchDB(queryString, cb, dbname) {
+      let results = [];
+      let searchItems = db.collection(dbname);
+      queryString =
+        queryString.substring(0, 1).toUpperCase() + queryString.substring(1);
+      if (queryString) {
+        let query = await searchItems
+          .orderBy("name")
+          .startAt(queryString)
+          .endAt(queryString + "\uf8ff")
           .get();
-        snapshot.docs.map(doc => this.recipe.ingredients.push(doc.data()));
-        this.ingredientsList.push(ingr);
-        this.ingredientsInput = "";
+        query.docs.map(doc => {
+          doc.value = doc.name;
+          results.push(doc.data());
+        });
+        results.map(i => (i.value = i.name));
+        cb(results);
       }
     },
-    removeIngredient(event) {
-      let ingr = event.currentTarget.textContent.trim();
+    addIngredient(ingr) {
+      delete ingr.value;
+      this.recipe.ingredients.push(ingr);
+      this.saveToLocalStorage();
+
+      // let ingr = this.$refs.ingredientInput.value;
+      // if (ingr) {
+      //   const snapshot = await db
+      //     .collection("ingredients")
+      //     .where("name", "==", ingr)
+      //     .get();
+      //   snapshot.docs.map(doc => this.recipe.ingredients.push(doc.data()));
+      //   this.ingredientsInput = "";
+      //   this.saveToLocalStorage();
+      // }
+    },
+    removeIngredient(ingr) {
       this.recipe.ingredients = this.recipe.ingredients.filter(
-        el => el.name != ingr
+        el => el.name !== ingr.name
       );
-      this.ingredientsList = this.ingredientsList.filter(el => el != ingr);
+      this.saveToLocalStorage();
     },
-    async addInventory() {
-      let inv = this.$refs.inventoryInput.value;
-      if (inv) {
-        const snapshot = await db
-          .collection("inventory")
-          .where("name", "==", inv)
-          .get();
-        snapshot.docs.map(doc => this.recipe.inventory.push(doc.data()));
-        this.inventoryList.push(inv);
-        this.inventoryInput = "";
-      }
+    addInventory(inv) {
+      delete inv.value;
+      this.recipe.inventory.push(inv);
+      this.saveToLocalStorage();
     },
-    removeInventory(event) {
-      let inv = event.currentTarget.textContent.trim();
+    removeInventory(inv) {
       this.recipe.inventory = this.recipe.inventory.filter(
-        el => el.name != inv
+        el => el.name !== inv.name
       );
-      this.inventoryList = this.inventoryList.filter(el => el != inv);
+      this.saveToLocalStorage();
     },
     handleStepSuccess(res, file) {
       const storageRef = fs.ref("steps/" + file.name);
@@ -359,30 +384,26 @@ export default {
         tag = "#" + tag;
         this.recipe.tags.push(tag);
         this.tag = "";
+        this.saveToLocalStorage();
       }
     },
     removeTag(event) {
       let tag = event.currentTarget.textContent.trim();
       this.recipe.tags = this.recipe.tags.filter(el => el != tag);
+      this.saveToLocalStorage();
     },
     addStep() {
       const step = {
         thumbnail: this.stepThumb,
         description: this.stepDescription
-        // time: this.stepTime
       };
       if (this.stepTime) {
         step.stepTime = this.stepTime;
       }
-      this.steps.push(step);
 
-      if (!localStorage.steps) {
-        localStorage.setItem("steps", JSON.stringify(this.steps));
-      } else {
-        let parsed = JSON.parse(localStorage.getItem("steps"));
-        parsed.push(step);
-        localStorage.setItem("steps", JSON.stringify(parsed));
-      }
+      this.recipe.steps.push(step);
+      this.saveToLocalStorage();
+
       this.$message.success("Шаг добавлен");
 
       this.stepThumb = "";
@@ -400,7 +421,7 @@ export default {
             return obj.description !== step.description;
           });
           localStorage.setItem("steps", JSON.stringify(parsed));
-          this.steps = parsed;
+          this.recipe.steps = parsed;
           this.$message({
             type: "success",
             message: "Шаг удален"
@@ -414,12 +435,22 @@ export default {
         });
     },
     stepUp(index) {
-      this.steps.splice(index - 1, 2, this.steps[index], this.steps[index - 1]);
-      localStorage.setItem("steps", JSON.stringify(this.steps));
+      this.recipe.steps.splice(
+        index - 1,
+        2,
+        this.recipe.steps[index],
+        this.recipe.steps[index - 1]
+      );
+      this.saveToLocalStorage();
     },
     stepDown(index) {
-      this.steps.splice(index, 2, this.steps[index + 1], this.steps[index]);
-      localStorage.setItem("steps", JSON.stringify(this.steps));
+      this.recipe.steps.splice(
+        index,
+        2,
+        this.recipe.steps[index + 1],
+        this.recipe.steps[index]
+      );
+      this.saveToLocalStorage();
     },
     async createRecipe() {
       this.$refs.recipeForm.validate(async valid => {
@@ -441,7 +472,7 @@ export default {
             },
             ingredients: this.recipe.ingredients,
             inventory: this.recipe.inventory,
-            steps: this.steps,
+            steps: this.recipe.steps,
             thumbnail: this.thumbnail
           };
 
@@ -464,9 +495,44 @@ export default {
 
 <style lang="scss">
 .create-recipe-page {
-  .ingr-button {
+  .admin-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .ingredients-list {
+    display: flex;
+    margin-bottom: 3rem;
+  }
+  .inventory-list {
+    display: flex;
+    margin-bottom: 8rem;
+  }
+  .ingredient-item,
+  .inventory-item {
+    width: 20rem;
+    text-align: center;
+    margin-right: 2rem;
+    position: relative;
+  }
+  .ingredient-image,
+  .inventory-image {
     display: block;
-    margin: 1rem 0;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+  .ingredient-icon-close,
+  .inventory-icon-close {
+    cursor: pointer;
+    font-size: 2.5rem;
+    color: #666;
+    background-color: #fff;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+  .autocomplete {
+    width: 36rem;
   }
   .step-thumbnail {
     margin-bottom: 4rem;

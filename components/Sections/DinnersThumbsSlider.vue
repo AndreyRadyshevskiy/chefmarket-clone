@@ -9,7 +9,7 @@
       class="weeks-slider"
     >
       <el-carousel-item>
-        <div class="title">Меню на 4 - 10 июня</div>
+        <div class="title">Меню на {{menuData[0].datesString}}</div>
         <div
           class="section-subtitle"
         >Эти блюда уже распроданы. Пожалуйста, выберете меню на следующую неделю</div>
@@ -72,11 +72,13 @@
         </div>
       </el-carousel-item>
     </el-carousel>
+    {{menuData}}
   </div>
 </template>
 
 <script>
 export default {
+  props: ["menuData"],
   methods: {
     switchDinners() {
       console.log(this.$refs.datesSlider.activeIndex);

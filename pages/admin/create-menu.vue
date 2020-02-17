@@ -27,14 +27,13 @@
       ></el-date-picker>
     </div>
 
-    <el-button type="primary" @click="addPeriod" class="mb4">Добавить период</el-button>
-
+    <el-button type="primary" @click="addPeriod" class="mb4">Создать период</el-button>
     <!-- PERIOD TABS -->
 
-    <el-tabs v-model="periodActiveName" type="card">
+    <el-tabs v-model="periodActiveName" type="card" closable @tab-remove="removePeriod">
       <el-tab-pane
         v-for="(period, index) in periods"
-        :key="index"
+        :key="index+period.datesString"
         :label="period.datesString"
         :name="period.datesString"
       >
@@ -58,16 +57,10 @@
         </div>
 
         <!-- MENU TABS -->
-        <el-tabs
-          v-model="menuActiveSetName"
-          type="card"
-          closable
-          @tab-click="displayMenuTabContent"
-          @tab-remove="removeMenuSet"
-        >
+        <el-tabs v-model="menuActiveSetName" type="card" closable @tab-remove="removeMenuSet">
           <el-tab-pane
             v-for="(menuSet, index) in periodActive.menuSets"
-            :key="index"
+            :key="index+menuSet.name"
             :label="menuSet.name"
             :name="menuSet.name"
             class="pt4"
@@ -101,13 +94,14 @@
                 v-for="(recipe, index) in menuActiveSet.recipes"
                 :key="index"
                 :recipe="recipe"
-                @removeRecipe="removeRecipe"
+                @removeRecipe="removeRecipe(menuActiveSet.recipes, index)"
               />
             </div>
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
     </el-tabs>
+    <el-button type="success" @click="savePeriod" class="mb4">Сохранить меню</el-button>
   </div>
 </template>
 
@@ -163,6 +157,14 @@ export default {
         : "";
     }
   },
+  mounted() {
+    // if (localStorage.getItem("periods")) {
+    //   this.periods = JSON.parse(localStorage.getItem("periods"));
+    // }
+    // const pers = JSON.parse(localStorage.getItem("periods"));
+    // this.periods = pers;
+    // console.log(this.periods);
+  },
   watch: {
     periodActiveName() {
       this.periodActive = this.periods.find(
@@ -170,6 +172,9 @@ export default {
       );
       if (this.periodActive && this.periodActive.menuSets.length > 0) {
         this.menuActiveSetName = this.periodActive.menuSets[0].name;
+        this.menuActiveSet = this.periodActive.menuSets[0];
+      } else {
+        console.log("error is here");
       }
     },
     menuActiveSetName() {
@@ -181,7 +186,6 @@ export default {
   methods: {
     addPeriod() {
       if (this.periodDates.length === 2 && this.deliveryDates.length === 2) {
-        console.log(this.periodDates);
         const datesString = this.periodStartDate + " - " + this.periodEndDate;
         const deliveryDatesString =
           this.deliveryStartDate + " - " + this.deliveryEndDate;
@@ -202,10 +206,45 @@ export default {
         this.$message.error("Выберете даты и добавьте период доставки!");
       }
     },
-    removePeriod() {},
-    // displayPeriodTabContent() {
-    //   this.menuActiveSetName = this.activeMenuSet.name;
-    // },
+    removePeriod(targetName) {
+      let tabs = this.periods;
+      let activeName = this.periodActiveName;
+      this.$confirm(
+        "Действительно ли вы хотите удалить этот период?",
+        "Внимание",
+        {
+          confirmButtonText: "Удалить",
+          cancelButtonText: "Отмена",
+          type: "warning"
+        }
+      )
+        .then(() => {
+          if (activeName === targetName) {
+            tabs.forEach((tab, index) => {
+              if (tab.datesString === targetName) {
+                let nextTab = tabs[index + 1] || tabs[index - 1];
+                if (nextTab) {
+                  activeName = nextTab.datesString;
+                }
+              }
+            });
+          }
+          this.periodActiveName = activeName;
+          this.periods = this.periods.filter(
+            tab => tab.datesString !== targetName
+          );
+          this.$message({
+            type: "success",
+            message: "Период удален"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "Отмена удаления"
+          });
+        });
+    },
     addMenuSet() {
       if (this.menuSetName) {
         const menuSet = {
@@ -229,7 +268,45 @@ export default {
         // this.$message.success("Меню добавлено!");
       }
     },
-    removeMenuSet() {},
+    removeMenuSet(targetName) {
+      let tabs = this.periodActive.menuSets;
+      let activeName = this.menuActiveSet.name;
+      this.$confirm(
+        "Действительно ли вы хотите удалить это Меню?",
+        "Внимание",
+        {
+          confirmButtonText: "Удалить",
+          cancelButtonText: "Отмена",
+          type: "warning"
+        }
+      )
+        .then(() => {
+          if (activeName === targetName) {
+            tabs.forEach((tab, index) => {
+              if (tab.name === targetName) {
+                let nextTab = tabs[index + 1] || tabs[index - 1];
+                if (nextTab) {
+                  activeName = nextTab.name;
+                }
+              }
+            });
+          }
+          this.menuActiveSetName = activeName;
+          this.periodActive.menuSets = this.periodActive.menuSets.filter(
+            tab => tab.name !== targetName
+          );
+          this.$message({
+            type: "success",
+            message: "Меню удалено"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "Отмена удаления"
+          });
+        });
+    },
     addRecipe() {
       if (this.recipeSelect) {
         const recipe = this.recipes.find(r => {
@@ -242,10 +319,46 @@ export default {
         this.recipeSelect = "";
       }
     },
-    displayMenuTabContent() {
-      // this.menuActiveSet = this.activePeriod.menuSets.find(p => {
-      //   return p.name === this.menuActiveSetName;
-      // });
+    removeRecipe(activeRecipes, i) {
+      this.$confirm(
+        "Действительно ли вы хотите удалить этот рецепт?",
+        "Внимание",
+        {
+          confirmButtonText: "Удалить",
+          cancelButtonText: "Отмена",
+          type: "warning"
+        }
+      )
+        .then(() => {
+          activeRecipes.splice(i, 1);
+          this.$message({
+            type: "success",
+            message: "Рецепт удален"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "Отмена удаления"
+          });
+        });
+    },
+    async savePeriod() {
+      // const parsedPeriod = JSON.stringify(this.periods);
+      // localStorage.setItem("periods", parsedPeriod);
+      // ТУТ ДОЛЖНА БЫТЬ ВАЛИДАЦИЯ
+      this.loading = true;
+      const formData = {
+        menu: this.periods
+      };
+      try {
+        await this.$store.dispatch("menu/createMenu", formData);
+        this.$message.success("меню сохранено!");
+      } catch (err) {
+        console.log(err);
+      } finally {
+        this.loading = false;
+      }
     }
   }
 };
@@ -284,7 +397,7 @@ export default {
     width: 126rem;
     margin: 0 auto;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: auto;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 6rem;
     padding: 6rem 0;

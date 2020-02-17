@@ -78,7 +78,7 @@
             </el-carousel-item>
           </el-carousel>
         </div>-->
-        <DinnersThumbsSlider />
+        <DinnersThumbsSlider :menuData="this.menuData[0].menu" />
         <div class="btn-group">
           <nuxt-link to="/" class="btn btn-colored">Смотреть меню</nuxt-link>
           <nuxt-link to="/" class="btn btn-transparent btn-black">Сравнить меню</nuxt-link>
@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import { db } from "@/plugins/firebase";
 import ChefsThumbsSlider from "@/components/Sections/ChefsThumbsSlider";
 import DinnersThumbsSlider from "@/components/Sections/DinnersThumbsSlider";
 export default {
@@ -118,6 +119,14 @@ export default {
         }
       }
     };
+  },
+  async asyncData() {
+    let menuData = [];
+    const menuDataSnapshot = await db.collection("menu").get();
+    menuDataSnapshot.forEach(md => {
+      menuData.unshift(md.data());
+    });
+    return { menuData };
   },
   computed: {
     chefs() {
