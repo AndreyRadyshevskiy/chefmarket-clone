@@ -50,7 +50,7 @@
     </section>
     <section class="menu-of-the-week">
       <div class="container">
-        <!-- <div class="dates-slider">
+        <div class="dates-slider">
           <el-carousel
             indicator-position="none"
             height="150px"
@@ -58,13 +58,19 @@
             :loop="false"
             :autoplay="false"
           >
-            <el-carousel-item>
-              <div class="title">Меню на 4 - 10 июня</div>
+            <el-carousel-item v-for="date in dates" :key="date.status">
+              <div class="title">Меню на {{date.dates}}</div>
+
               <div
+                v-if="date.status > 0"
                 class="section-subtitle"
+              >Доставка этого меню доступна только с {{date.deliveryDates}}</div>
+              <div
+                v-else
+                class="section-subtitle sold-out"
               >Эти блюда уже распроданы. Пожалуйста, выберете меню на следующую неделю</div>
             </el-carousel-item>
-            <el-carousel-item>
+            <!-- <el-carousel-item>
               <div class="title">Меню на 11 - 17 июня</div>
               <div
                 class="section-subtitle"
@@ -75,10 +81,10 @@
               <div
                 class="section-subtitle"
               >Доставка возможна с 18 по 24 июня, выбирайте удобный вам день</div>
-            </el-carousel-item>
+            </el-carousel-item>-->
           </el-carousel>
-        </div>-->
-        <DinnersThumbsSlider :menuData="this.menuData[0].menu" />
+        </div>
+        <!-- <DinnersThumbsSlider /> -->
         <div class="btn-group">
           <nuxt-link to="/" class="btn btn-colored">Смотреть меню</nuxt-link>
           <nuxt-link to="/" class="btn btn-transparent btn-black">Сравнить меню</nuxt-link>
@@ -121,12 +127,15 @@ export default {
     };
   },
   async asyncData() {
-    let menuData = [];
-    const menuDataSnapshot = await db.collection("menu").get();
-    menuDataSnapshot.forEach(md => {
-      menuData.unshift(md.data());
+    let dates = [];
+    const datesSnapshot = await db
+      .collection("dates")
+      .orderBy("status", "desc")
+      .get();
+    datesSnapshot.forEach(date => {
+      dates.unshift(date.data());
     });
-    return { menuData };
+    return { dates };
   },
   computed: {
     chefs() {

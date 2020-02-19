@@ -5,10 +5,10 @@
       :data="recipes.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
     >
-      <el-table-column width="700" label="Название" prop="title"></el-table-column>
+      <el-table-column width="800" label="Название" prop="title"></el-table-column>
       <el-table-column label="Автор" prop="chef.name"></el-table-column>
       <el-table-column label="Сложность" prop="difficulty"></el-table-column>
-      <el-table-column label="Время приготовления" prop="cookTime"></el-table-column>
+      <el-table-column label="Время приготовления" prop="cookTime" align="center"></el-table-column>
       <el-table-column align="right">
         <template slot="header" slot-scope="scope">
           <el-input v-model="search" size="mini" placeholder="Искать рецепт" />
@@ -210,7 +210,11 @@ export default {
       activeRecipe: {
         chef: ""
       },
-      recipeVisible: false
+      recipeVisible: false,
+      hi: {
+        priv: 123,
+        zdarov: 456
+      }
     };
   },
   async asyncData() {
@@ -229,10 +233,41 @@ export default {
       console.log(index, row);
     },
     handleEdit(index, row) {
+      this.$router.push({
+        name: "admin-create-recipe",
+        params: { recipe: row }
+      });
       console.log(index, row);
     },
     handleDelete(index, row) {
-      console.log(index, row);
+      this.$confirm(
+        `Вы действительно хотите безвозвратно удалить рецепт "${row.title}" ?`,
+        "Удаление рецепта!",
+        {
+          confirmButtonText: "Удалить рецепт",
+          cancelButtonText: "Отмена",
+          type: "error"
+        }
+      )
+        .then(async () => {
+          try {
+            await this.$store.dispatch("recipes/deleteRecipe", row.title);
+          } catch (err) {
+            console.log(err);
+          }
+          this.recipes.splice(index, 1);
+          this.$message({
+            type: "success",
+            message: "Рецепт удален"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "Удаление рецепта отменено"
+          });
+        });
+      // this.recipes.splice(index, 1);
     }
   }
 };

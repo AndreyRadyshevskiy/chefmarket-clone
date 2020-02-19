@@ -49,7 +49,7 @@
         ></el-input>
       </el-form-item>
 
-      <el-form-item label="Пищевая ценность" prop="energy">
+      <el-form-item label="Пищевая ценность на 100 г:" prop="energy">
         <el-input
           v-model="ingredient.energy"
           autocomplete="off"
@@ -58,7 +58,7 @@
         ></el-input>
       </el-form-item>
 
-      <el-form-item label="Энергетическая ценность" prop="kkal">
+      <el-form-item label="Энергетическая ценность на 100 г:" prop="kkal">
         <el-input
           v-model="ingredient.kkal"
           autocomplete="off"
@@ -189,7 +189,6 @@ export default {
       this.$refs.ingredientForm.validate(async valid => {
         if (valid && this.ingredient.thumbnail) {
           this.loading = true;
-          this.ingredient.name = this.ingredient.name.toLowerCase();
           const formData = this.ingredient;
 
           try {

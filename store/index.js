@@ -1,31 +1,31 @@
-import { getUserFromCookie, getUserFromSession } from '@/helpers'
-import { db } from '@/plugins/firebase'
+import { getUserFromCookie, getUserFromSession } from "@/helpers";
+import { db } from "@/plugins/firebase";
 
 export const actions = {
   async nuxtServerInit({ commit }, { req }) {
-    const user = getUserFromCookie(req)
+    const user = getUserFromCookie(req);
     if (user) {
-      await commit('auth/setUSER', {
+      await commit("auth/setUSER", {
         name: user.name,
         email: user.email,
         uid: user.user_id
-      })
+      });
     }
 
-    let posts = []
-    let chefs = []
+    let posts = [];
+    let chefs = [];
     const [postsSnapshot, chefsSnapshot] = await Promise.all([
-      db.collection('posts').get(),
-      db.collection('chefs').get()
-    ])
+      db.collection("posts").get(),
+      db.collection("chefs").get()
+    ]);
     postsSnapshot.forEach(post => {
-      posts.unshift(post.data())
-    })
+      posts.unshift(post.data());
+    });
     chefsSnapshot.forEach(chef => {
-      chefs.push(Object.assign({ uid: chef.id }, chef.data()))
-    })
-    commit('posts/setPosts', { posts })
-    commit('chefs/setChefs', { chefs })
+      chefs.push(Object.assign({ uid: chef.id }, chef.data()));
+    });
+    commit("posts/setPosts", { posts });
+    commit("chefs/setChefs", { chefs });
 
     //   let posts = []
     //   const postSnapshot = await db.collection('posts').get()
@@ -43,4 +43,20 @@ export const actions = {
     //   })
     //   commit('chefs/setChefs', { chefs })
   }
-}
+};
+// FETCH MULTIPLE COLLECTIONS EXAMPLE
+// async asyncData() {
+//   let ingredients = [];
+//   let inventory = [];
+//   const [ingredientsSnapshot, inventorySnapshot] = await Promise.all([
+//     db.collection("ingredients").get(),
+//     db.collection("inventory").get()
+//   ]);
+//   ingredientsSnapshot.forEach(ingr => {
+//     ingredients.unshift(ingr.data().name);
+//   });
+//   inventorySnapshot.forEach(inv => {
+//     inventory.unshift(inv.data().name);
+//   });
+//   return { ingredients, inventory };
+// },

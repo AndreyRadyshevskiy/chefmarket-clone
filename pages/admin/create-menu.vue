@@ -347,6 +347,7 @@ export default {
       // const parsedPeriod = JSON.stringify(this.periods);
       // localStorage.setItem("periods", parsedPeriod);
       // ТУТ ДОЛЖНА БЫТЬ ВАЛИДАЦИЯ
+
       this.loading = true;
       const formData = {
         menu: this.periods

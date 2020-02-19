@@ -83,13 +83,9 @@
           @change="saveToLocalStorage"
           filterable
           placeholder="Выберете автора"
+          value-key="name"
         >
-          <el-option
-            v-for="(chef, index) in chefs"
-            :key="index"
-            :label="chef.name"
-            :value="chef.name"
-          ></el-option>
+          <el-option v-for="(chef, index) in chefs" :key="index" :value="chef" :label="chef.name"></el-option>
         </el-select>
       </el-form-item>
 
@@ -179,7 +175,7 @@
             <div class="step-info">
               <div class="step-num">Шаг {{ index + 1 }}</div>
               <div class="step-descr">{{ step.description}}</div>
-              <div v-if="step.time" class="step-time">{{ step.time }} мин</div>
+              <div v-if="step.stepTime" class="step-time">{{ step.stepTime }} мин</div>
             </div>
             <div class="step-controls">
               <el-button
@@ -248,23 +244,10 @@ export default {
       invSearch: ""
     };
   },
-  async asyncData() {
-    let ingredients = [];
-    let inventory = [];
-    const [ingredientsSnapshot, inventorySnapshot] = await Promise.all([
-      db.collection("ingredients").get(),
-      db.collection("inventory").get()
-    ]);
-    ingredientsSnapshot.forEach(ingr => {
-      ingredients.unshift(ingr.data().name);
-    });
-    inventorySnapshot.forEach(inv => {
-      inventory.unshift(inv.data().name);
-    });
-    return { ingredients, inventory };
-  },
   mounted() {
-    if (localStorage.recipe) {
+    if (this.$route.params.recipe) {
+      this.recipe = this.$route.params.recipe;
+    } else if (localStorage.recipe) {
       this.recipe = JSON.parse(localStorage.getItem("recipe"));
     }
   },
@@ -298,13 +281,25 @@ export default {
         chef: "",
         steps: []
       };
+      localStorage.removeItem("recipe");
     },
     async searchDB(queryString, cb, dbname) {
       let results = [];
       let searchItems = db.collection(dbname);
       queryString =
         queryString.substring(0, 1).toUpperCase() + queryString.substring(1);
-      if (queryString) {
+      if (!queryString) {
+        let query = await searchItems
+          .orderBy("name")
+          .limit(10)
+          .get();
+        query.docs.map(doc => {
+          doc.value = doc.name;
+          results.push(doc.data());
+        });
+        results.map(i => (i.value = i.name));
+        cb(results);
+      } else {
         let query = await searchItems
           .orderBy("name")
           .startAt(queryString)
@@ -417,11 +412,15 @@ export default {
         type: "warning"
       })
         .then(() => {
-          let parsed = JSON.parse(localStorage.getItem("steps")).filter(obj => {
-            return obj.description !== step.description;
-          });
-          localStorage.setItem("steps", JSON.stringify(parsed));
-          this.recipe.steps = parsed;
+          this.recipe.steps = this.recipe.steps.filter(
+            obj => obj.description !== step.description
+          );
+          this.saveToLocalStorage();
+          // let parsed = JSON.parse(localStorage.getItem("recipe")).filter(obj => {
+          //   return obj.description !== step.description;
+          // });
+          // localStorage.setItem("steps", JSON.stringify(parsed));
+          // this.recipe.steps = parsed;
           this.$message({
             type: "success",
             message: "Шаг удален"
@@ -467,8 +466,8 @@ export default {
             advice: this.recipe.advice,
             tags: this.recipe.tags,
             chef: {
-              name: this.chefData.name,
-              avatar: this.chefData.avatar
+              name: this.recipe.chef.name,
+              avatar: this.recipe.chef.avatar
             },
             ingredients: this.recipe.ingredients,
             inventory: this.recipe.inventory,
@@ -502,17 +501,21 @@ export default {
   }
   .ingredients-list {
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 3rem;
   }
   .inventory-list {
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 8rem;
   }
   .ingredient-item,
   .inventory-item {
     width: 20rem;
+    height: 30rem;
     text-align: center;
     margin-right: 2rem;
+    margin-bottom: 2rem;
     position: relative;
   }
   .ingredient-image,
@@ -520,6 +523,7 @@ export default {
     display: block;
     width: 100%;
     margin-bottom: 2rem;
+    border-radius: 50%;
   }
   .ingredient-icon-close,
   .inventory-icon-close {
@@ -533,9 +537,6 @@ export default {
   }
   .autocomplete {
     width: 36rem;
-  }
-  .step-thumbnail {
-    margin-bottom: 4rem;
   }
   .el-upload {
     width: 100%;
@@ -572,6 +573,7 @@ export default {
     height: 25rem;
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
     margin-right: 2rem;
   }
   .step-info {
