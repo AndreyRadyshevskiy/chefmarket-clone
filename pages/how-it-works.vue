@@ -40,7 +40,7 @@
         <img src="@/assets/img/choice.jpg" alt="Изображение меню" class="choice-image" />
       </div>
       <div class="btn-group">
-        <nuxt-link to="/dinners-originalnoe" class="btn btn-colored">Выбрать меню</nuxt-link>
+        <nuxt-link to="/dinners" class="btn btn-colored">Выбрать меню</nuxt-link>
         <a href="#" class="link">Подробнее о разнице в меню</a>
       </div>
     </section>

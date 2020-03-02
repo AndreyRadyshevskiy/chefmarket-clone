@@ -14,7 +14,6 @@ const _7ac66703 = () => interopDefault(import('..\\pages\\admin\\chefs.vue' /* w
 const _1c704958 = () => interopDefault(import('..\\pages\\admin\\create-ingredient.vue' /* webpackChunkName: "pages_admin_create-ingredient" */))
 const _d61f42b6 = () => interopDefault(import('..\\pages\\admin\\create-inventory.vue' /* webpackChunkName: "pages_admin_create-inventory" */))
 const _075cf526 = () => interopDefault(import('..\\pages\\admin\\create-menu.vue' /* webpackChunkName: "pages_admin_create-menu" */))
-const _1b81f0ee = () => interopDefault(import('..\\pages\\admin\\create-menu-test.vue' /* webpackChunkName: "pages_admin_create-menu-test" */))
 const _5878efe7 = () => interopDefault(import('..\\pages\\admin\\create-post.vue' /* webpackChunkName: "pages_admin_create-post" */))
 const _3107d3d6 = () => interopDefault(import('..\\pages\\admin\\create-recipe.vue' /* webpackChunkName: "pages_admin_create-recipe" */))
 const _1d7215c9 = () => interopDefault(import('..\\pages\\admin\\inventory-list.vue' /* webpackChunkName: "pages_admin_inventory-list" */))
@@ -86,10 +85,6 @@ export const routerOptions = {
     path: "/admin/create-menu",
     component: _075cf526,
     name: "admin-create-menu"
-  }, {
-    path: "/admin/create-menu-test",
-    component: _1b81f0ee,
-    name: "admin-create-menu-test"
   }, {
     path: "/admin/create-post",
     component: _5878efe7,

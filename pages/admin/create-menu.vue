@@ -13,7 +13,6 @@
         format="dd-MM-yyyy"
       ></el-date-picker>
     </div>
-    {{periods}}
     <!-- DELIVERY DATES -->
     <div class="input-block">
       <span class="label">Доставка возможна:</span>
@@ -312,13 +311,21 @@ export default {
         const recipe = this.recipes.find(r => {
           return this.recipeSelect == r.title;
         });
+        // удаляем лишние поля, возможно необходимо сделать коллекцию RecipesThumbs.
+        const {
+          advice,
+          chef,
+          ingredients,
+          inventory,
+          steps,
+          ...updatedRecipe
+        } = recipe;
         this.menuActiveSet = this.periodActive.menuSets.find(p => {
           return p.name === this.menuActiveSetName;
         });
-        this.menuActiveSet.recipes.push(recipe);
+        this.menuActiveSet.recipes.push(updatedRecipe);
         this.recipeSelect = "";
       }
-      console.log(this.periods);
     },
     removeRecipe(activeRecipes, i) {
       this.$confirm(
@@ -351,8 +358,13 @@ export default {
 
       this.loading = true;
       const formData = {
-        menu: this.periods
+        // menu: this.periods
+        dates: this.periods[0].datesString,
+        deliveryDates: this.periods[0].deliveryDatesString,
+        menuSetName: this.periods[0].menuSets[0].name,
+        recipes: this.periods[0].menuSets[0].recipes
       };
+      console.log(formData);
       try {
         await this.$store.dispatch("menu/createMenu", formData);
         this.$message.success("меню сохранено!");

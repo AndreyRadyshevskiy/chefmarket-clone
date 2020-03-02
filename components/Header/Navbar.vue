@@ -6,7 +6,7 @@
           <img src="~/assets/img/logo.svg" class="navbar-logo" />
         </nuxt-link>
         <nav class="main-nav" v-if="!login">
-          <nuxt-link to="/dinners-originalnoe">Меню</nuxt-link>
+          <nuxt-link to="/dinners">Меню</nuxt-link>
           <nuxt-link to="/how-it-works">Как это работает</nuxt-link>
           <nuxt-link to="/blog">
             Блог о вкусном

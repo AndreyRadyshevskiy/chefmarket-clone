@@ -213,6 +213,7 @@
 
 <script>
 import { db, fs } from "@/plugins/firebase";
+import slugify from "slugify";
 
 export default {
   layout: "admin",
@@ -458,6 +459,7 @@ export default {
 
           const formData = {
             title: this.recipe.title,
+            slug: slugify(this.recipe.title, { lower: true }),
             expires: this.recipe.expires,
             weight: this.recipe.weight,
             cookTime: this.recipe.cookTime,

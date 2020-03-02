@@ -27,7 +27,7 @@ html {
 
 body {
   box-sizing: border-box;
-  font-family: 'LatoWeb', sans-serif;
+  font-family: "LatoWeb", sans-serif;
   font-size: 1.6rem;
   color: #333;
 }
@@ -43,5 +43,11 @@ ul {
 .container {
   width: 100%;
   max-width: 117rem;
+  margin: 0 auto;
+}
+
+.container-lg {
+  width: 100%;
+  max-width: 126rem;
   margin: 0 auto;
 }

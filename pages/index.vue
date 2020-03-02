@@ -7,7 +7,7 @@
           <br />готовить дома
         </div>
         <div class="hero-subtitle">Доставка продуктов с рецептами</div>
-        <nuxt-link to="/" class="btn btn-colored">Выбрать меню</nuxt-link>
+        <nuxt-link to="/dinners" class="btn btn-colored">Выбрать меню</nuxt-link>
         <nuxt-link to="/" class="btn btn-transparent">Узнать подробнее</nuxt-link>
       </div>
     </section>
@@ -56,7 +56,7 @@
         <div class="container">
           <DinnersThumbsSlider :active-menu-data="activeMenuData" />
           <div class="btn-group">
-            <el-button class="btn btn-colored" @click="goToDinners">Смотреть меню</el-button>
+            <nuxt-link to="/dinners" class="btn btn-colored">Смотреть меню</nuxt-link>
             <el-button to="/" class="btn btn-transparent btn-black">Сравнить меню</el-button>
           </div>
         </div>
@@ -267,7 +267,6 @@
 <script>
 import { db } from "@/plugins/firebase";
 import { mapGetters } from "vuex";
-import slugify from "slugify";
 import ChefsThumbsSlider from "@/components/Sections/ChefsThumbsSlider";
 import DatesSlider from "@/components/Sections/DatesSlider";
 import DinnersThumbsSlider from "@/components/Sections/DinnersThumbsSlider";
@@ -305,12 +304,6 @@ export default {
   },
   fetch({ store }) {
     return store.dispatch("menu/fetchActiveMenuData");
-  },
-  methods: {
-    goToDinners() {
-      const menuSlug = slugify(this.activeMenuSetName, { lower: true });
-      this.$router.push(`/dinners-${menuSlug}`);
-    }
   }
 };
 </script>

@@ -49,8 +49,7 @@ export default {
     },
     goToRecipe(recipe) {
       const recSlug = slugify(recipe, { lower: true });
-      const menuSetNameSlug = slugify(this.activeMenuSetName, { lower: true });
-      this.$router.push(`/dinners-${menuSetNameSlug}/${recSlug}`);
+      this.$router.push(`/dinners/${recSlug}`);
     }
   }
 };

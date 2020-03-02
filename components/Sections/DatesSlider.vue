@@ -55,7 +55,7 @@ export default {
       this.$store.dispatch("menu/fetchActiveMenuData");
     },
     fetchMenuSetRecipes(e) {
-      let b = e.target.textContent;
+      const b = e.target.textContent;
       this.$store.commit("menu/setActiveMenuSetName", b);
       this.$store.dispatch("menu/fetchActiveMenuData");
     }
