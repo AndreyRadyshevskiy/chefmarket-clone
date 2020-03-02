@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="76px" height="68px" viewBox="0 0 76 68" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>6AEF267E-63CF-42B1-9CC3-1B271F1CC1FF@1x</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="66" height="45"></rect>
+    </defs>
+    <g id="Chefmarket_18_other" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Chefmarket_17_how_it_works" transform="translate(-354.000000, -5626.000000)">
+            <g id="Group-9" transform="translate(276.000000, 5515.000000)">
+                <g id="2" transform="translate(0.000000, 109.000000)">
+                    <g id="Group-5" transform="translate(0.000000, 3.000000)">
+                        <g id="Cash-icon-1" transform="translate(79.000000, 0.000000)">
+                            <g id="analysis">
+                                <g id="Oval-+-Oval-Copy-+-Oval-Copy-2-Mask" transform="translate(4.000000, 4.000000)">
+                                    <mask id="mask-2" fill="white">
+                                        <use xlink:href="#path-1"></use>
+                                    </mask>
+                                    <use id="Mask" fill="#EAEAEA" xlink:href="#path-1"></use>
+                                    <circle id="Oval" fill="#FFFFFF" mask="url(#mask-2)" cx="33" cy="22" r="17"></circle>
+                                </g>
+                                <polygon id="Path-2" stroke="#4C494E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="29.8332278 55.1564307 28.5934501 65.3153181 45.3086696 65.3153181 43.7714807 55.1564307"></polygon>
+                                <rect id="Rectangle-7-Copy" stroke="#4C494E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x="4" y="4" width="66" height="45"></rect>
+                                <rect id="Rectangle-7-Copy-3" stroke="#4C494E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x="0" y="0" width="74" height="55" rx="3"></rect>
+                                <text id="%" font-family="Lato-Black, Lato" font-size="20" font-weight="700" line-spacing="22" fill="#59B958">
+                                    <tspan x="28.5" y="34">%</tspan>
+                                </text>
+                                <path d="M23.8152481,36.732217 C26.9324837,40.5571744 31.6809656,43 37,43 C46.3888407,43 54,35.3888407 54,26 M51.1004552,16.500748 C48.045922,11.9755681 42.8704516,9 37,9 C27.6111593,9 20,16.6111593 20,26" id="Oval-7" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M20.412066,65.3467585 L53.412066,65.3467585" id="Path-3" stroke="#4C494E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <polyline id="Path-6" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="45.6129765 15.8096345 52.0050697 17.4444166 50.7665984 11.3095039"></polyline>
+                                <polyline id="Path-6-Copy" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(25.196047, 38.067456) scale(-1, -1) translate(-25.196047, -38.067456) " points="22 39.5001305 28.3920931 41.1349127 27.1536218 35"></polyline>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

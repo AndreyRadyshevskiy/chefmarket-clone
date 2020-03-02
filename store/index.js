@@ -12,6 +12,17 @@ export const actions = {
       });
     }
 
+    let dates = [];
+    const datesSnapshot = await db
+      .collection("dates")
+      .orderBy("status", "desc")
+      .get();
+    datesSnapshot.forEach(date => {
+      dates.unshift(date.data());
+    });
+    commit("menu/setDates", { dates });
+
+    // убрать вот это все в соотв страницы
     let posts = [];
     let chefs = [];
     const [postsSnapshot, chefsSnapshot] = await Promise.all([

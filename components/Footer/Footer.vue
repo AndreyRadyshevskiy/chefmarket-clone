@@ -15,22 +15,25 @@
             <ul class="menu-column">
               <li class="menu-title">О Компании</li>
               <li>
-                <a href class="menu-link">Как это работает</a>
+                <nuxt-link to="/how-it-works" class="menu-link">Как это работает?</nuxt-link>
               </li>
               <li>
-                <a href class="menu-link">Доставка</a>
+                <nuxt-link to="/mission" class="menu-link">Миссия</nuxt-link>
               </li>
               <li>
-                <a href class="menu-link">Контакты</a>
+                <nuxt-link to="/delivery" class="menu-link">Доставка</nuxt-link>
               </li>
               <li>
-                <a href class="menu-link">Отзывы</a>
+                <nuxt-link to="/contacts" class="menu-link">Контакты</nuxt-link>
               </li>
               <li>
-                <a href class="menu-link">
+                <nuxt-link to="/reviews" class="menu-link">Отзывы</nuxt-link>
+              </li>
+              <li>
+                <nuxt-link to="/blog" class="menu-link">
                   Блог
-                  <img src="~/assets/img/icons/link.svg" class="icon">
-                </a>
+                  <img src="~/assets/img/icons/link.svg" class="icon" />
+                </nuxt-link>
               </li>
             </ul>
             <ul class="menu-column">
@@ -75,7 +78,7 @@
             <div class="subscribe">
               <h5 class="text">Подпишитесь и получайте рецепты изумительно вкусных блюд!</h5>
               <form action class="subscribe-form">
-                <input type="email" placeholder="Введите ваш e-mail">
+                <input type="email" placeholder="Введите ваш e-mail" />
                 <button type="submit">Подписаться</button>
               </form>
             </div>
@@ -84,10 +87,10 @@
         <div class="footer-contacts">
           <div class="apps-title">Приложения</div>
           <a href="#" class="app-link">
-            <img src="~/assets/img/google-play.svg" alt>
+            <img src="~/assets/img/google-play.svg" alt />
           </a>
           <a href="#" class="app-link">
-            <img src="~/assets/img/app-store.svg" alt>
+            <img src="~/assets/img/app-store.svg" alt />
           </a>
           <div class="copyright-wrapper">
             <p class="copyright">© 2012–2019 ООО «Шеф Маркет»</p>
@@ -105,7 +108,6 @@ export default {};
 
 <style lang="scss">
 .app-footer {
-  
   .app-footer-inner {
     padding: 4rem 0;
     display: flex;

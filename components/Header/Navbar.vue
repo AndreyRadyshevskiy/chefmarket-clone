@@ -3,14 +3,14 @@
     <div class="container">
       <div class="navbar-inner">
         <nuxt-link to="/">
-          <img src="~/assets/img/logo.svg" class="navbar-logo">
+          <img src="~/assets/img/logo.svg" class="navbar-logo" />
         </nuxt-link>
         <nav class="main-nav" v-if="!login">
-          <nuxt-link to="/menu">Меню</nuxt-link>
+          <nuxt-link to="/dinners-originalnoe">Меню</nuxt-link>
           <nuxt-link to="/how-it-works">Как это работает</nuxt-link>
           <nuxt-link to="/blog">
             Блог о вкусном
-            <img src="~/assets/img/icons/link.svg">
+            <img src="~/assets/img/icons/link.svg" />
           </nuxt-link>
         </nav>
         <nav class="main-nav" v-else>
@@ -30,10 +30,10 @@
         <template v-else>
           <button class="login" @click="loginModalVisible = true">Войти</button>
         </template>
-        <img src="~/assets/img/icons/menu_bars.svg" class="menu-bars" @click="toggleMobileMenu">
+        <img src="~/assets/img/icons/menu_bars.svg" class="menu-bars" @click="toggleMobileMenu" />
       </div>
-      <MobileMenu v-show="mobileMenuVisible"/>
-      <LoginForm v-if="loginModalVisible" :visible.sync="loginModalVisible"/>
+      <MobileMenu v-show="mobileMenuVisible" />
+      <LoginForm v-if="loginModalVisible" :visible.sync="loginModalVisible" />
     </div>
   </div>
 </template>

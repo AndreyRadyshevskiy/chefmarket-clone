@@ -1,5 +1,5 @@
 <template>
-  <div class="chefs-slider">
+  <div class="chefs-thumbs-slider">
     <no-ssr>
       <swiper :options="swiperOption" ref="swiper">
         <swiper-slide v-for="(chef, index) in chefs" :key="index">
@@ -31,7 +31,7 @@ export default {
       }
     };
   },
-  mounted() {
+  updated() {
     this.$nextTick(() => {
       this.swiper = this.$refs.swiper.swiper;
     });
@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="scss">
-.chefs-slider {
+.chefs-thumbs-slider {
   position: relative;
   padding-top: 2.5rem;
   padding-bottom: 5rem;

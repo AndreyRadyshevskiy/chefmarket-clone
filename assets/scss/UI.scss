@@ -45,8 +45,11 @@
   &-colored {
     background: #59b958;
 
-    &:hover {
+    &:hover,
+    &:active,
+    &:focus {
       background: #8bce8a;
+      color: #fff;
     }
   }
   &-transparent {

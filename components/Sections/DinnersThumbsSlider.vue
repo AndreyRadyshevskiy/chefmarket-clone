@@ -1,38 +1,6 @@
 <template>
   <div class="dinners-menu">
     <el-carousel
-      indicator-position="none"
-      height="150px"
-      arrow="always"
-      :loop="false"
-      :autoplay="false"
-      class="weeks-slider"
-    >
-      <el-carousel-item>
-        <div class="title">Меню на 4-10 июня</div>
-        <div
-          class="section-subtitle"
-        >Эти блюда уже распроданы. Пожалуйста, выберете меню на следующую неделю</div>
-      </el-carousel-item>
-      <el-carousel-item>
-        <div class="title">Меню на 11 - 17 июня</div>
-        <div class="section-subtitle">Доставка возможна с 12 по 17 июня, выбирайте удобный вам день</div>
-      </el-carousel-item>
-      <el-carousel-item>
-        <div class="title">Меню на 18 - 24 июня</div>
-        <div class="section-subtitle">Доставка возможна с 18 по 24 июня, выбирайте удобный вам день</div>
-      </el-carousel-item>
-    </el-carousel>
-
-    <el-tabs v-model="activeName" @tab-click="handleClick" :stretch="true" class="menu-tabs">
-      <el-tab-pane label="Оригинальное" name="first">Оригинальное</el-tab-pane>
-      <el-tab-pane label="Семейное" name="second">Семейное</el-tab-pane>
-      <el-tab-pane label="20 минут" name="third">20 минут</el-tab-pane>
-      <el-tab-pane label="Баланс" name="fourth">Баланс</el-tab-pane>
-      <el-tab-pane label="Еще блюда" name="fifth">Еще блюда</el-tab-pane>
-    </el-tabs>
-
-    <el-carousel
       type="card"
       height="620px"
       indicator-position="none"
@@ -41,32 +9,28 @@
       :autoplay="false"
       class="dinners-slider"
     >
-      <el-carousel-item v-for="slide in 3" :key="slide">
-        <div class="slider-image">
+      <el-carousel-item v-for="(recipe, index) in activeMenuData" :key="index">
+        <div class="slider-image" :style="{backgroundImage: 'url(' + recipe.thumbnail + ')'}">
           <div class="slider-tags">
-            <span class="slider-tag">#До 20 минут</span>
-            <span class="slider-tag">#Без духовки</span>
-            <span class="slider-tag">#Азия</span>
+            <span class="slider-tag" v-for="(tag, index) in recipe.tags" :key="index">{{tag}}</span>
           </div>
         </div>
         <div class="slider-footer">
-          <div class="dish-day">
+          <div class="expires">
             <span class="cook">Готовить</span>
-            <span class="day">1 - 5</span>
+            <span class="day">{{recipe.expires.slice(0,-5)}}</span>
             <span class="day">день</span>
           </div>
           <div class="slider-data">
-            <h6
-              class="slider-title"
-            >Мидии в устричном соусе со шпинатной лапшой и стружкой тунца «Бонито»</h6>
+            <h6 class="slider-title">{{recipe.title}}</h6>
             <div class="slider-stats">
               <img src="~/assets/img/dinners/svg/pot.svg" />
-              <span class="weight">450г</span>
+              <span class="weight">{{recipe.weight}}г</span>
               <img src="~/assets/img/dinners/svg/time-half.svg" />
-              <span class="time">20 минут</span>
+              <span class="time">{{recipe.cookTime}} минут</span>
               <img src="~/assets/img/dinners/svg/cook2.svg" />
-              <span class="difficulty">Готовить легко</span>
-              <span class="kkal">На 100г блюда: 109 кКалб 6.0 | 5.0 | 10.0 БЖУ</span>
+              <span class="difficulty">{{recipe.difficulty}}</span>
+              <span class="kkal">{{recipe.stats}}</span>
             </div>
           </div>
         </div>
@@ -77,12 +41,7 @@
 
 <script>
 export default {
-  props: ["menuData"],
-  methods: {
-    switchDinners() {
-      console.log(this.$refs.datesSlider.activeIndex);
-    }
-  }
+  props: ["activeMenuData"]
 };
 </script>
 
@@ -111,7 +70,6 @@ export default {
   .dinners-slider {
     background-color: #f9f9f9;
     padding-top: 4rem;
-    padding-bottom: 8rem;
     .btn {
       margin-right: 1rem;
     }
@@ -139,7 +97,8 @@ export default {
       }
     }
     .slider-image {
-      background: url("~assets/img/dinners/dish1.jpeg") no-repeat center center;
+      background-repeat: no-repeat;
+      background-position: center;
       background-size: cover;
       width: 100%;
       height: 490px;
@@ -153,6 +112,7 @@ export default {
     .slider-tag {
       background-color: rgba(122, 124, 130, 0.8);
       padding: 0.5rem;
+      margin-right: 0.5rem;
       border-radius: 5px;
       color: #fff;
       font-size: 1.2rem;
@@ -162,7 +122,7 @@ export default {
       height: 13rem;
       background-color: #fff;
     }
-    .dish-day {
+    .expires {
       flex: 0 0 130px;
       background: url("~assets/img/dinners/svg/calendar_large.svg") no-repeat
         top 1.6rem center;

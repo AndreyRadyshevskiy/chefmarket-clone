@@ -1,93 +1,121 @@
-<!--<template>
-  <div class="container">
-    <div class="chefs-slider">
+<template>
+  <div class="chefs-page">
+    <div class="container">
+      <h1 class="section-title">Наши шеф-повара</h1>
+      <div
+        class="section-subtitle"
+      >Наши шеф-повара не просто круто готовят. У каждого своя фишка: кто-то отвечает за домашнюю кухню, кто-то — за японскую, есть и повар-вегетарианец, и настоящий ЗОЖник! Найдите своего</div>
       <no-ssr>
-        <div v-swiper:swiper="swiperOption">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="(chef, index) in chefs" :key="index">
-              <nuxt-link :to="{path: 'true-chef', query: {index: index}}" class="slide-inner">
-                <div class="slide-image" :style="{backgroundImage: 'url(' + chef.avatar + ')'}"></div>
-                <div class="slide-name">{{chef.name}}</div>
-              </nuxt-link>
-            </div>
-          </div>
+        <div class="chefs-slider">
+          <swiper :options="swiperOption" ref="swiper">
+            <swiper-slide v-for="(chef, index) in chefs" :key="index">
+              <div class="slide-image-box">
+                <img :src="chef.avatar" alt class="slide-image" />
+              </div>
+              <div class="slide-content">
+                <div class="chef-name">{{chef.name}}</div>
+                <p class="chef-info">{{chef.info}}</p>
+                <img src="@/assets/img/quote.svg" />
+                <p class="chef-quote">{{chef.quote}}</p>
+              </div>
+            </swiper-slide>
+          </swiper>
+          <el-button icon="el-icon-back" circle class="button-prev" @click="swiper.slidePrev()"></el-button>
+          <el-button icon="el-icon-right" circle class="button-next" @click="swiper.slideNext()"></el-button>
         </div>
       </no-ssr>
     </div>
-
-    <nuxt-link to="/chefs" class="btn btn-colored btn-centred">подробнее</nuxt-link>
   </div>
 </template>
 
 <script>
-// export default {
-//   data() {
-//     const index = this.activeIndex;
-//     return {
-//       swiperOption: {}
-//     };
-//   },
-//   created() {
-//     this.swiperOption = {
-//       slidesPerView: 3,
-//       loop: true,
-//       centeredSlides: true,
-//       navigation: {
-//         nextEl: ".button-next",
-//         prevEl: ".button-prev"
-//       },
-//       initialSlide: this.activeIndex
-//     };
-//   },
-//   computed: {
-//     chefs() {
-//       return this.$store.getters["chefs/getChefs"];
-//     },
-//     activeIndex() {
-//       return this.$route.query.index;
-//     }
-//   }
-// };
-// </script>
+export default {
+  computed: {
+    swiper() {
+      return this.$refs.swiper.swiper;
+    },
+    chefs() {
+      return this.$store.getters["chefs/getChefs"];
+    },
+    swiperOption() {
+      return {
+        slidesPerView: 1,
+        initialSlide: this.$route.query.index,
+        loop: true,
+        navigation: {
+          nextEl: ".button-next",
+          prevEl: ".button-prev"
+        }
+        // on: {
+        //   init: function() {
+        //     console.log(this.realIndex, v.$route.query.index);
+        //     this.activeIndex = v.$route.query.index;
+        //   }
+        // }
+      };
+    }
+  }
+};
+</script>
 
-// <style lang="scss">
-// // .chefs-slider {
-// //   position: relative;
-// //   padding-top: 2.5rem;
-// //   padding-bottom: 5rem;
-
-// //   .slide-inner {
-// //     display: block;
-// //     margin: 0 2.5rem;
-// //   }
-// //   .slide-image {
-// //     width: 100%;
-// //     height: 26rem;
-// //     background-repeat: no-repeat;
-// //     background-size: cover;
-// //     background-position: center center;
-// //   }
-// //   .slide-name {
-// //     font-family: RegalBlack, sans-serif;
-// //     font-size: 2rem;
-// //     color: #333;
-// //     padding-top: 1.6rem;
-// //     text-align: center;
-// //   }
-// //   .button-prev {
-// //     position: absolute;
-// //     left: 0;
-// //     top: 50%;
-// //     transform: translateY(-50%);
-// //   }
-// //   .button-next {
-// //     position: absolute;
-// //     top: 50%;
-// //     right: 0;
-// //     transform: translateY(-50%);
-// //   }
-// // }
-// // .swiper-container {
-// //   width: 1026px;
-// // }
-// </style>
+ <style lang="scss">
+.chefs-page {
+  padding: 6rem 0;
+  .section-subtitle {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    max-width: 74rem;
+    text-align: left;
+    margin: 0 auto;
+  }
+  .chefs-slider {
+    width: 90rem;
+    margin: 0 auto;
+    position: relative;
+  }
+  .swiper-container {
+    width: 76rem;
+    padding-top: 2.5rem;
+    padding-bottom: 5rem;
+  }
+  .swiper-slide {
+    display: flex;
+    justify-content: space-between;
+  }
+  .slide-image {
+    width: 27.5rem;
+    height: auto;
+  }
+  .slide-content {
+    padding-left: 8.7rem;
+  }
+  .chef-name {
+    font-family: RegalBlack, sans-serif;
+    font-size: 4rem;
+    line-height: 4.6rem;
+    color: #333;
+  }
+  .chef-info {
+    font-size: 1.4rem;
+    margin: 1rem 0 4rem 0;
+  }
+  .chef-quote {
+    padding-top: 1rem;
+    padding-left: 2rem;
+    font-size: 1.2rem;
+    line-height: 2rem;
+  }
+  .button-prev {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .button-next {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+  }
+}
+</style>

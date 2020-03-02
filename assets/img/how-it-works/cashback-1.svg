@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="75px" height="63px" viewBox="0 0 75 63" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>E6E6C703-98BC-473E-8585-131193486B04@1x</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Chefmarket_18_other" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Chefmarket_17_how_it_works" transform="translate(-1017.000000, -5627.000000)" stroke="#4C494E">
+            <g id="Group-9" transform="translate(276.000000, 5515.000000)">
+                <g id="2" transform="translate(0.000000, 109.000000)">
+                    <g id="cashback-icon" transform="translate(742.000000, 4.000000)">
+                        <path d="M4,0 L64,5.32907052e-15 C66.209139,4.92325827e-15 68,1.790861 68,4 L68,21.2760717 C71.2796685,21.0121831 72.9195028,22.0191011 72.9195028,24.2968258 C72.9195028,26.5745504 71.2796685,32.5633726 68,42.2632925 L68,51 C68,53.209139 66.209139,55 64,55 L4,55 C1.790861,55 2.705415e-16,53.209139 0,51 L0,4 C-2.705415e-16,1.790861 1.790861,4.05812251e-16 4,0 Z" id="Rectangle-2" stroke-width="2" fill="#EAEAEA"></path>
+                        <path d="M6.07327335,4 L60.4269529,4 C62.6360919,4 64,5.28976961 64,7.49890861 L64,49.6450252" id="Rectangle-2-Copy-3"></path>
+                        <path d="M3.63797881e-12,3.20244171 C0.0981945961,6.4008139 1.99396425,8 5.68730897,8 C22.458206,8 39.229103,8 56,8 L56,8 C58.209139,8 60,9.790861 60,12 L60,57 C60,59.209139 58.209139,61 56,61 L4,61 C1.790861,61 3.63824935e-12,59.209139 3.63797881e-12,57 L3.63797881e-12,3.20244171 Z" id="Rectangle-2-Copy" stroke-width="2" fill="#FFFFFF"></path>
+                        <path d="M4,46 L37.9446897,46 C40.1538287,46 41.5177368,47.2897696 41.5177368,49.4989086 L41.5177368,56.9924157" id="Rectangle-2-Copy-4" transform="translate(22.758868, 51.496208) rotate(-180.000000) translate(-22.758868, -51.496208) "></path>
+                        <path d="M41.6698872,20.0439242 L41.6698872,26.8052554 C57.0040614,26.8052554 66.0760853,26.8052554 68.8859588,26.8052554 C71.6958323,26.8052554 73.0318425,25.536837 72.8939893,23 L72.8939893,39 C73.0761932,41.536837 71.8527746,42.8052554 69.2237334,42.8052554 C66.5946922,42.8052554 57.3703584,42.8052554 41.5507319,42.8052554 L41.5507319,49.507492 L19,34.8106264 L41.6698872,20.0439242 Z" id="Rectangle-3" stroke-width="2" fill="#59B958"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -13,7 +13,7 @@
         format="dd-MM-yyyy"
       ></el-date-picker>
     </div>
-
+    {{periods}}
     <!-- DELIVERY DATES -->
     <div class="input-block">
       <span class="label">Доставка возможна:</span>
@@ -188,7 +188,7 @@ export default {
       if (this.periodDates.length === 2 && this.deliveryDates.length === 2) {
         const datesString = this.periodStartDate + " - " + this.periodEndDate;
         const deliveryDatesString =
-          this.deliveryStartDate + " - " + this.deliveryEndDate;
+          this.deliveryStartDate + " по " + this.deliveryEndDate;
         const period = {
           dates: this.periodDates,
           deliveryDates: this.deliveryDates,
@@ -318,6 +318,7 @@ export default {
         this.menuActiveSet.recipes.push(recipe);
         this.recipeSelect = "";
       }
+      console.log(this.periods);
     },
     removeRecipe(activeRecipes, i) {
       this.$confirm(

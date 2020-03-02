@@ -1,7 +1,11 @@
 <template>
-  <div class="recipe-thumb-admin">
+  <div class="recipe-thumb">
     <el-card>
-      <div class="recipe-image" :style="{backgroundImage: 'url(' + recipe.thumbnail + ')'}">
+      <div
+        class="recipe-image"
+        :style="{backgroundImage: 'url(' + recipe.thumbnail + ')'}"
+        @click="goToRecipe(recipe.title)"
+      >
         <div class="recipe-tags">
           <span class="recipe-tag" v-for="(tag,index) in recipe.tags" :key="index">{{tag}}</span>
         </div>
@@ -22,7 +26,7 @@
         </div>
       </div>
     </el-card>
-    <div class="btn-group">
+    <div class="btn-group" v-if="['create-menu'].includes($route.name)">
       <el-button type="primary" size="small" icon="el-icon-edit">Редактировать</el-button>
       <el-button type="danger" size="small" icon="el-icon-delete" @click="removeRec(recipe)">Удалить</el-button>
     </div>
@@ -30,20 +34,39 @@
 </template>
 
 <script>
+import slugify from "slugify";
+import { mapGetters } from "vuex";
 export default {
   props: ["recipe"],
+  computed: {
+    ...mapGetters({
+      activeMenuSetName: "menu/getActiveMenuSetName"
+    })
+  },
   methods: {
     removeRec(recipe) {
       this.$emit("removeRecipe", recipe);
+    },
+    goToRecipe(recipe) {
+      const recSlug = slugify(recipe, { lower: true });
+      const menuSetNameSlug = slugify(this.activeMenuSetName, { lower: true });
+      this.$router.push(`/dinners-${menuSetNameSlug}/${recSlug}`);
     }
   }
 };
 </script>
 
 <style lang="scss">
-.recipe-thumb-admin {
+.recipe-thumb {
+  .el-card {
+    height: 100%;
+  }
   .el-card__body {
     padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   .recipe-image {
     background-repeat: no-repeat;
@@ -68,8 +91,8 @@ export default {
   .recipe-footer {
     display: flex;
     flex-direction: column;
-    flex: 1;
     padding: 2.4rem;
+    flex-grow: 1;
   }
 
   .recipe-title {
@@ -78,10 +101,12 @@ export default {
     line-height: 2.4rem;
     padding-top: 1rem;
     padding-bottom: 2.4rem;
+    margin-bottom: auto;
   }
   .recipe-expires {
     font-size: 1.2rem;
     padding-bottom: 2.4rem;
+    margin-top: 1rem;
   }
   .recipe-stats {
     font-size: 1.2rem;

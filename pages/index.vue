@@ -50,53 +50,215 @@
     </section>
     <section class="menu-of-the-week">
       <div class="container">
-        <div class="dates-slider">
-          <el-carousel
-            indicator-position="none"
-            height="150px"
-            arrow="always"
-            :loop="false"
-            :autoplay="false"
-          >
-            <el-carousel-item v-for="date in dates" :key="date.status">
-              <div class="title">Меню на {{date.dates}}</div>
-
-              <div
-                v-if="date.status > 0"
-                class="section-subtitle"
-              >Доставка этого меню доступна только с {{date.deliveryDates}}</div>
-              <div
-                v-else
-                class="section-subtitle sold-out"
-              >Эти блюда уже распроданы. Пожалуйста, выберете меню на следующую неделю</div>
-            </el-carousel-item>
-            <!-- <el-carousel-item>
-              <div class="title">Меню на 11 - 17 июня</div>
-              <div
-                class="section-subtitle"
-              >Доставка возможна с 12 по 17 июня, выбирайте удобный вам день</div>
-            </el-carousel-item>
-            <el-carousel-item>
-              <div class="title">Меню на 18 - 24 июня</div>
-              <div
-                class="section-subtitle"
-              >Доставка возможна с 18 по 24 июня, выбирайте удобный вам день</div>
-            </el-carousel-item>-->
-          </el-carousel>
-        </div>
-        <!-- <DinnersThumbsSlider /> -->
-        <div class="btn-group">
-          <nuxt-link to="/" class="btn btn-colored">Смотреть меню</nuxt-link>
-          <nuxt-link to="/" class="btn btn-transparent btn-black">Сравнить меню</nuxt-link>
+        <DatesSlider />
+      </div>
+      <div :style="{backgroundColor: '#f9f9f9' }">
+        <div class="container">
+          <DinnersThumbsSlider :active-menu-data="activeMenuData" />
+          <div class="btn-group">
+            <el-button class="btn btn-colored" @click="goToDinners">Смотреть меню</el-button>
+            <el-button to="/" class="btn btn-transparent btn-black">Сравнить меню</el-button>
+          </div>
         </div>
       </div>
     </section>
     <section class="chefs">
       <div class="container">
         <div class="section-title">Наши шеф-повара</div>
-        <div class="section-subtitle">придумывают для вас идеальные блюда</div>
+        <div class="section-subtitle">Вот кто придумывает для вас идеальные блюда</div>
         <ChefsThumbsSlider />
         <nuxt-link to="/true-chef" class="btn btn-colored btn-centred">подробнее</nuxt-link>
+      </div>
+    </section>
+    <section class="rating">
+      <div class="rating-box">
+        <div class="rating-title">4,9</div>
+        <div class="rating-stars">
+          <span class="rating-star">
+            <svg height="32" width="32" viewBox="0 0 32 32" class="vue-star-rating-star" step="1">
+              <linearGradient id="bv65d8" x1="0" x2="100%" y1="0" y2="0">
+                <stop offset="100%" stop-color="#FFC73F" />
+                <stop offset="100%" stop-color="#E1E1E1" />
+              </linearGradient>
+              <filter id="dhcns8" height="130%" width="130%" filterUnits="userSpaceOnUse">
+                <feGaussianBlur stdDeviation="0" result="coloredBlur" />
+                <feMerge>
+                  <feM in="coloredBlur" />
+                  <feM in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <polygon
+                points="16.40131979370215,24.601979690553225,6.760419002466604,29.66998750680719,8.602492231796777,18.935323701829134,0.802639587404299,11.333311977448185,11.581381939327931,9.76698593714963,16.40131979370215,0,21.22125764807637,9.76698593714963,32,11.333311977448185,24.200147355607523,18.935323701829134,26.042220584937695,29.66998750680719,16.40131979370215,24.601979690553225"
+                fill="url(#bv65d8)"
+                stroke="#fff"
+                filter="url(#dhcns8)"
+                style
+              />
+              <polygon
+                points="16.40131979370215,24.601979690553225,6.760419002466604,29.66998750680719,8.602492231796777,18.935323701829134,0.802639587404299,11.333311977448185,11.581381939327931,9.76698593714963,16.40131979370215,0,21.22125764807637,9.76698593714963,32,11.333311977448185,24.200147355607523,18.935323701829134,26.042220584937695,29.66998750680719,16.40131979370215,24.601979690553225"
+                fill="url(#bv65d8)"
+                stroke="#999"
+                stroke-width="0"
+                stroke-linejoin="miter"
+              />
+              <polygon
+                points="16.40131979370215,24.601979690553225,6.760419002466604,29.66998750680719,8.602492231796777,18.935323701829134,0.802639587404299,11.333311977448185,11.581381939327931,9.76698593714963,16.40131979370215,0,21.22125764807637,9.76698593714963,32,11.333311977448185,24.200147355607523,18.935323701829134,26.042220584937695,29.66998750680719,16.40131979370215,24.601979690553225"
+                fill="url(#bv65d8)"
+              />
+            </svg>
+          </span>
+          <span class="rating-star">
+            <svg height="32" width="32" viewBox="0 0 32 32" class="vue-star-rating-star" step="1">
+              <linearGradient id="bv65d8" x1="0" x2="100%" y1="0" y2="0">
+                <stop offset="100%" stop-color="#FFC73F" />
+                <stop offset="100%" stop-color="#E1E1E1" />
+              </linearGradient>
+              <filter id="dhcns8" height="130%" width="130%" filterUnits="userSpaceOnUse">
+                <feGaussianBlur stdDeviation="0" result="coloredBlur" />
+                <feMerge>
+                  <feM in="coloredBlur" />
+                  <feM in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <polygon
+                points="16.40131979370215,24.601979690553225,6.760419002466604,29.66998750680719,8.602492231796777,18.935323701829134,0.802639587404299,11.333311977448185,11.581381939327931,9.76698593714963,16.40131979370215,0,21.22125764807637,9.76698593714963,32,11.333311977448185,24.200147355607523,18.935323701829134,26.042220584937695,29.66998750680719,16.40131979370215,24.601979690553225"
+                fill="url(#bv65d8)"
+                stroke="#fff"
+                filter="url(#dhcns8)"
+                style
+              />
+              <polygon
+                points="16.40131979370215,24.601979690553225,6.760419002466604,29.66998750680719,8.602492231796777,18.935323701829134,0.802639587404299,11.333311977448185,11.581381939327931,9.76698593714963,16.40131979370215,0,21.22125764807637,9.76698593714963,32,11.333311977448185,24.200147355607523,18.935323701829134,26.042220584937695,29.66998750680719,16.40131979370215,24.601979690553225"
+                fill="url(#bv65d8)"
+                stroke="#999"
+                stroke-width="0"
+                stroke-linejoin="miter"
+              />
+              <polygon
+                points="16.40131979370215,24.601979690553225,6.760419002466604,29.66998750680719,8.602492231796777,18.935323701829134,0.802639587404299,11.333311977448185,11.581381939327931,9.76698593714963,16.40131979370215,0,21.22125764807637,9.76698593714963,32,11.333311977448185,24.200147355607523,18.935323701829134,26.042220584937695,29.66998750680719,16.40131979370215,24.601979690553225"
+                fill="url(#bv65d8)"
+              />
+            </svg>
+          </span>
+          <span class="rating-star">
+            <svg height="32" width="32" viewBox="0 0 32 32" class="vue-star-rating-star" step="1">
+              <linearGradient id="bv65d8" x1="0" x2="100%" y1="0" y2="0">
+                <stop offset="100%" stop-color="#FFC73F" />
+                <stop offset="100%" stop-color="#E1E1E1" />
+              </linearGradient>
+              <filter id="dhcns8" height="130%" width="130%" filterUnits="userSpaceOnUse">
+                <feGaussianBlur stdDeviation="0" result="coloredBlur" />
+                <feMerge>
+                  <feM in="coloredBlur" />
+                  <feM in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <polygon
+                points="16.40131979370215,24.601979690553225,6.760419002466604,29.66998750680719,8.602492231796777,18.935323701829134,0.802639587404299,11.333311977448185,11.581381939327931,9.76698593714963,16.40131979370215,0,21.22125764807637,9.76698593714963,32,11.333311977448185,24.200147355607523,18.935323701829134,26.042220584937695,29.66998750680719,16.40131979370215,24.601979690553225"
+                fill="url(#bv65d8)"
+                stroke="#fff"
+                filter="url(#dhcns8)"
+                style
+              />
+              <polygon
+                points="16.40131979370215,24.601979690553225,6.760419002466604,29.66998750680719,8.602492231796777,18.935323701829134,0.802639587404299,11.333311977448185,11.581381939327931,9.76698593714963,16.40131979370215,0,21.22125764807637,9.76698593714963,32,11.333311977448185,24.200147355607523,18.935323701829134,26.042220584937695,29.66998750680719,16.40131979370215,24.601979690553225"
+                fill="url(#bv65d8)"
+                stroke="#999"
+                stroke-width="0"
+                stroke-linejoin="miter"
+              />
+              <polygon
+                points="16.40131979370215,24.601979690553225,6.760419002466604,29.66998750680719,8.602492231796777,18.935323701829134,0.802639587404299,11.333311977448185,11.581381939327931,9.76698593714963,16.40131979370215,0,21.22125764807637,9.76698593714963,32,11.333311977448185,24.200147355607523,18.935323701829134,26.042220584937695,29.66998750680719,16.40131979370215,24.601979690553225"
+                fill="url(#bv65d8)"
+              />
+            </svg>
+          </span>
+          <span class="rating-star">
+            <svg height="32" width="32" viewBox="0 0 32 32" class="vue-star-rating-star" step="1">
+              <linearGradient id="bv65d8" x1="0" x2="100%" y1="0" y2="0">
+                <stop offset="100%" stop-color="#FFC73F" />
+                <stop offset="100%" stop-color="#E1E1E1" />
+              </linearGradient>
+              <filter id="dhcns8" height="130%" width="130%" filterUnits="userSpaceOnUse">
+                <feGaussianBlur stdDeviation="0" result="coloredBlur" />
+                <feMerge>
+                  <feM in="coloredBlur" />
+                  <feM in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <polygon
+                points="16.40131979370215,24.601979690553225,6.760419002466604,29.66998750680719,8.602492231796777,18.935323701829134,0.802639587404299,11.333311977448185,11.581381939327931,9.76698593714963,16.40131979370215,0,21.22125764807637,9.76698593714963,32,11.333311977448185,24.200147355607523,18.935323701829134,26.042220584937695,29.66998750680719,16.40131979370215,24.601979690553225"
+                fill="url(#bv65d8)"
+                stroke="#fff"
+                filter="url(#dhcns8)"
+                style
+              />
+              <polygon
+                points="16.40131979370215,24.601979690553225,6.760419002466604,29.66998750680719,8.602492231796777,18.935323701829134,0.802639587404299,11.333311977448185,11.581381939327931,9.76698593714963,16.40131979370215,0,21.22125764807637,9.76698593714963,32,11.333311977448185,24.200147355607523,18.935323701829134,26.042220584937695,29.66998750680719,16.40131979370215,24.601979690553225"
+                fill="url(#bv65d8)"
+                stroke="#999"
+                stroke-width="0"
+                stroke-linejoin="miter"
+              />
+              <polygon
+                points="16.40131979370215,24.601979690553225,6.760419002466604,29.66998750680719,8.602492231796777,18.935323701829134,0.802639587404299,11.333311977448185,11.581381939327931,9.76698593714963,16.40131979370215,0,21.22125764807637,9.76698593714963,32,11.333311977448185,24.200147355607523,18.935323701829134,26.042220584937695,29.66998750680719,16.40131979370215,24.601979690553225"
+                fill="url(#bv65d8)"
+              />
+            </svg>
+          </span>
+          <span class="rating-star">
+            <svg height="32" width="32" viewBox="0 0 32 32" class="vue-star-rating-star" step="1">
+              <linearGradient id="bv65d8" x1="0" x2="100%" y1="0" y2="0">
+                <stop offset="100%" stop-color="#FFC73F" />
+                <stop offset="100%" stop-color="#E1E1E1" />
+              </linearGradient>
+              <filter id="dhcns8" height="130%" width="130%" filterUnits="userSpaceOnUse">
+                <feGaussianBlur stdDeviation="0" result="coloredBlur" />
+                <feMerge>
+                  <feM in="coloredBlur" />
+                  <feM in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <polygon
+                points="16.40131979370215,24.601979690553225,6.760419002466604,29.66998750680719,8.602492231796777,18.935323701829134,0.802639587404299,11.333311977448185,11.581381939327931,9.76698593714963,16.40131979370215,0,21.22125764807637,9.76698593714963,32,11.333311977448185,24.200147355607523,18.935323701829134,26.042220584937695,29.66998750680719,16.40131979370215,24.601979690553225"
+                fill="url(#bv65d8)"
+                stroke="#fff"
+                filter="url(#dhcns8)"
+                style
+              />
+              <polygon
+                points="16.40131979370215,24.601979690553225,6.760419002466604,29.66998750680719,8.602492231796777,18.935323701829134,0.802639587404299,11.333311977448185,11.581381939327931,9.76698593714963,16.40131979370215,0,21.22125764807637,9.76698593714963,32,11.333311977448185,24.200147355607523,18.935323701829134,26.042220584937695,29.66998750680719,16.40131979370215,24.601979690553225"
+                fill="url(#bv65d8)"
+                stroke="#999"
+                stroke-width="0"
+                stroke-linejoin="miter"
+              />
+              <polygon
+                points="16.40131979370215,24.601979690553225,6.760419002466604,29.66998750680719,8.602492231796777,18.935323701829134,0.802639587404299,11.333311977448185,11.581381939327931,9.76698593714963,16.40131979370215,0,21.22125764807637,9.76698593714963,32,11.333311977448185,24.200147355607523,18.935323701829134,26.042220584937695,29.66998750680719,16.40131979370215,24.601979690553225"
+                fill="url(#bv65d8)"
+              />
+            </svg>
+          </span>
+        </div>
+        <div class="rating-desc">
+          <div>Средняя оценка наших блюд клиентами</div>
+          <div>
+            Уже приготовлено:
+            <b>7 127 567</b> блюд
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="instagram">
+      <div class="container">
+        <div class="section-title">Тысячи людей уже готовят с Шефмаркет</div>
+        <div class="section-subtitle mb4">Читайте отзывы здесь и по тегу #шефмаркет в инстаграм</div>
+        <FeedSlider />
+      </div>
+    </section>
+    <section class="mass-media">
+      <div class="container">
+        <MediaSlider />
       </div>
     </section>
   </main>
@@ -104,15 +266,23 @@
 
 <script>
 import { db } from "@/plugins/firebase";
+import { mapGetters } from "vuex";
+import slugify from "slugify";
 import ChefsThumbsSlider from "@/components/Sections/ChefsThumbsSlider";
+import DatesSlider from "@/components/Sections/DatesSlider";
 import DinnersThumbsSlider from "@/components/Sections/DinnersThumbsSlider";
+import FeedSlider from "@/components/Sections/FeedSlider";
+import MediaSlider from "@/components/Sections/MediaSlider";
 export default {
   head: {
     title: "Главная"
   },
   components: {
+    DatesSlider,
     ChefsThumbsSlider,
-    DinnersThumbsSlider
+    DinnersThumbsSlider,
+    FeedSlider,
+    MediaSlider
   },
   data() {
     return {
@@ -126,23 +296,22 @@ export default {
       }
     };
   },
-  async asyncData() {
-    let dates = [];
-    const datesSnapshot = await db
-      .collection("dates")
-      .orderBy("status", "desc")
-      .get();
-    datesSnapshot.forEach(date => {
-      dates.unshift(date.data());
-    });
-    return { dates };
-  },
   computed: {
-    chefs() {
-      return this.$store.getters["chefs/getChefs"];
-    }
+    ...mapGetters({
+      chefs: "chefs/getChefs",
+      activeMenuData: "menu/getActiveMenuData",
+      activeMenuSetName: "menu/getActiveMenuSetName"
+    })
   },
-  methods: {}
+  fetch({ store }) {
+    return store.dispatch("menu/fetchActiveMenuData");
+  },
+  methods: {
+    goToDinners() {
+      const menuSlug = slugify(this.activeMenuSetName, { lower: true });
+      this.$router.push(`/dinners-${menuSlug}`);
+    }
+  }
 };
 </script>
 
@@ -209,12 +378,54 @@ export default {
     padding: 0 1rem;
   }
   .btn-group {
-    margin: 4rem 0;
+    padding: 2rem 0 6rem 0;
     text-align: center;
   }
   .chefs {
     padding-top: 5rem;
     padding-bottom: 6rem;
+  }
+  .menu-of-the-week {
+    .btn {
+      margin-right: 1rem;
+    }
+  }
+  .rating {
+    background: linear-gradient(rgb(255, 255, 255) 50%, rgb(249, 249, 249) 50%);
+    .rating-box {
+      background-color: #fff;
+      width: 45rem;
+      margin: auto;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.06);
+      border-radius: 30px;
+      padding: 4rem 0;
+    }
+    .rating-title {
+      font-size: 5.5rem;
+      line-height: 6rem;
+      font-weight: 900;
+      margin-bottom: 2rem;
+    }
+    .rating-stars {
+      margin-bottom: 2rem;
+    }
+    .rating-star {
+      margin: 0 0.5rem;
+    }
+    .rating-desc {
+      font-size: 1.8rem;
+      line-height: 3rem;
+    }
+  }
+  .instagram {
+    padding-top: 4rem;
+    padding-bottom: 20rem;
+    background-color: #f9f9f9;
+  }
+  .mass-media {
+    padding-top: 6rem;
+    padding-bottom: 8rem;
   }
 }
 </style>

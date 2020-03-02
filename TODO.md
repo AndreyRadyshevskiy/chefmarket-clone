@@ -37,3 +37,13 @@ https://github.com/cferdinandi/smooth-scroll/tree/master/dist
 # добавить проверку инпута добавить меню
 
 # создать страницу с ингридиентами с возможностью просмотра и редактирования
+
+# в index.vue сделать чтобы возвращалось с базы не menuData[0] а просто menuData
+
+# привести в порядок стили index.vue и вообще везде
+
+# в index.js nuxtServerInit вынести все лишнее и раскидать куда надо
+
+# вынести dates slider в отдельный компонент (дублируется на странцах index.vue \_id.vue)
+
+# настроить breakpoints на всех слайдерах Index.vue (пример в media-slider)
