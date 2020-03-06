@@ -6,27 +6,51 @@
           <div class="slide-inner">
             <div class="slide-image"></div>
             <div class="slide-content">
-              <div class="author">
-                <span class="green">@</span>boookayanny
-              </div>
+              <div class="author"><span class="green">@</span>boookayanny</div>
               <div class="time">месяц назад</div>
               <p class="text">Привет, меня зовут Яна, и я едаголик!</p>
-              <p
-                class="text"
-              >Готова поспорить, что многие люди, глядя на наши с мужем кулинарные эксперименты и постоянные поиски вкусных мест, думают, что мы слишком расточительные да и просто очень ленивые, чтобы готовить дома и экономить.</p>
-              <p
-                class="text"
-              >К слову, мы готовим дома часто - минимум 5 раз в неделю(привет сервису @chefmarket), зато еда вкусная и разнообразная. Никаких блюд приготовленных на неделю вперед, которые надоедают через пару дней. У нас каждый день новый...</p>
-              <a href="instagram.com" class="link">Читать в instagram</a>
+              <p class="text">
+                Готова поспорить, что многие люди, глядя на наши с мужем
+                кулинарные эксперименты и постоянные поиски вкусных мест,
+                думают, что мы слишком расточительные да и просто очень ленивые,
+                чтобы готовить дома и экономить.
+              </p>
+              <p class="text">
+                К слову, мы готовим дома часто - минимум 5 раз в неделю(привет
+                сервису @chefmarket), зато еда вкусная и разнообразная. Никаких
+                блюд приготовленных на неделю вперед, которые надоедают через
+                пару дней. У нас каждый день новый...
+              </p>
+              <a href="https://instagram.com" class="link"
+                >Читать в instagram</a
+              >
             </div>
           </div>
         </swiper-slide>
       </swiper>
-      <el-button icon="el-icon-back" circle class="button-prev" @click="swiperTop.slidePrev()"></el-button>
-      <el-button icon="el-icon-right" circle class="button-next" @click="swiperTop.slideNext()"></el-button>
+      <el-button
+        icon="el-icon-back"
+        circle
+        class="button-prev"
+        @click="swiperTop.slidePrev()"
+      ></el-button>
+      <el-button
+        icon="el-icon-right"
+        circle
+        class="button-next"
+        @click="swiperTop.slideNext()"
+      ></el-button>
       <!-- swiper2 Thumbs -->
-      <swiper :options="swiperOptionThumbs" class="gallery-thumbs" ref="swiperThumbs">
-        <swiper-slide v-for="(slide, index) in 7" :key="index" class="slide"></swiper-slide>
+      <swiper
+        :options="swiperOptionThumbs"
+        class="gallery-thumbs"
+        ref="swiperThumbs"
+      >
+        <swiper-slide
+          v-for="(slide, index) in 7"
+          :key="index"
+          class="slide"
+        ></swiper-slide>
       </swiper>
     </no-ssr>
   </div>

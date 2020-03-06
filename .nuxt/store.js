@@ -19,11 +19,10 @@ let store = {};
   // Enforce store modules
   store.modules = store.modules || {}
 
-  resolveStoreModules(require('..\\store\\inventory.js'), 'inventory.js')
   resolveStoreModules(require('..\\store\\auth.js'), 'auth.js')
-  resolveStoreModules(require('..\\store\\dinners.js'), 'dinners.js')
-  resolveStoreModules(require('..\\store\\ingredients.js'), 'ingredients.js')
   resolveStoreModules(require('..\\store\\chefs.js'), 'chefs.js')
+  resolveStoreModules(require('..\\store\\ingredients.js'), 'ingredients.js')
+  resolveStoreModules(require('..\\store\\inventory.js'), 'inventory.js')
   resolveStoreModules(require('..\\store\\menu.js'), 'menu.js')
   resolveStoreModules(require('..\\store\\posts.js'), 'posts.js')
   resolveStoreModules(require('..\\store\\recipes.js'), 'recipes.js')
@@ -35,12 +34,11 @@ let store = {};
   if (process.client && module.hot) {
     // Whenever any Vuex module is updated...
     module.hot.accept([
-      '..\\store\\inventory.js',
       '..\\store\\auth.js',
-      '..\\store\\dinners.js',
+      '..\\store\\chefs.js',
       '..\\store\\index.js',
       '..\\store\\ingredients.js',
-      '..\\store\\chefs.js',
+      '..\\store\\inventory.js',
       '..\\store\\menu.js',
       '..\\store\\posts.js',
       '..\\store\\recipes.js',

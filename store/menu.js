@@ -30,6 +30,8 @@ export const actions = {
       console.log(err);
     }
   },
+  // ВОТ СЮДА ВЫНЕСТИ ИЗНАЧАЛЬНУЮ ЗАГРУЗКУ МЕНЮ
+  // ПРОВЕРИТЬ STORE ЕСЛИ ТАМ ПУСТО ИСКАТЬ ПО ДЕФОЛТ ЗНАЧЕНИЯМ
   async fetchActiveMenuData({ commit, state }) {
     let menuData = [];
     const recipesSnapshot = await db

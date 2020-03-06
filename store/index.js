@@ -13,14 +13,27 @@ export const actions = {
     }
 
     let dates = [];
-    const datesSnapshot = await db
-      .collection("dates")
-      .orderBy("status", "desc")
-      .get();
+    let menuData = [];
+    const [datesSnapshot, menuDataSnapshot] = await Promise.all([
+      db
+        .collection("dates")
+        .orderBy("status", "desc")
+        .get(),
+      db
+        .collection("menu")
+        .where("status", "==", 1)
+        .where("menuSetName", "==", "Оригинальное")
+        .get()
+    ]);
     datesSnapshot.forEach(date => {
       dates.unshift(date.data());
     });
+    menuDataSnapshot.forEach(md => {
+      menuData.unshift(md.data());
+    });
+    menuData = menuData[0].recipes;
     commit("menu/setDates", { dates });
+    commit("menu/setActiveMenuData", menuData);
 
     // убрать вот это все в соотв страницы
     let posts = [];
@@ -38,21 +51,21 @@ export const actions = {
     commit("posts/setPosts", { posts });
     commit("chefs/setChefs", { chefs });
 
-    //   let posts = []
-    //   const postSnapshot = await db.collection('posts').get()
-    //   postSnapshot.forEach(doc => {
-    //     const post = doc.data()
-    //     posts.unshift(post)
-    //   })
-    //   commit('posts/setPosts', { posts })
+    // let posts = [];
+    // const postSnapshot = await db.collection("posts").get();
+    // postSnapshot.forEach(doc => {
+    //   const post = doc.data();
+    //   posts.unshift(post);
+    // });
+    // commit("posts/setPosts", { posts });
 
-    //   let chefs = []
-    //   const postSnapshot = await db.collection('chefs').get()
-    //   postSnapshot.forEach(doc => {
-    //     const chef = doc.data()
-    //     chefs.unshift(chef)
-    //   })
-    //   commit('chefs/setChefs', { chefs })
+    // let chefs = [];
+    // const postSnapshot = await db.collection("chefs").get();
+    // postSnapshot.forEach(doc => {
+    //   const chef = doc.data();
+    //   chefs.unshift(chef);
+    // });
+    // commit("chefs/setChefs", { chefs });
   }
 };
 // FETCH MULTIPLE COLLECTIONS EXAMPLE

@@ -5,6 +5,7 @@ import scrollBehavior from './router.scrollBehavior.js'
 
 const _2d536fe8 = () => interopDefault(import('..\\pages\\admin\\index.vue' /* webpackChunkName: "pages_admin_index" */))
 const _b92f9e8a = () => interopDefault(import('..\\pages\\blog\\index.vue' /* webpackChunkName: "pages_blog_index" */))
+const _7e46bd0e = () => interopDefault(import('..\\pages\\comparison.vue' /* webpackChunkName: "pages_comparison" */))
 const _29fc58d0 = () => interopDefault(import('..\\pages\\contacts.vue' /* webpackChunkName: "pages_contacts" */))
 const _ef476dfc = () => interopDefault(import('..\\pages\\how-it-works.vue' /* webpackChunkName: "pages_how-it-works" */))
 const _8adc1b52 = () => interopDefault(import('..\\pages\\mission.vue' /* webpackChunkName: "pages_mission" */))
@@ -49,6 +50,10 @@ export const routerOptions = {
     path: "/blog",
     component: _b92f9e8a,
     name: "blog"
+  }, {
+    path: "/comparison",
+    component: _7e46bd0e,
+    name: "comparison"
   }, {
     path: "/contacts",
     component: _29fc58d0,

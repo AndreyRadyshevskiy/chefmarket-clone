@@ -13,7 +13,10 @@
       <div class="video">
         <no-ssr>
           <vue-plyr>
-            <video poster="@/assets/img/hero-banner.jpg" src="@/assets/video/how-it-works.mp4"></video>
+            <video
+              poster="@/assets/img/hero-banner.jpg"
+              src="@/assets/video/how-it-works.mp4"
+            ></video>
           </vue-plyr>
         </no-ssr>
       </div>
@@ -25,7 +28,8 @@
       </h2>
       <div class="section-subtitle mb2">
         В нашей команде 18 шеф-поваров, технологов и диетологов. Еженедельно
-        <br />мы формируем 4 сбалансированных и функциональных меню по 15 блюд в каждом.
+        <br />мы формируем 4 сбалансированных и функциональных меню по 15 блюд в
+        каждом.
       </div>
       <div class="container">
         <ChefsThumbsSlider />
@@ -37,10 +41,16 @@
         <br />вам подходят, и оформляете заказ
       </h2>
       <div class="choice-image-box">
-        <img src="@/assets/img/choice.jpg" alt="Изображение меню" class="choice-image" />
+        <img
+          src="@/assets/img/choice.jpg"
+          alt="Изображение меню"
+          class="choice-image"
+        />
       </div>
       <div class="btn-group">
-        <nuxt-link to="/dinners" class="btn btn-colored">Выбрать меню</nuxt-link>
+        <nuxt-link to="/dinners" class="btn btn-colored"
+          >Выбрать меню</nuxt-link
+        >
         <a href="#" class="link">Подробнее о разнице в меню</a>
       </div>
     </section>
@@ -52,35 +62,52 @@
       <div class="production-grid">
         <div class="production-item">
           <nuxt-link to="/">
-            <img src="@/assets/img/how-it-works/purchase-1.jpg" class="production-image" />
-            <p
-              class="text"
-            >Наше производство находится в Москве и соответствует всем нормам пищевой отрасли</p>
+            <img
+              src="@/assets/img/how-it-works/purchase-1.jpg"
+              class="production-image"
+            />
+            <p class="text">
+              Наше производство находится в Москве и соответствует всем нормам
+              пищевой отрасли
+            </p>
           </nuxt-link>
           <nuxt-link to="/" class="link">Подробнее о производстве</nuxt-link>
         </div>
         <div class="production-item">
           <nuxt-link to="/">
-            <img src="@/assets/img/how-it-works/purchase-2.jpg" class="production-image" />
+            <img
+              src="@/assets/img/how-it-works/purchase-2.jpg"
+              class="production-image"
+            />
           </nuxt-link>
-          <nuxt-link to="/" class="link">Подробнее о наших поставщиках</nuxt-link>
+          <nuxt-link to="/" class="link"
+            >Подробнее о наших поставщиках</nuxt-link
+          >
         </div>
         <div class="production-item">
           <nuxt-link to="/">
-            <img src="@/assets/img/how-it-works/purchase-3.jpg" class="production-image" />
+            <img
+              src="@/assets/img/how-it-works/purchase-3.jpg"
+              class="production-image"
+            />
           </nuxt-link>
           <nuxt-link to="/" class="link">Происхождение продуктов</nuxt-link>
         </div>
         <div class="production-item">
           <nuxt-link to="/">
-            <img src="@/assets/img/how-it-works/purchase-4.jpg" class="production-image" />
+            <img
+              src="@/assets/img/how-it-works/purchase-4.jpg"
+              class="production-image"
+            />
           </nuxt-link>
           <nuxt-link to="/" class="link">Сертификаты соответсвия</nuxt-link>
         </div>
       </div>
     </section>
     <section class="delivery">
-      <h2 class="section-title section-title--md mb2">Бесплатно привозим ваш заказ</h2>
+      <h2 class="section-title section-title--md mb2">
+        Бесплатно привозим ваш заказ
+      </h2>
       <CitySelect />
       <nuxt-link to="/" class="link">Подробнее о доставке</nuxt-link>
       <img
@@ -90,38 +117,61 @@
       />
     </section>
     <section class="product">
-      <h2 class="section-title section-title--md mb2">В нашей коробке продукты и рецепты</h2>
+      <h2 class="section-title section-title--md mb2">
+        В нашей коробке продукты и рецепты
+      </h2>
       <div class="section-subtitle mb6">
-        Все ингредиенты отдельно упакованы, маркированы в соответствии с ГОСТ и ТУ.
+        Все ингредиенты отдельно упакованы, маркированы в соответствии с ГОСТ и
+        ТУ.
         <br />К каждому блюду прилагается фоторецепт.
       </div>
       <div class="unpacking-video-box">
-        <video src="@/assets/video/unpacking.mp4" class="unpacking-video" autoplay loop muted></video>
+        <video
+          src="@/assets/video/unpacking.mp4"
+          class="unpacking-video"
+          autoplay
+          loop
+          muted
+        ></video>
       </div>
     </section>
     <section class="cashback">
-      <h2 class="section-title section-title--md mb2">Кешбэк за каждый заказ</h2>
+      <h2 class="section-title section-title--md mb2">
+        Кешбэк за каждый заказ
+      </h2>
       <div class="section-subtitle mb6">
         Кешбэк начисляется в бонусных рублях,
         <br />которыми можно оплачивать новые заказы.
       </div>
       <div class="cashback-grid">
         <div class="cashback-item">
-          <img src="@/assets/img/how-it-works/cashback-1.svg" alt="Кешбек" class="cashback-image" />
+          <img
+            src="@/assets/img/how-it-works/cashback-1.svg"
+            alt="Кешбек"
+            class="cashback-image"
+          />
           <span class="cashback-text">
             Возвращаем на ваш счет
             <br />до 5% от каждого заказа
           </span>
         </div>
         <div class="cashback-item">
-          <img src="@/assets/img/how-it-works/cashback-2.svg" alt="Кешбэк" class="cashback-image" />
+          <img
+            src="@/assets/img/how-it-works/cashback-2.svg"
+            alt="Кешбэк"
+            class="cashback-image"
+          />
           <span class="cashback-text">
             Копить или тратить -
             <br />решать вам
           </span>
         </div>
         <div class="cashback-item">
-          <img src="@/assets/img/how-it-works/cashback-3.svg" alt="Кэшбэк" class="cashback-image" />
+          <img
+            src="@/assets/img/how-it-works/cashback-3.svg"
+            alt="Кэшбэк"
+            class="cashback-image"
+          />
           <span class="cashback-text">
             Чем больше заказов,
             <br />тем больше кешбэк
@@ -136,7 +186,7 @@
         <br />по нашим рецептам
       </h2>
       <RecipesVideoSlider />
-      <el-button to="/dinners-originalnoe" class="btn btn-colored">Выбрать меню</el-button>
+      <nuxt-link to="/dinners" class="btn btn-colored">Выбрать меню</nuxt-link>
     </section>
     <section class="environment">
       <h2 class="section-title section-title--md mb2">

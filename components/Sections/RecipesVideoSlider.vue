@@ -1,7 +1,6 @@
 <template>
   <div class="video-slider">
     <no-ssr>
-      {{swiper}}
       <swiper
         :options="swiperOption"
         ref="videoSwiper"
@@ -25,10 +24,25 @@
           </p>
         </swiper-slide>
       </swiper>
-      <el-button icon="el-icon-back" circle class="button-prev" @click="swiper.slidePrev()"></el-button>
-      <el-button icon="el-icon-right" circle class="button-next" @click="swiper.slideNext()"></el-button>
+      <el-button
+        icon="el-icon-back"
+        circle
+        class="button-prev"
+        @click="swiper.slidePrev()"
+      ></el-button>
+      <el-button
+        icon="el-icon-right"
+        circle
+        class="button-next"
+        @click="swiper.slideNext()"
+      ></el-button>
     </no-ssr>
-    <el-dialog :visible.sync="dialogVisible" width="40%" center class="video-dialog">
+    <el-dialog
+      :visible.sync="dialogVisible"
+      width="40%"
+      center
+      class="video-dialog"
+    >
       <div class="section-title section-title--md">Видео рецепт</div>
       <iframe
         width="560"
@@ -39,7 +53,11 @@
         allowfullscreen
         class="video-frame"
       ></iframe>
-      <el-button class="btn btn-transparent btn-black" @click="dialogVisible=false">Назад</el-button>
+      <el-button
+        class="btn btn-transparent btn-black"
+        @click="dialogVisible = false"
+        >Назад</el-button
+      >
       <span slot="footer" class="dialog-footer"></span>
     </el-dialog>
   </div>
