@@ -87,7 +87,6 @@ export default {
       swiperTop.controller.control = swiperThumbs;
       swiperThumbs.controller.control = swiperTop;
       this.swiperTop = this.$refs.swiperTop.swiper;
-      console.log(this.swiperTop);
     });
   }
 };

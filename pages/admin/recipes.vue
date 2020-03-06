@@ -2,22 +2,43 @@
   <div class="recipes-list-page">
     <div class="admin-page-title">Рецепты</div>
     <el-table
-      :data="recipes.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
+      :data="
+        recipes.filter(
+          data =>
+            !search || data.title.toLowerCase().includes(search.toLowerCase())
+        )
+      "
       style="width: 100%"
     >
-      <el-table-column width="800" label="Название" prop="title"></el-table-column>
+      <el-table-column
+        width="800"
+        label="Название"
+        prop="title"
+      ></el-table-column>
       <el-table-column label="Автор" prop="chef.name"></el-table-column>
       <el-table-column label="Сложность" prop="difficulty"></el-table-column>
-      <el-table-column label="Время приготовления" prop="cookTime" align="center"></el-table-column>
+      <el-table-column
+        label="Время приготовления"
+        prop="cookTime"
+        align="center"
+      ></el-table-column>
       <el-table-column align="right">
         <template slot="header" slot-scope="scope">
           <el-input v-model="search" size="mini" placeholder="Искать рецепт" />
         </template>
         <template slot-scope="scope">
           <el-tooltip content="Смотреть рецепт" placement="top" effect="light">
-            <el-button circle icon="el-icon-view" @click="handleView(scope.$index, scope.row)"></el-button>
+            <el-button
+              circle
+              icon="el-icon-view"
+              @click="handleView(scope.$index, scope.row)"
+            ></el-button>
           </el-tooltip>
-          <el-tooltip content="Редактировать рецепт" placement="top" effect="light">
+          <el-tooltip
+            content="Редактировать рецепт"
+            placement="top"
+            effect="light"
+          >
             <el-button
               type="primary"
               icon="el-icon-edit"
@@ -77,14 +98,12 @@ export default {
     handleView(index, row) {
       this.recipeVisible = true;
       this.activeRecipe = row;
-      console.log(index, row);
     },
     handleEdit(index, row) {
       this.$router.push({
         name: "admin-create-recipe",
         params: { recipe: row }
       });
-      console.log(index, row);
     },
     handleDelete(index, row) {
       this.$confirm(
@@ -127,4 +146,3 @@ export default {
   }
 }
 </style>
-

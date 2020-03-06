@@ -1,6 +1,6 @@
 <template>
   <div class="info-overlay">
-    <p>
+    <p class="info-title">
       Клон сервиса по доставке продуктов с рецептами
       <a class="link" href="https://chefmarket.ru" target="blank"
         >chefmarket.ru</a
@@ -44,6 +44,11 @@ export default {};
   }
   li {
     padding-left: 1rem;
+  }
+  .info-title,
+  .info-title a {
+    font-size: 1.8rem;
+    font-weight: bold;
   }
 }
 </style>

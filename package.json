@@ -1,7 +1,7 @@
 {
   "name": "chefmarket",
   "version": "1.0.0",
-  "description": "My kryptonian Nuxt.js project",
+  "description": "Клон сервиса по доставке продуктов с рецептами chefmarket.ru",
   "author": "Andrey",
   "private": true,
   "scripts": {

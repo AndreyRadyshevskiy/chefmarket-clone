@@ -172,8 +172,6 @@ export default {
       if (this.periodActive && this.periodActive.menuSets.length > 0) {
         this.menuActiveSetName = this.periodActive.menuSets[0].name;
         this.menuActiveSet = this.periodActive.menuSets[0];
-      } else {
-        console.log("error is here");
       }
     },
     menuActiveSetName() {
@@ -364,7 +362,6 @@ export default {
         menuSetName: this.periods[0].menuSets[0].name,
         recipes: this.periods[0].menuSets[0].recipes
       };
-      console.log(formData);
       try {
         await this.$store.dispatch("menu/createMenu", formData);
         this.$message.success("меню сохранено!");

@@ -250,7 +250,6 @@ export default {
               author: this.post.author,
               slug: slugify(this.post.title, { lower: true })
             };
-            console.log(formData);
             await this.$store.dispatch("posts/createPost", formData);
 
             this.$refs.upload.clearFiles();
