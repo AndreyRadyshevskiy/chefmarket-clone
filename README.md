@@ -1,6 +1,7 @@
-# chefmarket
+# chefmarket-clone
 
-> My kryptonian Nuxt.js project
+> Полнофункциональный клон известного сервиса
+  по доставке продуктов с рецептами [Nuxt.js docs] https://bit.ly/39EHupt
 
 ## Build Setup
 
