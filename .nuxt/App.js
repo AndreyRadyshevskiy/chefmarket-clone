@@ -25,7 +25,7 @@ import _77430317 from '..\\layouts\\empty.vue'
 const layouts = { "_admin": _77068119,"_default": _6f6c098b,"_empty": _77430317 }
 
 export default {
-  head: {"title":"chefmarket","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"My kryptonian Nuxt.js project"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.png"}],"style":[],"script":[]},
+  head: {"title":"chefmarket","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"name":"robots","content":"noindex, nofollow"},{"hid":"description","name":"description","content":"Клон сервиса по доставке продуктов с рецептами chefmarket.ru"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.png"}],"style":[],"script":[]},
 
   render (h, props) {
     const loadingEl = h('NuxtLoading', { ref: 'loading' })

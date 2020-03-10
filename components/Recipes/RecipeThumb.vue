@@ -73,6 +73,7 @@ export default {
     width: 100%;
     height: 200px;
     position: relative;
+    cursor: pointer;
   }
   .recipe-tags {
     position: absolute;
@@ -101,6 +102,7 @@ export default {
     padding-top: 1rem;
     padding-bottom: 2.4rem;
     margin-bottom: auto;
+    cursor: pointer;
   }
   .recipe-expires {
     font-size: 1.2rem;

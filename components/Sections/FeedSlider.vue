@@ -28,18 +28,8 @@
           </div>
         </swiper-slide>
       </swiper>
-      <el-button
-        icon="el-icon-back"
-        circle
-        class="button-prev"
-        @click="swiperTop.slidePrev()"
-      ></el-button>
-      <el-button
-        icon="el-icon-right"
-        circle
-        class="button-next"
-        @click="swiperTop.slideNext()"
-      ></el-button>
+      <el-button icon="el-icon-back" circle class="button-prev"></el-button>
+      <el-button icon="el-icon-right" circle class="button-next"></el-button>
       <!-- swiper2 Thumbs -->
       <swiper
         :options="swiperOptionThumbs"

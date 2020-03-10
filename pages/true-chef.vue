@@ -2,9 +2,11 @@
   <div class="chefs-page">
     <div class="container">
       <h1 class="section-title">Наши шеф-повара</h1>
-      <div
-        class="section-subtitle"
-      >Наши шеф-повара не просто круто готовят. У каждого своя фишка: кто-то отвечает за домашнюю кухню, кто-то — за японскую, есть и повар-вегетарианец, и настоящий ЗОЖник! Найдите своего</div>
+      <div class="section-subtitle">
+        Наши шеф-повара не просто круто готовят. У каждого своя фишка: кто-то
+        отвечает за домашнюю кухню, кто-то — за японскую, есть и
+        повар-вегетарианец, и настоящий ЗОЖник! Найдите своего
+      </div>
       <no-ssr>
         <div class="chefs-slider">
           <swiper :options="swiperOption" ref="swiper">
@@ -13,15 +15,25 @@
                 <img :src="chef.avatar" alt class="slide-image" />
               </div>
               <div class="slide-content">
-                <div class="chef-name">{{chef.name}}</div>
-                <p class="chef-info">{{chef.info}}</p>
+                <div class="chef-name">{{ chef.name }}</div>
+                <p class="chef-info">{{ chef.info }}</p>
                 <img src="@/assets/img/quote.svg" />
-                <p class="chef-quote">{{chef.quote}}</p>
+                <p class="chef-quote">{{ chef.quote }}</p>
               </div>
             </swiper-slide>
           </swiper>
-          <el-button icon="el-icon-back" circle class="button-prev" @click="swiper.slidePrev()"></el-button>
-          <el-button icon="el-icon-right" circle class="button-next" @click="swiper.slideNext()"></el-button>
+          <el-button
+            icon="el-icon-back"
+            circle
+            class="button-prev"
+            slot="button-prev"
+          ></el-button>
+          <el-button
+            icon="el-icon-right"
+            circle
+            class="button-next"
+            slot="button-next"
+          ></el-button>
         </div>
       </no-ssr>
     </div>
@@ -31,34 +43,25 @@
 <script>
 export default {
   computed: {
-    swiper() {
-      return this.$refs.swiper.swiper;
-    },
     chefs() {
       return this.$store.getters["chefs/getChefs"];
     },
     swiperOption() {
       return {
         slidesPerView: 1,
-        initialSlide: this.$route.query.index,
+        initialSlide: this.$route.query.index ? this.$route.query.index : 0,
         loop: true,
         navigation: {
           nextEl: ".button-next",
           prevEl: ".button-prev"
         }
-        // on: {
-        //   init: function() {
-        //     console.log(this.realIndex, v.$route.query.index);
-        //     this.activeIndex = v.$route.query.index;
-        //   }
-        // }
       };
     }
   }
 };
 </script>
 
- <style lang="scss">
+<style lang="scss">
 .chefs-page {
   padding: 6rem 0;
   .section-subtitle {
@@ -104,18 +107,6 @@ export default {
     padding-left: 2rem;
     font-size: 1.2rem;
     line-height: 2rem;
-  }
-  .button-prev {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  .button-next {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
   }
 }
 </style>

@@ -13,10 +13,7 @@
       <div class="video">
         <no-ssr>
           <vue-plyr>
-            <video
-              poster="@/assets/img/hero-banner.jpg"
-              src="@/assets/video/how-it-works.mp4"
-            ></video>
+            <video poster="@/assets/img/hero-banner.jpg" src="@/assets/video/how-it-works.mp4"></video>
           </vue-plyr>
         </no-ssr>
       </div>
@@ -41,16 +38,10 @@
         <br />вам подходят, и оформляете заказ
       </h2>
       <div class="choice-image-box">
-        <img
-          src="@/assets/img/choice.jpg"
-          alt="Изображение меню"
-          class="choice-image"
-        />
+        <img src="@/assets/img/choice.jpg" alt="Изображение меню" class="choice-image" />
       </div>
       <div class="btn-group">
-        <nuxt-link to="/dinners" class="btn btn-colored"
-          >Выбрать меню</nuxt-link
-        >
+        <nuxt-link to="/dinners" class="btn btn-colored">Выбрать меню</nuxt-link>
         <a href="#" class="link">Подробнее о разнице в меню</a>
       </div>
     </section>
@@ -62,10 +53,7 @@
       <div class="production-grid">
         <div class="production-item">
           <nuxt-link to="/">
-            <img
-              src="@/assets/img/how-it-works/purchase-1.jpg"
-              class="production-image"
-            />
+            <img src="@/assets/img/how-it-works/purchase-1.jpg" class="production-image" />
             <p class="text">
               Наше производство находится в Москве и соответствует всем нормам
               пищевой отрасли
@@ -75,40 +63,42 @@
         </div>
         <div class="production-item">
           <nuxt-link to="/">
-            <img
-              src="@/assets/img/how-it-works/purchase-2.jpg"
-              class="production-image"
-            />
+            <img src="@/assets/img/how-it-works/purchase-2.jpg" class="production-image" />
           </nuxt-link>
-          <nuxt-link to="/" class="link"
-            >Подробнее о наших поставщиках</nuxt-link
-          >
+          <nuxt-link to="/" class="link">Подробнее о наших поставщиках</nuxt-link>
         </div>
         <div class="production-item">
           <nuxt-link to="/">
-            <img
-              src="@/assets/img/how-it-works/purchase-3.jpg"
-              class="production-image"
-            />
+            <img src="@/assets/img/how-it-works/purchase-3.jpg" class="production-image" />
           </nuxt-link>
           <nuxt-link to="/" class="link">Происхождение продуктов</nuxt-link>
         </div>
         <div class="production-item">
           <nuxt-link to="/">
-            <img
-              src="@/assets/img/how-it-works/purchase-4.jpg"
-              class="production-image"
-            />
+            <img src="@/assets/img/how-it-works/purchase-4.jpg" class="production-image" />
           </nuxt-link>
           <nuxt-link to="/" class="link">Сертификаты соответсвия</nuxt-link>
         </div>
       </div>
     </section>
     <section class="delivery">
-      <h2 class="section-title section-title--md mb2">
-        Бесплатно привозим ваш заказ
-      </h2>
-      <CitySelect />
+      <h2 class="section-title section-title--md mb2">Бесплатно привозим ваш заказ</h2>
+      <SelectBox :options="regions" :default-option="0" class="pb4">
+        <template v-slot:default="slotProps">
+          <div class="section-subtitle" v-if="slotProps.activeOption == 'МОСКВА'">
+            Ежедневная бесплатная доставка по Москве и до 60 км от МКАД.
+            <br />В удобный для вас интервал времени.
+          </div>
+          <div class="section-subtitle" v-if="slotProps.activeOption == 'САНКТ-ПЕТЕРБУРГ'">
+            Бесплатная доставка по Санкт-Петербургу и до 30 км от города.
+            <br />Каждый день, кроме субботы. В удобный для вас интервал времени.
+          </div>
+          <div class="section-subtitle" v-if="slotProps.activeOption == 'НИЖНИЙ НОВГОРОД'">
+            Бесплатная доставка по Нижнему Новгороду и до 30 км от города
+            <br />по четвергам и воскресеньям. В удобный для вас интервал времени.
+          </div>
+        </template>
+      </SelectBox>
       <nuxt-link to="/" class="link">Подробнее о доставке</nuxt-link>
       <img
         src="@/assets/img/how-it-works/delivery.jpg"
@@ -117,61 +107,39 @@
       />
     </section>
     <section class="product">
-      <h2 class="section-title section-title--md mb2">
-        В нашей коробке продукты и рецепты
-      </h2>
+      <h2 class="section-title section-title--md mb2">В нашей коробке продукты и рецепты</h2>
       <div class="section-subtitle mb6">
         Все ингредиенты отдельно упакованы, маркированы в соответствии с ГОСТ и
         ТУ.
         <br />К каждому блюду прилагается фоторецепт.
       </div>
       <div class="unpacking-video-box">
-        <video
-          src="@/assets/video/unpacking.mp4"
-          class="unpacking-video"
-          autoplay
-          loop
-          muted
-        ></video>
+        <video src="@/assets/video/unpacking.mp4" class="unpacking-video" autoplay loop muted></video>
       </div>
     </section>
     <section class="cashback">
-      <h2 class="section-title section-title--md mb2">
-        Кешбэк за каждый заказ
-      </h2>
+      <h2 class="section-title section-title--md mb2">Кешбэк за каждый заказ</h2>
       <div class="section-subtitle mb6">
         Кешбэк начисляется в бонусных рублях,
         <br />которыми можно оплачивать новые заказы.
       </div>
       <div class="cashback-grid">
         <div class="cashback-item">
-          <img
-            src="@/assets/img/how-it-works/cashback-1.svg"
-            alt="Кешбек"
-            class="cashback-image"
-          />
+          <img src="@/assets/img/how-it-works/cashback-1.svg" alt="Кешбек" class="cashback-image" />
           <span class="cashback-text">
             Возвращаем на ваш счет
             <br />до 5% от каждого заказа
           </span>
         </div>
         <div class="cashback-item">
-          <img
-            src="@/assets/img/how-it-works/cashback-2.svg"
-            alt="Кешбэк"
-            class="cashback-image"
-          />
+          <img src="@/assets/img/how-it-works/cashback-2.svg" alt="Кешбэк" class="cashback-image" />
           <span class="cashback-text">
             Копить или тратить -
             <br />решать вам
           </span>
         </div>
         <div class="cashback-item">
-          <img
-            src="@/assets/img/how-it-works/cashback-3.svg"
-            alt="Кэшбэк"
-            class="cashback-image"
-          />
+          <img src="@/assets/img/how-it-works/cashback-3.svg" alt="Кэшбэк" class="cashback-image" />
           <span class="cashback-text">
             Чем больше заказов,
             <br />тем больше кешбэк
@@ -220,13 +188,20 @@
 
 <script>
 import ChefsThumbsSlider from "@/components/Sections/ChefsThumbsSlider";
-import CitySelect from "@/components/Sections/CitySelect";
+import SelectBox from "@/components/UI/SelectBox";
 import RecipesVideoSlider from "@/components/Sections/RecipesVideoSlider";
 export default {
   components: {
     ChefsThumbsSlider,
-    CitySelect,
+    SelectBox,
     RecipesVideoSlider
+  },
+  computed: {
+    regions() {
+      return this.$store.getters["region/getRegions"].map(item =>
+        item.name.toUpperCase()
+      );
+    }
   }
 };
 </script>

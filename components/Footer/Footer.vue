@@ -15,7 +15,9 @@
             <ul class="menu-column">
               <li class="menu-title">О Компании</li>
               <li>
-                <nuxt-link to="/how-it-works" class="menu-link">Как это работает?</nuxt-link>
+                <nuxt-link to="/how-it-works" class="menu-link"
+                  >Как это работает?</nuxt-link
+                >
               </li>
               <li>
                 <nuxt-link to="/mission" class="menu-link">Миссия</nuxt-link>
@@ -39,7 +41,9 @@
             <ul class="menu-column">
               <li class="menu-title">Гарантии Качества</li>
               <li>
-                <a href class="menu-link">Наши шеф-повара</a>
+                <nuxt-link to="/true-chef" class="menu-link"
+                  >Наши шеф-повара</nuxt-link
+                >
               </li>
               <li>
                 <a href class="menu-link">Наши поставщики</a>
@@ -76,7 +80,9 @@
               </div>
             </div>
             <div class="subscribe">
-              <h5 class="text">Подпишитесь и получайте рецепты изумительно вкусных блюд!</h5>
+              <h5 class="text">
+                Подпишитесь и получайте рецепты изумительно вкусных блюд!
+              </h5>
               <form action class="subscribe-form">
                 <input type="email" placeholder="Введите ваш e-mail" />
                 <button type="submit">Подписаться</button>

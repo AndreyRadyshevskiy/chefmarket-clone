@@ -5,20 +5,20 @@
         <div class="region" ref="regionOptions">
           <span>Ваш регион доставки:</span>
           <span class="region-select" @click="regionSelect = !regionSelect">
-            {{ region }}
+            {{ activeRegion }}
             <span class="expand-arrow-green"></span>
           </span>
           <ul class="region-options" v-show="regionSelect" @click="setRegion">
-            <li class="region-option">Москва</li>
-            <li class="region-option">Санкт-Петербург</li>
-            <li class="region-option">Нижний Новгород</li>
+            <li class="region-option" v-for="(region, index) in regions">
+              {{ region.name }}
+            </li>
           </ul>
         </div>
         <a href="tel:+74953746132" class="phone-link">{{ phone }}</a>
         <a href="#" class="top-line-link">
-          <img src="~/assets/img/icons/ready-food.svg" class="icon-food">
+          <img src="~/assets/img/icons/ready-food.svg" class="icon-food" />
           <span>Готовая еда</span>
-          <img src="~/assets/img/icons/link.svg" class="icon-link">
+          <img src="~/assets/img/icons/link.svg" class="icon-link" />
         </a>
       </div>
     </div>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -36,8 +36,9 @@ export default {
   },
   computed: {
     ...mapGetters({
-      region: 'region/region',
-      phone: 'region/phone'
+      phone: "region/getPhone",
+      activeRegion: "region/getRegion",
+      regions: "region/getRegions"
     })
   },
   mounted() {
@@ -48,11 +49,11 @@ export default {
   },
   methods: {
     setRegion(event) {
-      const region = event.target.textContent;
-      const activeRegionObj = this.$store.state.region.regionArr.find(
+      const region = event.target.textContent.trim();
+      const activeRegionObj = this.$store.state.region.regions.find(
         el => el.name == region
-      )
-      this.$store.commit('region/setActiveRegion', activeRegionObj)
+      );
+      this.$store.commit("region/setActiveRegion", activeRegionObj);
       this.regionSelect = false;
     },
     close(event) {
@@ -65,7 +66,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .top-line {
   background: #333;
   font-size: 1.2rem;
@@ -99,7 +99,7 @@ export default {
       background: #fff;
       color: #333;
       font-weight: normal;
-      box-shadow: 0 4px 10px 0 hsla(0,0%,65%,.5);
+      box-shadow: 0 4px 10px 0 hsla(0, 0%, 65%, 0.5);
       padding: 1rem 0;
       width: 20rem;
       left: 46%;
@@ -139,8 +139,8 @@ export default {
     font-weight: 600;
     margin-left: auto;
     color: #fff;
-    opacity: .8;
-    padding: .5rem 0;
+    opacity: 0.8;
+    padding: 0.5rem 0;
 
     &:hover {
       opacity: 1;
@@ -157,4 +157,3 @@ export default {
   }
 }
 </style>
-

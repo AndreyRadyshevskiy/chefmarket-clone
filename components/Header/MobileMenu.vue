@@ -5,31 +5,42 @@
         <div class="region-select" @click="toggleRegionMenu">
           <span>Ваш регион доставки:</span>
           <span class="region-selected">{{ region }}</span>
-          <span class="expand-arrow-green" :class="{ rotate: regionMenuIsOpen }"></span>
+          <span
+            class="expand-arrow-green"
+            :class="{ rotate: regionMenuIsOpen }"
+          ></span>
         </div>
         <ul class="region-items" @click="setRegion" v-show="regionMenuIsOpen">
           <li
             class="region-item"
             v-for="(region, index) in this.$store.state.region.regionArr"
             :key="index"
-          >{{ region.name }}</li>
+          >
+            {{ region.name }}
+          </li>
         </ul>
       </div>
       <div class="line" v-show="!regionMenuIsOpen"></div>
       <div class="menu-items">
         <nuxt-link to="/menu" class="menu-item">Меню</nuxt-link>
-        <nuxt-link to="/how-it-works" class="menu-item">Как это работает</nuxt-link>
+        <nuxt-link to="/how-it-works" class="menu-item"
+          >Как это работает</nuxt-link
+        >
         <nuxt-link to="/blog" class="menu-item">Блог о вкусном</nuxt-link>
         <nuxt-link to="/" class="menu-item">
           Готовая еда
-          <img src="~/assets/img/icons/link.svg">
+          <img src="~/assets/img/icons/link.svg" />
         </nuxt-link>
-        <div class="menu-item" @click="login=!login">Войти</div>
+        <div class="menu-item" @click="login = !login">Войти</div>
       </div>
       <div class="info-block">
         <div class="mobile-contacts">
-          <a href="tel:+74953746132" class="mobile-menu-tel">+7 (495) 374-61-32</a>
-          <span class="text">Вы можете связаться с нами, удобным способом:</span>
+          <a href="tel:+74953746132" class="mobile-menu-tel"
+            >+7 (495) 374-61-32</a
+          >
+          <span class="text"
+            >Вы можете связаться с нами, удобным способом:</span
+          >
           <div class="social-contacts">
             <a href class="icon icon-vk"></a>
             <a href class="icon icon-wa"></a>
@@ -43,7 +54,9 @@
             <span class="expand-arrow-grey"></span>
           </div>
           <div class="menu-content d-none">
-            <nuxt-link to="/how-it-works" class="menu-item">Как это работает?</nuxt-link>
+            <nuxt-link to="/how-it-works" class="menu-item"
+              >Как это работает?</nuxt-link
+            >
             <nuxt-link to="delivery" class="menu-item">Доставка</nuxt-link>
             <nuxt-link to="contacts" class="menu-item">Контакты</nuxt-link>
             <nuxt-link to="reviews" class="menu-item">Отзывы</nuxt-link>
@@ -56,8 +69,12 @@
           </div>
           <div class="menu-content d-none">
             <nuxt-link to="/cooks" class="menu-item">Наши шеф-повара</nuxt-link>
-            <nuxt-link to="/suppliers" class="menu-item">Наши поставщики</nuxt-link>
-            <nuxt-link to="/certificates" class="menu-item">Сертификаты соответствия</nuxt-link>
+            <nuxt-link to="/suppliers" class="menu-item"
+              >Наши поставщики</nuxt-link
+            >
+            <nuxt-link to="/certificates" class="menu-item"
+              >Сертификаты соответствия</nuxt-link
+            >
           </div>
           <div class="line"></div>
           <div class="menu-title">
@@ -65,26 +82,30 @@
             <span class="expand-arrow-grey"></span>
           </div>
           <div class="menu-content d-none">
-            <nuxt-link to="/feedback" class="menu-item">Обратная связь</nuxt-link>
+            <nuxt-link to="/feedback" class="menu-item"
+              >Обратная связь</nuxt-link
+            >
             <nuxt-link to="faq" class="menu-item">Частые вопросы</nuxt-link>
             <nuxt-link to="cashback" class="menu-item">Кэшбек</nuxt-link>
-            <nuxt-link to="agreement" class="menu-item">Пользовательское соглашение</nuxt-link>
+            <nuxt-link to="agreement" class="menu-item"
+              >Пользовательское соглашение</nuxt-link
+            >
             <nuxt-link to="sitemap" class="menu-item">Карта сайта</nuxt-link>
           </div>
           <div class="line"></div>
         </div>
         <div class="app-links">
           <a href="#" class="app-link">
-            <img src="~/assets/img/google-play.svg">
+            <img src="~/assets/img/google-play.svg" />
           </a>
           <a href="#" class="app-link">
-            <img src="~/assets/img/app-store.svg">
+            <img src="~/assets/img/app-store.svg" />
           </a>
         </div>
       </div>
       <footer class="mobile-footer">
         <span class="text">Присоединяйтесь к нам в социальных сетях!</span>
-        <SocialContacts/>
+        <SocialContacts />
         <span class="text copyright">© 2012–2019 ООО «Шеф Маркет»</span>
       </footer>
     </div>
@@ -106,8 +127,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      region: "region/region",
-      phone: "region/phone"
+      region: "region/getRegion",
+      phone: "region/getPhone"
     })
   },
   methods: {
@@ -295,4 +316,3 @@ export default {
   }
 }
 </style>
-

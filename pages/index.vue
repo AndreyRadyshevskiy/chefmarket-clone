@@ -63,6 +63,7 @@
     <section class="menu-of-the-week">
       <div class="container">
         <DatesSlider />
+        <MenuTabs />
       </div>
       <div :style="{ backgroundColor: '#f9f9f9' }">
         <div class="container">
@@ -350,6 +351,7 @@ import DinnersThumbsSlider from "@/components/Sections/DinnersThumbsSlider";
 import FeedSlider from "@/components/Sections/FeedSlider";
 import MediaSlider from "@/components/Sections/MediaSlider";
 import InfoOverlay from "@/components/Sections/InfoOverlay";
+import MenuTabs from "@/components/Sections/MenuTabs";
 export default {
   head: {
     title: "Главная"
@@ -360,7 +362,8 @@ export default {
     DinnersThumbsSlider,
     FeedSlider,
     MediaSlider,
-    InfoOverlay
+    InfoOverlay,
+    MenuTabs
   },
   data() {
     return {

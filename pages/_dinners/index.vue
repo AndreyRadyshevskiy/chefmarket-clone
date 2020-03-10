@@ -5,9 +5,15 @@
         <DatesSlider />
       </div>
     </div>
-    <div :style="{backgroundColor: '#f9f9f9' }">
+    <div class="menu-content">
+      <MenuTabs />
+      <MenuOptions />
       <div class="recipes-grid">
-        <RecipeThumb v-for="(recipe, index) in activeMenuData" :key="index" :recipe="recipe" />
+        <RecipeThumb
+          v-for="(recipe, index) in activeMenuData"
+          :key="index"
+          :recipe="recipe"
+        />
       </div>
     </div>
   </div>
@@ -18,11 +24,13 @@ import { db } from "@/plugins/firebase";
 import { mapGetters } from "vuex";
 import DatesSlider from "@/components/Sections/DatesSlider";
 import RecipeThumb from "@/components/Recipes/RecipeThumb";
+import MenuTabs from "@/components/Sections/MenuTabs";
+import MenuOptions from "@/components/Sections/MenuOptions";
 export default {
   validate({ params }) {
     return Boolean(params.dinners);
   },
-  components: { RecipeThumb, DatesSlider },
+  components: { RecipeThumb, DatesSlider, MenuTabs, MenuOptions },
   data() {
     return {};
   },
@@ -40,6 +48,9 @@ export default {
 <style lang="scss">
 .menu-page {
   padding-top: 4rem;
+  .menu-content {
+    background: #f9f9f9;
+  }
   .recipes-grid {
     width: 126rem;
     margin: 0 auto;
@@ -51,4 +62,3 @@ export default {
   }
 }
 </style>
-

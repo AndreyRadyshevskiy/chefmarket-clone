@@ -3,14 +3,30 @@
     <no-ssr>
       <swiper :options="swiperOption" ref="swiper">
         <swiper-slide v-for="(chef, index) in chefs" :key="index">
-          <nuxt-link :to="{path: 'true-chef', query: {index: index}}" class="slide-inner">
-            <div class="slide-image" :style="{backgroundImage: 'url(' + chef.avatar + ')'}"></div>
-            <div class="slide-name">{{chef.name}}</div>
+          <nuxt-link
+            :to="{ path: 'true-chef', query: { index: index } }"
+            class="slide-inner"
+          >
+            <div
+              class="slide-image"
+              :style="{ backgroundImage: 'url(' + chef.avatar + ')' }"
+            ></div>
+            <div class="slide-name">{{ chef.name }}</div>
           </nuxt-link>
         </swiper-slide>
       </swiper>
-      <el-button icon="el-icon-back" circle class="button-prev" @click="swiper.slidePrev()"></el-button>
-      <el-button icon="el-icon-right" circle class="button-next" @click="swiper.slideNext()"></el-button>
+      <el-button
+        icon="el-icon-back"
+        circle
+        class="button-prev"
+        @click="swiper.slidePrev()"
+      ></el-button>
+      <el-button
+        icon="el-icon-right"
+        circle
+        class="button-next"
+        @click="swiper.slideNext()"
+      ></el-button>
     </no-ssr>
   </div>
 </template>
@@ -84,20 +100,6 @@ export default {
     color: #333;
     padding-top: 1.6rem;
     text-align: center;
-  }
-  .button-prev {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 199;
-  }
-  .button-next {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    z-index: 199;
-    transform: translateY(-50%);
   }
 }
 </style>
