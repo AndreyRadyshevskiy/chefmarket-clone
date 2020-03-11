@@ -1,22 +1,22 @@
-# chefmarket
+# chefmarket-clone
 
-> My kryptonian Nuxt.js project
+> Полнофункциональный клон известного сервиса
+  по доставке продуктов с рецептами [chefmarket.ru](https://chefmarket.ru)
 
-## Build Setup
+> Live version: https://chefmarket-clone.herokuapp.com/ (Desktop Only)
 
-``` bash
-# install dependencies
-$ npm install
+## Используемые технологии:
+* Frontend: Nuxt.js (Vue.js + SSR)
+* Database: Firebase (Firestore)
+* Interface: Element UI
+* Plugins: Plyr, Awesome Swiper, Яндекс Карты
+* Deploy: Heroku
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+## Функционал:
+* Авторизация
+* Основные разделы сайта,
+* Блог
+* Админ панель,
+* Заказы (в процессе разработки)
 
-# build for production and launch server
-$ npm run build
-$ npm start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+**Для входа в админку: /admin**
