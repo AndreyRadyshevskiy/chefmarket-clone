@@ -1,6 +1,10 @@
 <template>
   <div class="create-menu-page">
     <div class="admin-page-title">Составить меню</div>
+    <p class="warning mb2">Меню формируется в процессе заполнения полей!</p>
+    <p
+      class="warning mb4"
+    >Кнопка "Сохранить меню" заблокирована, с целью не поломать рабочую демо версию сайта!</p>
     <!-- DATES INPUT -->
     <div class="input-block">
       <span class="label">Выберете даты:</span>
@@ -100,7 +104,7 @@
         </el-tabs>
       </el-tab-pane>
     </el-tabs>
-    <el-button type="success" @click="savePeriod" class="mb4">Сохранить меню</el-button>
+    <el-button type="success" @click="savePeriod" class="mb4" disabled>Сохранить меню</el-button>
   </div>
 </template>
 
@@ -376,6 +380,9 @@ export default {
 </script>
 <style lang="scss">
 .create-menu-page {
+  .warning {
+    font-style: italic;
+  }
   .input-block {
     display: flex;
     align-items: center;

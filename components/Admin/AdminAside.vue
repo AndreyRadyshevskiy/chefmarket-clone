@@ -51,7 +51,7 @@
       <span>Шеф-повара</span>
     </el-menu-item>
 
-    <el-menu-item index="4">
+    <el-menu-item index="/">
       <i class="el-icon-setting"></i>
       <span>Выйти</span>
     </el-menu-item>

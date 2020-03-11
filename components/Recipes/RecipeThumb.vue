@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="recipe-footer">
-        <h6 class="recipe-title">{{recipe.title}}</h6>
+        <h6 class="recipe-title" @click="goToRecipe(recipe.title)">{{recipe.title}}</h6>
         <div class="recipe-expires">
           Готовить
           <b>{{recipe.expires}}</b>

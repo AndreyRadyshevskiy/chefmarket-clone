@@ -7,13 +7,9 @@
     </div>
     <div class="menu-content">
       <MenuTabs />
-      <MenuOptions />
+      <!-- <MenuOptions /> -->
       <div class="recipes-grid">
-        <RecipeThumb
-          v-for="(recipe, index) in activeMenuData"
-          :key="index"
-          :recipe="recipe"
-        />
+        <RecipeThumb v-for="(recipe, index) in activeMenuData" :key="index" :recipe="recipe" />
       </div>
     </div>
   </div>
@@ -58,7 +54,8 @@ export default {
     grid-auto-rows: 1fr;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 2rem 6rem;
-    padding: 2rem 0;
+    padding-top: 2rem;
+    padding-bottom: 10rem;
   }
 }
 </style>
