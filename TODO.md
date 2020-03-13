@@ -47,3 +47,7 @@ https://github.com/cferdinandi/smooth-scroll/tree/master/dist
 # вынести dates slider в отдельный компонент (дублируется на странцах index.vue \_id.vue)
 
 # настроить breakpoints на всех слайдерах Index.vue (пример в media-slider)
+
+# реализовать click outside во все выпадающих элементах
+
+# починить создание постов в блоге

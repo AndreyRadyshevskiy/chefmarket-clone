@@ -193,6 +193,9 @@ export default {
     width: 100%;
     height: 46rem;
   }
+  .el-carousel__item--card.is-in-stage {
+    cursor: auto;
+  }
 }
 </style>
 

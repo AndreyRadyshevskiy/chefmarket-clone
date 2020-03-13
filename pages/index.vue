@@ -8,12 +8,8 @@
           <br />готовить дома
         </div>
         <div class="hero-subtitle">Доставка продуктов с рецептами</div>
-        <nuxt-link to="/dinners" class="btn btn-colored"
-          >Выбрать меню</nuxt-link
-        >
-        <a class="btn btn-transparent" @click="scrollSmoothTo"
-          >Узнать подробнее</a
-        >
+        <nuxt-link to="/dinners" class="btn btn-colored">Выбрать меню</nuxt-link>
+        <a class="btn btn-transparent" @click="scrollSmoothTo">Узнать подробнее</a>
       </div>
     </section>
     <section class="how-it-works" ref="how">
@@ -25,27 +21,21 @@
               <img src="~/assets/img/how-it-works/how_1.svg" />
             </div>
             <div class="feature-title">Выбирайте блюда на ваш вкус</div>
-            <div class="feature-text">
-              Каждую неделю 36 новых рецептов от шеф-поваров и диетологов
-            </div>
+            <div class="feature-text">Каждую неделю 36 новых рецептов от шеф-поваров и диетологов</div>
           </div>
           <div class="feature">
             <div class="feature-image">
               <img src="~/assets/img/how-it-works/how_2.svg" />
             </div>
             <div class="feature-title">Получайте коробку с продуктами</div>
-            <div class="feature-text">
-              В удобный вам день и интервал — доставка бесплатная
-            </div>
+            <div class="feature-text">В удобный вам день и интервал — доставка бесплатная</div>
           </div>
           <div class="feature">
             <div class="feature-image">
               <img src="~/assets/img/how-it-works/how_3.svg" />
             </div>
             <div class="feature-title">Готовьте за 20-40 минут</div>
-            <div class="feature-text">
-              Свежие ингридиенты лучшего качества и наглядные фоторецепты
-            </div>
+            <div class="feature-text">Свежие ингридиенты лучшего качества и наглядные фоторецепты</div>
           </div>
           <div class="feature">
             <div class="feature-image">
@@ -69,12 +59,8 @@
         <div class="container">
           <DinnersThumbsSlider :active-menu-data="activeMenuData" />
           <div class="btn-group">
-            <nuxt-link to="/dinners" class="btn btn-colored"
-              >Смотреть меню</nuxt-link
-            >
-            <nuxt-link to="/comparison" class="btn btn-transparent btn-black"
-              >Сравнить меню</nuxt-link
-            >
+            <nuxt-link to="/dinners" class="btn btn-colored">Смотреть меню</nuxt-link>
+            <nuxt-link to="/comparison" class="btn btn-transparent btn-black">Сравнить меню</nuxt-link>
           </div>
         </div>
       </div>
@@ -82,13 +68,9 @@
     <section class="chefs">
       <div class="container">
         <div class="section-title">Наши шеф-повара</div>
-        <div class="section-subtitle">
-          Вот кто придумывает для вас идеальные блюда
-        </div>
+        <div class="section-subtitle">Вот кто придумывает для вас идеальные блюда</div>
         <ChefsThumbsSlider />
-        <nuxt-link to="/true-chef" class="btn btn-colored btn-centred"
-          >подробнее</nuxt-link
-        >
+        <nuxt-link to="/true-chef" class="btn btn-colored btn-centred">подробнее</nuxt-link>
       </div>
     </section>
     <section class="rating">
@@ -96,23 +78,12 @@
         <div class="rating-title">4,9</div>
         <div class="rating-stars">
           <span class="rating-star">
-            <svg
-              height="32"
-              width="32"
-              viewBox="0 0 32 32"
-              class="vue-star-rating-star"
-              step="1"
-            >
+            <svg height="32" width="32" viewBox="0 0 32 32" class="vue-star-rating-star" step="1">
               <linearGradient id="bv65d8" x1="0" x2="100%" y1="0" y2="0">
                 <stop offset="100%" stop-color="#FFC73F" />
                 <stop offset="100%" stop-color="#E1E1E1" />
               </linearGradient>
-              <filter
-                id="dhcns8"
-                height="130%"
-                width="130%"
-                filterUnits="userSpaceOnUse"
-              >
+              <filter id="dhcns8" height="130%" width="130%" filterUnits="userSpaceOnUse">
                 <feGaussianBlur stdDeviation="0" result="coloredBlur" />
                 <feMerge>
                   <feM in="coloredBlur" />
@@ -140,23 +111,12 @@
             </svg>
           </span>
           <span class="rating-star">
-            <svg
-              height="32"
-              width="32"
-              viewBox="0 0 32 32"
-              class="vue-star-rating-star"
-              step="1"
-            >
+            <svg height="32" width="32" viewBox="0 0 32 32" class="vue-star-rating-star" step="1">
               <linearGradient id="bv65d8" x1="0" x2="100%" y1="0" y2="0">
                 <stop offset="100%" stop-color="#FFC73F" />
                 <stop offset="100%" stop-color="#E1E1E1" />
               </linearGradient>
-              <filter
-                id="dhcns8"
-                height="130%"
-                width="130%"
-                filterUnits="userSpaceOnUse"
-              >
+              <filter id="dhcns8" height="130%" width="130%" filterUnits="userSpaceOnUse">
                 <feGaussianBlur stdDeviation="0" result="coloredBlur" />
                 <feMerge>
                   <feM in="coloredBlur" />
@@ -184,23 +144,12 @@
             </svg>
           </span>
           <span class="rating-star">
-            <svg
-              height="32"
-              width="32"
-              viewBox="0 0 32 32"
-              class="vue-star-rating-star"
-              step="1"
-            >
+            <svg height="32" width="32" viewBox="0 0 32 32" class="vue-star-rating-star" step="1">
               <linearGradient id="bv65d8" x1="0" x2="100%" y1="0" y2="0">
                 <stop offset="100%" stop-color="#FFC73F" />
                 <stop offset="100%" stop-color="#E1E1E1" />
               </linearGradient>
-              <filter
-                id="dhcns8"
-                height="130%"
-                width="130%"
-                filterUnits="userSpaceOnUse"
-              >
+              <filter id="dhcns8" height="130%" width="130%" filterUnits="userSpaceOnUse">
                 <feGaussianBlur stdDeviation="0" result="coloredBlur" />
                 <feMerge>
                   <feM in="coloredBlur" />
@@ -228,23 +177,12 @@
             </svg>
           </span>
           <span class="rating-star">
-            <svg
-              height="32"
-              width="32"
-              viewBox="0 0 32 32"
-              class="vue-star-rating-star"
-              step="1"
-            >
+            <svg height="32" width="32" viewBox="0 0 32 32" class="vue-star-rating-star" step="1">
               <linearGradient id="bv65d8" x1="0" x2="100%" y1="0" y2="0">
                 <stop offset="100%" stop-color="#FFC73F" />
                 <stop offset="100%" stop-color="#E1E1E1" />
               </linearGradient>
-              <filter
-                id="dhcns8"
-                height="130%"
-                width="130%"
-                filterUnits="userSpaceOnUse"
-              >
+              <filter id="dhcns8" height="130%" width="130%" filterUnits="userSpaceOnUse">
                 <feGaussianBlur stdDeviation="0" result="coloredBlur" />
                 <feMerge>
                   <feM in="coloredBlur" />
@@ -272,23 +210,12 @@
             </svg>
           </span>
           <span class="rating-star">
-            <svg
-              height="32"
-              width="32"
-              viewBox="0 0 32 32"
-              class="vue-star-rating-star"
-              step="1"
-            >
+            <svg height="32" width="32" viewBox="0 0 32 32" class="vue-star-rating-star" step="1">
               <linearGradient id="bv65d8" x1="0" x2="100%" y1="0" y2="0">
                 <stop offset="100%" stop-color="#FFC73F" />
                 <stop offset="100%" stop-color="#E1E1E1" />
               </linearGradient>
-              <filter
-                id="dhcns8"
-                height="130%"
-                width="130%"
-                filterUnits="userSpaceOnUse"
-              >
+              <filter id="dhcns8" height="130%" width="130%" filterUnits="userSpaceOnUse">
                 <feGaussianBlur stdDeviation="0" result="coloredBlur" />
                 <feMerge>
                   <feM in="coloredBlur" />
@@ -328,9 +255,7 @@
     <section class="instagram">
       <div class="container">
         <div class="section-title">Тысячи людей уже готовят с Шефмаркет</div>
-        <div class="section-subtitle mb4">
-          Читайте отзывы здесь и по тегу #шефмаркет в инстаграм
-        </div>
+        <div class="section-subtitle mb4">Читайте отзывы здесь и по тегу #шефмаркет в инстаграм</div>
         <FeedSlider />
       </div>
     </section>

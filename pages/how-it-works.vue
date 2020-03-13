@@ -83,7 +83,7 @@
     </section>
     <section class="delivery">
       <h2 class="section-title section-title--md mb2">Бесплатно привозим ваш заказ</h2>
-      <SelectBox :options="regions" :default-option="0" class="pb4">
+      <SelectBox :options="regions" :default-option="0" width="35rem" class="pb4">
         <template v-slot:default="slotProps">
           <div class="section-subtitle" v-if="slotProps.activeOption == 'МОСКВА'">
             Ежедневная бесплатная доставка по Москве и до 60 км от МКАД.
@@ -284,6 +284,12 @@ export default {
   .production-image {
     width: 100%;
     display: block;
+    margin-bottom: 2rem;
+  }
+  .select-box {
+    margin: 0 auto;
+  }
+  .slot-box {
     margin-bottom: 2rem;
   }
   .delivery {

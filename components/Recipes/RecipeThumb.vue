@@ -23,6 +23,9 @@
           <span class="time">{{ recipe.cookTime }} мин</span>
           <img src="~/assets/img/dinners/svg/cook2.svg" />
           <span class="difficulty">{{ recipe.difficulty}}</span>
+          <div class="checkbox" @click="toggleActiveRecipe" ref="checkbox">
+            <i class="check"></i>
+          </div>
         </div>
       </div>
     </el-card>
@@ -50,6 +53,9 @@ export default {
     goToRecipe(recipe) {
       const recSlug = slugify(recipe, { lower: true });
       this.$router.push(`/dinners/${recSlug}`);
+    },
+    toggleActiveRecipe() {
+      this.$refs.checkbox.classList.toggle("active");
     }
   }
 };
@@ -110,6 +116,7 @@ export default {
     margin-top: 1rem;
   }
   .recipe-stats {
+    position: relative;
     font-size: 1.2rem;
     display: flex;
     align-items: flex-end;
@@ -136,6 +143,42 @@ export default {
   .btn-group {
     padding: 2rem 0;
     text-align: center;
+  }
+  .checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 5rem;
+    height: 5rem;
+    background: red;
+    border-radius: 50%;
+    right: 1rem;
+    bottom: 4rem;
+    background-color: #fff;
+    border: 1px solid #59b958;
+    cursor: pointer;
+
+    &:hover .check {
+      border: solid #cccccc;
+      border-width: 0 3px 3px 0;
+    }
+  }
+  .checkbox.active {
+    background-color: #59b958;
+  }
+  .checkbox.active:hover .check {
+    border: solid #fff;
+    border-width: 0 3px 3px 0;
+  }
+  .check {
+    display: inline-block;
+    width: 10px;
+    height: 16px;
+    margin: -3px 10px 3px;
+    border: solid #fff;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
   }
 }
 </style>

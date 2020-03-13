@@ -46,8 +46,7 @@
     background: #59b958;
 
     &:hover,
-    &:active,
-    &:focus {
+    &:active {
       background: #8bce8a;
       color: #fff;
     }
@@ -55,13 +54,16 @@
   &-transparent {
     border: 1px solid #59b958;
 
-    &:hover {
-      background: #ffffff;
+    &:hover,
+    &:active {
+      border: 1px solid #59b958;
+      background: #def1de;
       color: #333;
     }
   }
   &-black {
     color: #333;
+    background: #fff;
   }
   &-centred {
     display: table;

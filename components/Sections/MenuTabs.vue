@@ -1,18 +1,12 @@
 <template>
   <div class="menu-tabs">
-    <nuxt-link
-      to="/comparison"
-      class="choose-link"
-      v-if="$route.name == 'dinners'"
-      >Что выбрать?</nuxt-link
-    >
+    <nuxt-link to="/comparison" class="choose-link" v-if="$route.name == 'dinners'">Что выбрать?</nuxt-link>
     <span
       v-for="(set, index) in menuSetNames"
       :key="index"
       :class="[activeMenuSetName == set ? 'active' : '', 'menu-tab-name']"
       @click="fetchMenuSetRecipes"
-      >{{ set }}</span
-    >
+    >{{ set }}</span>
   </div>
 </template>
 
@@ -47,6 +41,7 @@ export default {
   text-align: center;
   z-index: 1;
   background-color: #fff;
+  height: 5rem;
 
   .menu-tab-name,
   .choose-link {

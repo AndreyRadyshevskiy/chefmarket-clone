@@ -9,9 +9,7 @@
             <span class="expand-arrow-green"></span>
           </span>
           <ul class="region-options" v-show="regionSelect" @click="setRegion">
-            <li class="region-option" v-for="(region, index) in regions">
-              {{ region.name }}
-            </li>
+            <li class="region-option" v-for="(region, index) in regions">{{ region.name }}</li>
           </ul>
         </div>
         <a href="tel:+74953746132" class="phone-link">{{ phone }}</a>
