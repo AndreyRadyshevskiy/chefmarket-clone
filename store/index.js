@@ -84,3 +84,4 @@ export const actions = {
 //   });
 //   return { ingredients, inventory };
 // },
+export const strict = false
